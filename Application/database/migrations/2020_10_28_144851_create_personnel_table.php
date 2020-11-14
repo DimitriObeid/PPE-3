@@ -15,12 +15,12 @@ class CreatePersonnelTable extends Migration
     {
         Schema::create('personnel', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_categorie');
+            $table->integer('id_service');
             $table->string('nom', 255);
             $table->string('prenom', 255);
             $table->string('mail', 255);
             $table->string('pass', 255);
-            $table->string('service', 255);
-            $table->string('categorie', 255);
         });
     }
 
