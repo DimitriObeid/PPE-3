@@ -1,6 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommandesController;
+use App\Http\Controllers\EtatController;
+use App\Http\Controllers\FournituresController;
+use App\Http\Controllers\PersonnelController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('connexion');
 });
+
+Route::get('/connexion', [PersonnelController::class, 'connexion']);

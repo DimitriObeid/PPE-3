@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFournituresTable extends Migration
+class CreateEtatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateFournituresTable extends Migration
      */
     public function up()
     {
-        Schema::create('fournitures', function (Blueprint $table) {
+        Schema::create('etat', function (Blueprint $table) {
             $table->id();
             $table->string('nom', 255);
-            $table->string('nomPhoto', 255);
             $table->string('description', 255);
-            $table->integer('quantiteDisponible');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateFournituresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fournitures');
+        Schema::dropIfExists('etat');
     }
 }
