@@ -15,10 +15,10 @@ class CreateCommandesTable extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_etat');
-            $table->integer('id_fournitures');
-            $table->integer('id_personnel');
-            $table->string('nom', 255);
+            $table->integer('idEtat');
+            $table->integer('idFournitures');
+            $table->integer('idPersonnel');
+            $table->string('nomCommandes', 255);
             $table->integer('quantiteDemande');
             $table->timestamps();
         });

@@ -15,8 +15,8 @@ class CreateEtatTable extends Migration
     {
         Schema::create('etat', function (Blueprint $table) {
             $table->id();
-            $table->string('nom', 255);
-            $table->string('description', 255);
+            $table->string('nomEtat', 255);
+            $table->string('descriptionEtat', 255);
         });
     }
 

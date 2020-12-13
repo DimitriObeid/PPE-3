@@ -6,10 +6,78 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categorie` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nomCategorie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptionCategorie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `commandes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `idEtat` int(11) NOT NULL,
+  `idFournitures` int(11) NOT NULL,
+  `idPersonnel` int(11) NOT NULL,
+  `nomCommandes` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantiteDemande` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `etat` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nomEtat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptionEtat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fournitures` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nomFournitures` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nomPhoto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptionFournitures` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantiteDisponible` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personnels` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `idCategorie` int(11) NOT NULL,
+  `idService` int(11) NOT NULL,
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pass` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` varchar(1500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `service` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nomService` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptionService` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -20,3 +88,9 @@ CREATE TABLE `migrations` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+INSERT INTO `migrations` VALUES (1,'2020_10_28_144756_create_commandes_table',1);
+INSERT INTO `migrations` VALUES (2,'2020_10_28_144825_create_fournitures_table',1);
+INSERT INTO `migrations` VALUES (3,'2020_10_28_144851_create_personnel_table',1);
+INSERT INTO `migrations` VALUES (4,'2020_11_14_092922_create_service_table',1);
+INSERT INTO `migrations` VALUES (5,'2020_11_14_092948_create_categorie_table',1);
+INSERT INTO `migrations` VALUES (6,'2020_11_14_093006_create_etat_table',1);

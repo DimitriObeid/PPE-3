@@ -24,4 +24,16 @@ Route::get('/', function () {
     return view('connexion');
 });
 
-Route::get('/connexion', [PersonnelController::class, 'connexion']);
+Route::post('/connexion', [PersonnelController::class, 'connexion']);
+
+Route::get('/inscription', [PersonnelController::class, 'creer']);
+
+Route::post('/inscription', [PersonnelController::class, 'verif_creer']);
+
+Route::get('/deconnexion', [PersonnelController::class, 'deconnexion']);
+
+Route::get('/dashboard', [PersonnelController::class, 'dashboard']);
+
+Route::post('/message', [PersonnelController::class, 'message']);
+
+Route::post('/supprimer', [PersonnelController::class, 'supprimer']);

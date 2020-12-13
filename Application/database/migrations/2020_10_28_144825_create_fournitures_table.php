@@ -15,9 +15,9 @@ class CreateFournituresTable extends Migration
     {
         Schema::create('fournitures', function (Blueprint $table) {
             $table->id();
-            $table->string('nom', 255);
+            $table->string('nomFournitures', 255);
             $table->string('nomPhoto', 255);
-            $table->string('description', 255);
+            $table->string('descriptionFournitures', 255);
             $table->integer('quantiteDisponible');
         });
     }
