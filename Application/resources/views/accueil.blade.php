@@ -11,13 +11,18 @@
         <nav>
             <ul>
                 <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
-                <li><a class="menu" href="dashboard">DASHBOARD</a></li>
-                <li><a class="menu" href="">NOS SERVICES</a></li>
-                <li><a class="menu" href="">NOS FOURITURES</a></li>
-                <li><a class="menu" href="">DEPARTEMENTS</a></li>
-                <li><a class="menu" href="">COMMANDE-SUIVI</a></li>
-                <li><a class="menu" href="">ETAT</a></li>
-                <li><a class="menu" href="">VOIR PLUS</a></li>
+                <li><a class="menu" href="accueil">ACCUEIL</a></li>
+                <li><a class="menu" href="">DÉPARTEMENTS</a></li>
+                <li><a class="menu" href="">FOURNITURES</a></li>
+                <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                    <li><a class="menu" href="">MÉSSAGERIE</a></li>
+                    <li><a class="menu" href="">STATISTIQUE</a></li>
+                <?php } ?>
+                <li><a class="menu" href="">DEMANDE SPÉCIFIQUE</a></li>
+                <li><a class="menu" href="">SUIVI</a></li>
+                <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                    <li><a class="menu" href="">PERSONNALISATION DU COMPTE</a></li>
+                <?php } ?>
             </ul>
         </nav>
         <header>
@@ -31,7 +36,7 @@
         </header>
         <section id="corps">
             <?php
-                if ($_SESSION['nom'] != 'Admin') {
+                if ($_SESSION['categorie'] != 'Administrateur') {
                     if ($_SESSION['message'] != '') { ?>
                         <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
                     <?php } ?>

@@ -94,7 +94,7 @@ class PersonnelController extends Controller
         return view('connexion');
     }
 
-    public function dashboard()
+    public function accueil()
     {
         session_start();
 

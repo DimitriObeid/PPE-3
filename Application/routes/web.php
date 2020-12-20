@@ -32,7 +32,7 @@ Route::post('/inscription', [PersonnelController::class, 'verif_creer']);
 
 Route::get('/deconnexion', [PersonnelController::class, 'deconnexion']);
 
-Route::get('/dashboard', [PersonnelController::class, 'dashboard']);
+Route::get('/accueil', [PersonnelController::class, 'accueil']);
 
 Route::post('/message', [PersonnelController::class, 'message']);
 
