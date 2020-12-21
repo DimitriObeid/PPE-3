@@ -18,7 +18,7 @@
                     <li><a class="menu" href="">MÉSSAGERIE</a></li>
                     <li><a class="menu" href="">STATISTIQUE</a></li>
                 <?php } ?>
-                <li><a class="menu" href="">DEMANDE SPÉCIFIQUE</a></li>
+                <li><a class="menu" href="demandesspecifiques">DEMANDE SPÉCIFIQUE</a></li>
                 <li><a class="menu" href="">SUIVI</a></li>
                 <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                     <li><a class="menu" href="">PERSONNALISATION DU COMPTE</a></li>
@@ -33,6 +33,25 @@
             {!! Form::close() !!}
             <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
             <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            <?php if (isset($_SESSION['commandes'][0])) { ?>
+                <table id="commandes_cours">
+                    <caption>Commandes en cours</caption>
+                    <tr>
+                        <th class="tabl_comm">Nom</th>
+                        <th class="tabl_comm">Quantité demandé</th>
+                        <th class="tabl_comm">État</th>
+                        <th class="tabl_comm">Dernière mise à jour</th>
+                    </tr>
+                <?php for ($h=0; $h < $_SESSION['commandes']->count(); $h++) { ?>
+                    <tr>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomEtat }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes'][$h]->updated_at)) }}</td>
+                    </tr>
+                <?php } ?>
+                </table>
+            <?php } ?>
         </header>
         <section id="corps">
             <?php
@@ -51,13 +70,13 @@
                         </tr>
                         <?php for ($i=0; $i < 6; $i++) { ?>
                                 <tr>
-                                    <td><img class="photo_fournitures" src="http://localhost/PPE-3/Application/storage/app/public/{{ $Fournitures[$i]->nomPhoto }}.jpg" /></td>
-                                    <td>{{ $Fournitures[$i]->nomFournitures }}</td>
-                                    <td>{{ $Fournitures[$i]->descriptionFournitures }}</td>
-                                    <td>{{ $Fournitures[$i]->quantiteDisponible }}</td>
+                                    <td><img class="photo_fournitures" src="http://localhost/PPE-3/Application/storage/app/public/{{ $_SESSION['fournitures'][$i]->nomPhoto }}.jpg" /></td>
+                                    <td>{{ $_SESSION['fournitures'][$i]->nomFournitures }}</td>
+                                    <td>{{ $_SESSION['fournitures'][$i]->descriptionFournitures }}</td>
+                                    <td>{{ $_SESSION['fournitures'][$i]->quantiteDisponible }}</td>
                                     <td>
                                         {!! Form::open(['url' => 'commander']) !!}
-                                            <input type="number" name="quantite_disponible" value="0" min="0" max="{{ $Fournitures[$i]->quantiteDisponible }}" />
+                                            <input type="number" name="quantite_disponible" value="0" min="0" max="{{ $_SESSION['fournitures'][$i]->quantiteDisponible }}" />
                                         {{ Form::submit('Commander') }}
                                         {!! Form::close() !!}
                                     </td>
@@ -84,8 +103,8 @@
                     {{ Form::textarea('message') }}
                     {{ Form::label('mail', 'Utilisateur :', ['id'=>'label_select']) }}
                         <select name="mail">
-                            <?php for ($j=0; $j < $Personnels->count(); $j++) {
-                                echo '<option value='.$Personnels[$j]->mail.'>'.$Personnels[$j]->mail.'</option>';
+                            <?php for ($j=0; $j < $_SESSION['personnels']->count(); $j++) {
+                                echo '<option value='.$_SESSION['personnels'][$j]->mail.'>'.$_SESSION['personnels'][$j]->mail.'</option>';
                             } ?>
                         </select>
                     {{ Form::submit('Envoyer') }}
@@ -101,18 +120,18 @@
                             <th>Catégorie</th>
                             <th id="col_message">Message</th>
                         </tr>
-                    <?php for ($k=0; $k < $Personnels->count(); $k++) { ?>
+                    <?php for ($k=0; $k < $_SESSION['personnels']->count(); $k++) { ?>
                         <tr>
-                            <td>{{ $Personnels[$k]->nom }}</td>
-                            <td>{{ $Personnels[$k]->prenom }}</td>
-                            <td>{{ $Personnels[$k]->mail }}</td>
-                            <td>{{ $Personnels[$k]->nomService }}</td>
-                            <td>{{ $Personnels[$k]->nomCategorie }}</td>
+                            <td>{{ $_SESSION['personnels'][$k]->nom }}</td>
+                            <td>{{ $_SESSION['personnels'][$k]->prenom }}</td>
+                            <td>{{ $_SESSION['personnels'][$k]->mail }}</td>
+                            <td>{{ $_SESSION['personnels'][$k]->nomService }}</td>
+                            <td>{{ $_SESSION['personnels'][$k]->nomCategorie }}</td>
                             <td>
-                                {{ $Personnels[$k]->message }}
-                                <?php if ($Personnels[$k]->message != '') { ?>
+                                {{ $_SESSION['personnels'][$k]->message }}
+                                <?php if ($_SESSION['personnels'][$k]->message != '') { ?>
                                     {!! Form::open(['url' => 'supprimer']) !!}
-                                    <?php echo '<input type="hidden" name="mail" value='.$Personnels[$k]->mail.'>' ?>
+                                    <?php echo '<input type="hidden" name="mail" value='.$_SESSION['personnels'][$k]->mail.'>' ?>
                                     {{ Form::submit('Supprimer le message', ['id'=>'supprimer_message']) }}
                                     {!! Form::close() !!}
                                 <?php } ?>
@@ -120,9 +139,51 @@
                         </tr>
                     <?php } ?>
                     </table>
+                    <table>
+                        <caption>Commandes en cours</caption>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Nom de la commande</th>
+                            <th>Quantité demandé</th>
+                            <th>État</th>
+                            <th>Création</th>
+                            <th>Dernière mise à jour</th>
+                        </tr>
+                    <?php for ($l=0; $l < $_SESSION['commandes_liste']->count(); $l++) { ?>
+                        <tr>
+                            <td>{{ $_SESSION['commandes_liste'][$l]->nom }}</td>
+                            <td>{{ $_SESSION['commandes_liste'][$l]->prenom }}</td>
+                            <td>{{ $_SESSION['commandes_liste'][$l]->nomCommandes }}</td>
+                            <td>{{ $_SESSION['commandes_liste'][$l]->quantiteDemande }}</td>
+                            <td>{{ $_SESSION['commandes_liste'][$l]->nomEtat }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_liste'][$l]->created_at)) }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_liste'][$l]->updated_at)) }}</td>
+                        </tr>
+                    <?php } ?>
+                    </table>
                 <?php } ?>
         </section>
         <footer>
+            <?php if (isset($_SESSION['commandes_fini'][0])) { ?>
+                <table id="commandes_fini">
+                    <caption>Historique des commandes</caption>
+                    <tr>
+                        <th class="tabl_comm">Nom</th>
+                        <th class="tabl_comm">Quantité demandé</th>
+                        <th class="tabl_comm">État</th>
+                        <th class="tabl_comm">Dernière mise à jour</th>
+                    </tr>
+                <?php for ($m=0; $m < $_SESSION['commandes_fini']->count(); $m++) { ?>
+                    <tr>
+                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$m]->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$m]->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$m]->nomEtat }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_fini'][$m]->updated_at)) }}</td>
+                    </tr>
+                <?php } ?>
+                </table>
+            <?php } ?>
             <p id="service">Vous êtes dans le service : {{ $_SESSION['service'] }}</p>
             <p id="categorie">Votre rôle est : {{ $_SESSION['categorie'] }}</p>
         </footer>

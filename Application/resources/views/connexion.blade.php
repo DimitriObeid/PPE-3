@@ -33,7 +33,7 @@
         {{ Form::password('mdp') }}
         <br>
         {{ Form::submit('Se connecter',['class'=>'submit']) }}
-        {{ Form::button('Créer un compte',['onclick'=>'window.location.href="inscription"']) }}
+        {{ Form::button('Créer un compte',['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php/inscription"']) }}
         {!! Form::close() !!}
     </body>
 </html>

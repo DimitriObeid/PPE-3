@@ -83,7 +83,7 @@ h1
     width: 29.5%;
     padding: 1.6% 6% 1.5% 2%;
     border-radius: 25px;
-    margin-left: 65%;
+    margin-left: 40%;
 }
 
 #envoyer
@@ -96,7 +96,7 @@ h1
 
 #nom_prenom
 {
-    margin-left: 20%;
+    margin-left: 7%;
 }
 
 #deconnexion
@@ -124,27 +124,6 @@ body
     margin-left: 15%;
     width: auto;
     padding: 2%;
-}
-
-#message
-{
-    background: #595959;
-    color: #e2e2e2;
-    border-radius: 5px;
-    padding: 1%;
-    width: 25%;
-    margin: 0% 37.5% 3% 37.5%;
-}
-
-h4
-{
-    text-align: center;
-    margin-bottom: 1%;
-}
-
-.photo_fournitures
-{
-    width: 35%;
 }
 
 table
@@ -176,46 +155,10 @@ th, td
     top: 2px;
 }
 
-textarea
-{
-    background: #595959;
-    color: #e2e2e2;
-    margin: 0% 32.7% 1% 32.7%;
-    padding: 1%;
-    border: none;
-    border-radius: 5px;
-    resize: none;
-}
-
-#label_select
-{
-    margin-left: 38%;
-}
-
-select
-{
-    margin-right: 2%;
-}
-
-#liste_comptes
-{
-    margin: 5% 0% 5% 0%;
-}
-
 caption
 {
     font-size: 18px;
     font-weight: bold;
-}
-
-#col_message
-{
-    width: 20%;
-}
-
-#supprimer_message
-{
-    margin-top: 3%;
 }
 
 footer

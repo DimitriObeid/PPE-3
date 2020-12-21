@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommandesController;
+use App\Http\Controllers\DemandesSpecifiquesController;
 use App\Http\Controllers\EtatController;
 use App\Http\Controllers\FournituresController;
 use App\Http\Controllers\PersonnelController;
@@ -37,3 +38,5 @@ Route::get('/accueil', [PersonnelController::class, 'accueil']);
 Route::post('/message', [PersonnelController::class, 'message']);
 
 Route::post('/supprimer', [PersonnelController::class, 'supprimer']);
+
+Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'afficher']);
