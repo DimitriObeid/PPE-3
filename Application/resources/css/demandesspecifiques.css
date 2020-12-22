@@ -49,6 +49,7 @@ nav li
     text-decoration: none;
     height: 100%;
     padding-left: 5%;
+    padding-right: 1%;
     padding-top: 13%;
     color: #c2c2c2;
 }
@@ -126,6 +127,44 @@ body
     padding: 2%;
 }
 
+h4
+{
+    font-size: 18px;
+}
+
+#nom_demande, #quantite_demande, #lien_produit
+{
+    margin-right: 5.4%;
+}
+
+#demandes_pers
+{
+    margin-top: 5%;
+    margin-bottom: 7.5%;
+}
+
+#demandes_spec
+{
+    margin-top: 5%;
+}
+
+#demandes_utilisateur
+{
+    margin-top: 5%;
+    margin-bottom: 23.4%;
+}
+
+#tab_ut
+{
+    margin-top: 5%;
+    margin-bottom: 12.8%;
+}
+
+.titre_demande
+{
+    text-align: left;
+}
+
 table
 {
     width: 100%;
@@ -136,6 +175,11 @@ th, td
 {
     border-bottom: 1px #363636 solid;
     padding: 1% 0% 1% 0%;
+}
+
+.lien_produit
+{
+    width: 35%;
 }
 
 .confirm

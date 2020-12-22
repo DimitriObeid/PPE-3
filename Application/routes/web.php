@@ -40,3 +40,7 @@ Route::post('/message', [PersonnelController::class, 'message']);
 Route::post('/supprimer', [PersonnelController::class, 'supprimer']);
 
 Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'afficher']);
+
+Route::get('/creationdemande', [DemandesSpecifiquesController::class, 'afficher']);
+
+Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);

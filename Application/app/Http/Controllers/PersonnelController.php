@@ -9,6 +9,7 @@ use App\Models\Categorie;
 use App\Models\Commandes;
 use App\Models\Etat;
 use App\Models\Service;
+use App\Models\DemandesSpecifiques;
 
 class PersonnelController extends Controller
 {

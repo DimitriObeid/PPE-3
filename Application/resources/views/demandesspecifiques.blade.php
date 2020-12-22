@@ -55,10 +55,96 @@
         </header>
         <section id="corps">
             <?php
-                if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                if ($_SESSION['categorie'] != 'Administrateur') {
+                    $confirm = $vrai ?? false;
+                    if ($confirm) { ?>
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande à bien été envoyé</p><br />
+                    <?php } ?>
+                    <h4>Effectuer une demande spécifique :</h4><br />
+                    {!! Form::open(['url' => 'creationdemande']) !!}
+                    {{ Form::label('nom_demande', 'Nom de la demande :') }}
+                    <input type="text" name="nom_demande" id="nom_demande" placeholder="Ex: Ciseau" />
+                    {{ Form::label('quantite_demande', 'Quantité demandé :') }}
+                    <input type="number" name="quantite_demande" id="quantite_demande" value="1" min="1" max="50" />
+                    {{ Form::label('lien_produit', 'Lien vers le produit :') }}
+                    {{ Form::text('lien_produit') }}
+                    {{ Form::submit('Envoyer la demande') }}
+                    {!! Form::close() !!}
 
-            <?php }
-                else { ?>
+                    <?php if (isset($_SESSION['demandes_pers'][0])) { ?>
+                        <table id="demandes_pers">
+                            <caption class="titre_demande">Liste des demandes spécifiques :</caption>
+                            <tr>
+                                <th>Nom de la demande</th>
+                                <th>Quantité demandé</th>
+                                <th>Lien du produit</th>
+                                <th>État</th>
+                                <th>Création</th>
+                                <th>Dernière mise à jour</th>
+                            </tr>
+                        <?php for ($i=0; $i < $_SESSION['demandes_pers']->count(); $i++) { ?>
+                            <tr>
+                                <td>{{ $_SESSION['demandes_pers'][$i]->nomDemande }}</td>
+                                <td>{{ $_SESSION['demandes_pers'][$i]->quantiteDemande }}</td>
+                                <td class="lien_produit">{{ $_SESSION['demandes_pers'][$i]->lienProduit }}</td>
+                                <td>{{ $_SESSION['demandes_pers'][$i]->nomEtat }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$i]->created_at)) }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$i]->updated_at)) }}</td>
+                            </tr>
+                        <?php } ?>
+                        </table>
+                <?php } else { ?>
+                    <section id="demandes_spec">
+                        <h4>Demandes spécifiques :</h4><br />
+                        <p>Vous n'avez pas encore effectuer de demandes.</p>
+                    </section>
+                <?php }
+                    if ($_SESSION['categorie'] == 'Valideur') {
+                        if (isset($_SESSION['demandes_valid'][0])) { ?>
+                            <table id="tab_ut">
+                                <caption class="titre_demande">Liste des demandes des utilisateurs</caption>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Nom de la demande</th>
+                                    <th>Quantité demandé</th>
+                                    <th>Lien du produit</th>
+                                    <th>État</th>
+                                    <th>Création</th>
+                                    <th>Dernière mise à jour</th>
+                                    <th></th>
+                                </tr>
+                            <?php for ($j=0; $j < $_SESSION['demandes_valid']->count(); $j++) { ?>
+                                <tr>
+                                    <td>{{ $_SESSION['demandes_valid'][$j]->nom }}</td>
+                                    <td>{{ $_SESSION['demandes_valid'][$j]->prenom }}</td>
+                                    <td>{{ $_SESSION['demandes_valid'][$j]->nomDemande }}</td>
+                                    <td>{{ $_SESSION['demandes_valid'][$j]->quantiteDemande }}</td>
+                                    <td class="lien_produit">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</td>
+                                    <td>
+                                        {!! Form::open(['url' => 'majetat']) !!}
+                                        {{ Form::select('etat',[
+                                                'Prise en compte' => 'Prise en compte',
+                                                '2' => 'Comptabilité',
+                                                '3' => 'Administration'
+                                            ]) }}
+                                        {!! Form::close() !!}
+                                        {{ $_SESSION['demandes_valid'][$j]->nomEtat }}
+                                    </td>
+                                    <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->created_at)) }}</td>
+                                    <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->updated_at)) }}</td>
+                                    <td></td>
+                                </tr>
+                            <?php } ?>
+                            </table>
+                <?php   } else { ?>
+                            <section id="demandes_utilisateur">
+                                <h4>Demandes utilisateurs :</h4><br />
+                                <p>Vous n'avez pas de demandes d'utilisateurs.</p>
+                            </section>
+                <?php   }
+                    }
+                } else { ?>
                     <table>
                         <caption>Liste des demandes spécifiques</caption>
                         <tr>
@@ -71,16 +157,16 @@
                             <th>Création</th>
                             <th>Dernière mise à jour</th>
                         </tr>
-                    <?php for ($i=0; $i < $_SESSION['demandes']->count(); $i++) { ?>
+                    <?php for ($k=0; $k < $_SESSION['demandes']->count(); $k++) { ?>
                         <tr>
-                            <td>{{ $_SESSION['demandes'][$i]->nom }}</td>
-                            <td>{{ $_SESSION['demandes'][$i]->prenom }}</td>
-                            <td>{{ $_SESSION['demandes'][$i]->nomDemande }}</td>
-                            <td>{{ $_SESSION['demandes'][$i]->quantiteDemande }}</td>
-                            <td>{{ $_SESSION['demandes'][$i]->lienProduit }}</td>
-                            <td>{{ $_SESSION['demandes'][$i]->nomEtat }}</td>
-                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$i]->created_at)) }}</td>
-                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$i]->updated_at)) }}</td>
+                            <td>{{ $_SESSION['demandes'][$k]->nom }}</td>
+                            <td>{{ $_SESSION['demandes'][$k]->prenom }}</td>
+                            <td>{{ $_SESSION['demandes'][$k]->nomDemande }}</td>
+                            <td>{{ $_SESSION['demandes'][$k]->quantiteDemande }}</td>
+                            <td class="lien_produit">{{ $_SESSION['demandes'][$k]->lienProduit }}</td>
+                            <td>{{ $_SESSION['demandes'][$k]->nomEtat }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->created_at)) }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->updated_at)) }}</td>
                         </tr>
                     <?php } ?>
                     </table>
