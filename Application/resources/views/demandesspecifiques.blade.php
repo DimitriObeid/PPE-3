@@ -59,7 +59,15 @@
                     $confirm = $vrai ?? false;
                     if ($confirm) { ?>
                         <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande à bien été envoyé</p><br />
-                    <?php } ?>
+                    <?php header('Refresh: 5; url=demandesspecifiques');
+                    }
+
+                    $envoye = $envoyer ?? false;
+                    if ($envoye) { ?>
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise à jour à bien été prise en compte</p><br />
+                        <?php header('Refresh: 5; url=demandesspecifiques');
+                    } ?>
+
                     <h4>Effectuer une demande spécifique :</h4><br />
                     {!! Form::open(['url' => 'creationdemande']) !!}
                     {{ Form::label('nom_demande', 'Nom de la demande :') }}
@@ -73,7 +81,7 @@
 
                     <?php if (isset($_SESSION['demandes_pers'][0])) { ?>
                         <table id="demandes_pers">
-                            <caption class="titre_demande">Liste des demandes spécifiques :</caption>
+                            <caption class="titre_demande">Liste des demandes effectués :</caption>
                             <tr>
                                 <th>Nom de la demande</th>
                                 <th>Quantité demandé</th>
@@ -112,7 +120,7 @@
                                     <th>État</th>
                                     <th>Création</th>
                                     <th>Dernière mise à jour</th>
-                                    <th></th>
+                                    <th> </th>
                                 </tr>
                             <?php for ($j=0; $j < $_SESSION['demandes_valid']->count(); $j++) { ?>
                                 <tr>
@@ -123,17 +131,20 @@
                                     <td class="lien_produit">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</td>
                                     <td>
                                         {!! Form::open(['url' => 'majetat']) !!}
+                                        {{ Form::hidden('id', $_SESSION['demandes_valid'][$j]->id) }}
                                         {{ Form::select('etat',[
                                                 'Prise en compte' => 'Prise en compte',
-                                                '2' => 'Comptabilité',
-                                                '3' => 'Administration'
-                                            ]) }}
-                                        {!! Form::close() !!}
-                                        {{ $_SESSION['demandes_valid'][$j]->nomEtat }}
+                                                'Validé' => 'Validé',
+                                                'En cours' => 'En cours',
+                                                'Terminer' => 'Terminer'
+                                            ], $_SESSION["demandes_valid"][$j]->nomEtat) }}
                                     </td>
                                     <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->created_at)) }}</td>
                                     <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->updated_at)) }}</td>
-                                    <td></td>
+                                    <td>
+                                        {{ Form::submit('Envoyer') }}
+                                        {!! Form::close() !!}
+                                    </td>
                                 </tr>
                             <?php } ?>
                             </table>
@@ -145,7 +156,7 @@
                 <?php   }
                     }
                 } else { ?>
-                    <table>
+                    <table id="demandes_list">
                         <caption>Liste des demandes spécifiques</caption>
                         <tr>
                             <th>Nom</th>

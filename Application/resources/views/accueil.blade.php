@@ -55,6 +55,11 @@
         </header>
         <section id="corps">
             <?php
+                $refresh = $connexion ?? false;
+                if ($refresh) {
+                    header('Refresh: 0; url=accueil');
+                }
+
                 if ($_SESSION['categorie'] != 'Administrateur') {
                     if ($_SESSION['message'] != '') { ?>
                         <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
@@ -87,15 +92,19 @@
             <?php }
                 else {
                     $confirm = $vrai ?? false;
-                    if ($confirm)
-                    { ?>
+                    if ($confirm) { ?>
                         <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre message à bien été envoyé</p><br />
-                    <?php }
+                    <?php header('Refresh: 5; url=accueil');
+                    }
 
                     $confirmSuppr = $suppr ?? false;
-                    if ($confirmSuppr)
-                    { ?>
+                    if ($confirmSuppr) { ?>
                         <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le message à bien été supprimé</p><br />
+                    <?php header('Refresh: 5; url=accueil');
+                    }
+                    
+                    if ($_SESSION['message'] != '') { ?>
+                        <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
                     <?php } ?>
 
                     <h4>Envoyer un message à un utilisateur :</h4>

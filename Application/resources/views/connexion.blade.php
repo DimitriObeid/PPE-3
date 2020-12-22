@@ -13,6 +13,11 @@
             <h1>Connexion</h1>
         </header>
         <?php
+            $refresh = $deconnexion ?? false;
+            if ($refresh) {
+                header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+            }
+
             if (isset($erreur))
             {
                 if ($erreur == 'mail')

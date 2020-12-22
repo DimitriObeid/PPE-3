@@ -44,3 +44,5 @@ Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'affic
 Route::get('/creationdemande', [DemandesSpecifiquesController::class, 'afficher']);
 
 Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);
+
+Route::post('/majetat', [DemandesSpecifiquesController::class, 'majetat']);

@@ -17,11 +17,11 @@ class DemandesSpecifiquesController extends Controller
     {
         session_start();
 
-        $demandes = DemandesSpecifiques::join('etat', 'demandes_specifiques.idEtat', 'etat.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom')->orderby('demandes_specifiques.id', 'asc')->get();
+        $demandes = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom')->orderby('demandes_specifiques.id', 'asc')->get();
 
-        $demandes_pers = DemandesSpecifiques::join('etat', 'demandes_specifiques.idEtat', 'etat.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->orderby('demandes_specifiques.id', 'asc')->get();
+        $demandes_pers = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->orderby('demandes_specifiques.id', 'asc')->get();
 
-        $demandes_valid = DemandesSpecifiques::join('etat', 'demandes_specifiques.idEtat', 'etat.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('service', 'personnels.idService', 'service.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
+        $demandes_valid = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('service', 'personnels.idService', 'service.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
 
         $_SESSION['demandes'] = $demandes;
         $_SESSION['demandes_pers'] = $demandes_pers;
@@ -52,12 +52,29 @@ class DemandesSpecifiquesController extends Controller
 
         $DemandesSpecifiques->save();
 
-        $demandes_pers = DemandesSpecifiques::join('etat', 'demandes_specifiques.idEtat', 'etat.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->orderby('demandes_specifiques.id', 'asc')->get();
+        $demandes_pers = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->orderby('demandes_specifiques.id', 'asc')->get();
 
         $_SESSION['demandes_pers'] = $demandes_pers;
 
         $vrai = true;
 
         return view('demandesspecifiques', ['vrai'=>$vrai]);
+    }
+
+    public function majetat(Request $request)
+    {
+        session_start();
+
+        $idetat = Etat::select('id')->where('nomEtat', $request->etat)->get();
+
+        $DemandesSpecifiques = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->where('demandes_specifiques.id', $request->id)->update(['demandes_specifiques.idEtat' => $idetat[0]->id]);
+
+        $demandes_valid = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('service', 'personnels.idService', 'service.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
+
+        $_SESSION['demandes_valid'] = $demandes_valid;
+
+        $envoyer = true;
+
+        return view('demandesspecifiques', ['envoyer'=>$envoyer]);
     }
 }
