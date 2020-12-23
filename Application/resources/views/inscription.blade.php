@@ -39,6 +39,7 @@
             ]) }}
         <br>
         {{ Form::submit('Créer',['class'=>'submit']) }}
+        <button type="button" name="button" onclick="window.location.href='http://localhost/PPE-3/Application/server.php'">Retour à l'accueil</button>
         {!! Form::close() !!}
     </body>
 </html>

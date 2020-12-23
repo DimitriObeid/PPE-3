@@ -23,10 +23,19 @@
                 if ($erreur == 'mail')
                 {
                     echo '<p id="erreur"><img id="warning" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de warning" /> L\'adresse mail est incorrect !</p>';
+                    header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
                 }
                 elseif ($erreur == 'mdp')
                 {
                     echo '<p id="erreur"><img id="warning" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de warning" /> Le mot de passe est incorrect !</p>';
+                    header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
+                }
+            }
+
+            if ($errors->any()) {
+                echo $errors;
+                foreach ($errors->all() as $key => $value) {
+                    echo $key.$value;
                 }
             }
         ?>

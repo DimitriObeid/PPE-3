@@ -94,7 +94,7 @@
                             <tr>
                                 <td>{{ $_SESSION['demandes_pers'][$i]->nomDemande }}</td>
                                 <td>{{ $_SESSION['demandes_pers'][$i]->quantiteDemande }}</td>
-                                <td class="lien_produit">{{ $_SESSION['demandes_pers'][$i]->lienProduit }}</td>
+                                <td class="lien_produit"><a href="{{ $_SESSION['demandes_pers'][$i]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_pers'][$i]->lienProduit }}</a></td>
                                 <td>{{ $_SESSION['demandes_pers'][$i]->nomEtat }}</td>
                                 <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$i]->created_at)) }}</td>
                                 <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$i]->updated_at)) }}</td>
@@ -128,7 +128,7 @@
                                     <td>{{ $_SESSION['demandes_valid'][$j]->prenom }}</td>
                                     <td>{{ $_SESSION['demandes_valid'][$j]->nomDemande }}</td>
                                     <td>{{ $_SESSION['demandes_valid'][$j]->quantiteDemande }}</td>
-                                    <td class="lien_produit">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</td>
+                                    <td class="lien_produit"><a href="{{ $_SESSION['demandes_valid'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</a></td>
                                     <td>
                                         {!! Form::open(['url' => 'majetat']) !!}
                                         {{ Form::hidden('id', $_SESSION['demandes_valid'][$j]->id) }}
@@ -174,7 +174,7 @@
                             <td>{{ $_SESSION['demandes'][$k]->prenom }}</td>
                             <td>{{ $_SESSION['demandes'][$k]->nomDemande }}</td>
                             <td>{{ $_SESSION['demandes'][$k]->quantiteDemande }}</td>
-                            <td class="lien_produit">{{ $_SESSION['demandes'][$k]->lienProduit }}</td>
+                            <td class="lien_produit"><a href="{{ $_SESSION['demandes'][$k]->lienProduit }}" target="_blank">{{ $_SESSION['demandes'][$k]->lienProduit }}</a></td>
                             <td>{{ $_SESSION['demandes'][$k]->nomEtat }}</td>
                             <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->created_at)) }}</td>
                             <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->updated_at)) }}</td>
