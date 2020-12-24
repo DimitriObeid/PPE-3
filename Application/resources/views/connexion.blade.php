@@ -18,36 +18,24 @@
                 header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
             }
 
-            if (isset($erreur))
-            {
-                if ($erreur == 'mail')
-                {
-                    echo '<p id="erreur"><img id="warning" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de warning" /> L\'adresse mail est incorrect !</p>';
-                    header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
-                }
-                elseif ($erreur == 'mdp')
-                {
-                    echo '<p id="erreur"><img id="warning" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de warning" /> Le mot de passe est incorrect !</p>';
-                    header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
-                }
-            }
-
-            if ($errors->any()) {
-                echo $errors;
-                foreach ($errors->all() as $key => $value) {
-                    echo $key.$value;
-                }
+            if (isset($erreur)) {
+                if ($erreur == 'mail') { ?>
+                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> L\'adresse mail est incorrect !</p>
+                <?php }
+                elseif ($erreur == 'mdp') { ?>
+                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Le mot de passe est incorrect !</p>
+                <?php }
             }
         ?>
         {!! Form::open(['url' => 'connexion']) !!}
         {{ Form::label('email', 'Adresse mail') }}
-        {{ Form::email('email', $value = null, $attributes = []) }}
+        {{ Form::email('email', $value = null, ['required'=>'true']) }}
         <br>
         {{ Form::label('mdp', 'Mot de passe') }}
-        {{ Form::password('mdp') }}
+        {{ Form::password('mdp', ['required'=>'true']) }}
         <br>
-        {{ Form::submit('Se connecter',['class'=>'submit']) }}
-        {{ Form::button('Créer un compte',['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php/inscription"']) }}
+        {{ Form::submit('Se connecter', ['class'=>'submit']) }}
+        {{ Form::button('Créer un compte', ['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php/inscription"']) }}
         {!! Form::close() !!}
     </body>
 </html>

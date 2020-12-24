@@ -59,6 +59,11 @@ nav li
     background: #910000;
 }
 
+#personnalisation
+{
+    padding-top: 9%;
+}
+
 header
 {
     background-color: #00062e;
@@ -134,7 +139,7 @@ h4
 
 #nom_demande, #quantite_demande, #lien_produit
 {
-    margin-right: 5.4%;
+    margin-right: 5%;
 }
 
 #demandes_pers

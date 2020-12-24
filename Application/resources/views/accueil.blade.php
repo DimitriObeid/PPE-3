@@ -1,3 +1,8 @@
+<?php
+    if (!isset($_SESSION['categorie'])) {
+        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" />
     <head>
@@ -21,15 +26,15 @@
                 <li><a class="menu" href="demandesspecifiques">DEMANDE SPÉCIFIQUE</a></li>
                 <li><a class="menu" href="">SUIVI</a></li>
                 <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
-                    <li><a class="menu" href="">PERSONNALISATION DU COMPTE</a></li>
+                    <li><a class="menu" id="personnalisation" href="">PERSONNALISATION DU COMPTE</a></li>
                 <?php } ?>
             </ul>
         </nav>
         <header>
             <h1>Accueil</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
-                <input id="recherche" type="search" name="recherche" placeholder="Recherche" />
-                <input type="image" id="envoyer" name="envoyer" src="http://localhost/PPE-3/Application/storage/app/public/icon-search.png" alt="Icone de loupe" />
+            {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
+            {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
             {!! Form::close() !!}
             <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
             <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
@@ -38,7 +43,7 @@
                     <caption>Commandes en cours</caption>
                     <tr>
                         <th class="tabl_comm">Nom</th>
-                        <th class="tabl_comm">Quantité demandé</th>
+                        <th class="tabl_comm">Quantitée demandée</th>
                         <th class="tabl_comm">État</th>
                         <th class="tabl_comm">Dernière mise à jour</th>
                     </tr>
@@ -70,8 +75,8 @@
                             <th>Photo</th>
                             <th>Nom</th>
                             <th>Description</th>
-                            <th>Quantité disponible</th>
-                            <th>Quantité demander</th>
+                            <th>Quantitée disponible</th>
+                            <th>Quantitée demandée</th>
                         </tr>
                         <?php for ($i=0; $i < 6; $i++) { ?>
                                 <tr>
@@ -81,7 +86,7 @@
                                     <td>{{ $_SESSION['fournitures'][$i]->quantiteDisponible }}</td>
                                     <td>
                                         {!! Form::open(['url' => 'commander']) !!}
-                                            <input type="number" name="quantite_disponible" value="0" min="0" max="{{ $_SESSION['fournitures'][$i]->quantiteDisponible }}" />
+                                        {{ Form::number('quantite_disponible', '1', ['min'=>'1', 'max'=>$_SESSION['fournitures'][$i]->quantiteDisponible]) }}
                                         {{ Form::submit('Commander') }}
                                         {!! Form::close() !!}
                                     </td>
@@ -102,14 +107,14 @@
                         <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le message à bien été supprimé</p><br />
                     <?php header('Refresh: 5; url=accueil');
                     }
-                    
+
                     if ($_SESSION['message'] != '') { ?>
                         <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
                     <?php } ?>
 
                     <h4>Envoyer un message à un utilisateur :</h4>
                     {!! Form::open(['url' => 'message']) !!}
-                    {{ Form::textarea('message') }}
+                    {{ Form::textarea('message', $value = null, ['required'=>'true']) }}
                     {{ Form::label('mail', 'Utilisateur :', ['id'=>'label_select']) }}
                         <select name="mail">
                             <?php for ($j=0; $j < $_SESSION['personnels']->count(); $j++) {
@@ -140,7 +145,7 @@
                                 {{ $_SESSION['personnels'][$k]->message }}
                                 <?php if ($_SESSION['personnels'][$k]->message != '') { ?>
                                     {!! Form::open(['url' => 'supprimer']) !!}
-                                    <?php echo '<input type="hidden" name="mail" value='.$_SESSION['personnels'][$k]->mail.'>' ?>
+                                    {{ Form::hidden('mail', $_SESSION['personnels'][$k]->mail) }}
                                     {{ Form::submit('Supprimer le message', ['id'=>'supprimer_message']) }}
                                     {!! Form::close() !!}
                                 <?php } ?>
@@ -154,7 +159,7 @@
                             <th>Nom</th>
                             <th>Prénom</th>
                             <th>Nom de la commande</th>
-                            <th>Quantité demandé</th>
+                            <th>Quantitée demandée</th>
                             <th>État</th>
                             <th>Création</th>
                             <th>Dernière mise à jour</th>
@@ -179,7 +184,7 @@
                     <caption>Historique des commandes</caption>
                     <tr>
                         <th class="tabl_comm">Nom</th>
-                        <th class="tabl_comm">Quantité demandé</th>
+                        <th class="tabl_comm">Quantitée demandée</th>
                         <th class="tabl_comm">État</th>
                         <th class="tabl_comm">Dernière mise à jour</th>
                     </tr>

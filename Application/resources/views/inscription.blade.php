@@ -14,16 +14,16 @@
         </header>
         {!! Form::open(['url' => 'inscription']) !!}
         {{ Form::label('nom', 'Nom') }}
-        {{ Form::text('nom') }}
+        {{ Form::text('nom', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}
         <br>
         {{ Form::label('prenom', 'Prénom') }}
-        {{ Form::text('prenom') }}
+        {{ Form::text('prenom', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}
         <br>
         {{ Form::label('email', 'Adresse mail') }}
-        {{ Form::email('email', $value = null, $attributes = []) }}
+        {{ Form::email('email', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}
         <br>
         {{ Form::label('mdp', 'Mot de passe') }}
-        {{ Form::password('mdp') }}
+        {{ Form::password('mdp', ['required'=>'true']) }}
         <br>
         {{ Form::label('categorie', 'Catégorie') }}
         {{ Form::select('categorie',[
@@ -38,8 +38,8 @@
                 '3' => 'Administration'
             ]) }}
         <br>
-        {{ Form::submit('Créer',['class'=>'submit']) }}
-        <button type="button" name="button" onclick="window.location.href='http://localhost/PPE-3/Application/server.php'">Retour à l'accueil</button>
+        {{ Form::submit('Créer un compte', ['class'=>'submit']) }}
+        {{ Form::button('Retour à la page de connexion', ['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php"']) }}
         {!! Form::close() !!}
     </body>
 </html>

@@ -58,6 +58,11 @@ nav li
     background: #910000;
 }
 
+#personnalisation
+{
+    padding-top: 9%;
+}
+
 header
 {
     background-color: #00062e;
@@ -169,7 +174,17 @@ th, td
     font-weight: bold;
 }
 
-.img_confirm
+.erreur
+{
+    background: #ee0000;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.3%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.img_confirm, .img_erreur
 {
     width: 1.1%;
     position: relative;

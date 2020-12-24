@@ -28,14 +28,14 @@ body
     background-color: #e9e5dc;
 }
 
-#warning
+.img_erreur
 {
     width: 3.5%;
     position: relative;
     top: 2px;
 }
 
-#erreur
+.erreur
 {
     background: #ee0000;
     border-radius: 5px;

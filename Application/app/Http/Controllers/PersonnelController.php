@@ -46,7 +46,7 @@ class PersonnelController extends Controller
     {
         $validatedData = $request->validate([
         'email' => 'required|email',
-        'mdp' => 'required|max:50',
+        'mdp' => 'required',
         ]);
 
         $Personnel = Personnel::join('service', 'personnels.idService', 'service.id')->join('categorie', 'personnels.idCategorie', 'categorie.id')->where('mail', $request->email)->get();
@@ -120,6 +120,10 @@ class PersonnelController extends Controller
 
     public function message(Request $request)
     {
+        $validatedData = $request->validate([
+            'message' => 'required',
+        ]);
+
         $Personnel = Personnel::where('mail', $request->mail)->update(['message' => $request->message]);
 
         session_start();
@@ -153,5 +157,16 @@ class PersonnelController extends Controller
 
         return view('accueil', ['suppr'=>$suppr]);
 
+    }
+
+    public function rechercher(Request $request)
+    {
+        $validatedData = $request->validate([
+            'rechercher' => 'required',
+        ]);
+
+        session_start();
+
+        return view('accueil');
     }
 }

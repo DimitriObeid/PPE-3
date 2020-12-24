@@ -37,16 +37,14 @@ class DemandesSpecifiquesController extends Controller
         $id_personnel = Personnel::where('mail', $_SESSION['mail'])->select('id')->get();
 
         $validatedData = $request->validate([
-        'nom_demande' => 'required|max:50',
-        'quantite_demande' => 'required',
-        'lien_produit' => 'max:1000',
+        'nom_demande' => 'required',
         ]);
 
         $DemandesSpecifiques = new DemandesSpecifiques;
 
         $DemandesSpecifiques->nomDemande = $request->nom_demande;
         $DemandesSpecifiques->quantiteDemande = $request->quantite_demande;
-        $DemandesSpecifiques->lienProduit = $request->lien_produit ?? '';
+        $DemandesSpecifiques->lienProduit = $request->lien_produit ?? 'Aucun lien fourni';
         $DemandesSpecifiques->idEtat = '1';
         $DemandesSpecifiques->idPersonnel = $id_personnel[0]->id;
 
