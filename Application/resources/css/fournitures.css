@@ -102,7 +102,7 @@ h1
 
 #nom_prenom
 {
-    margin-left: 20%;
+    margin-left: 19%;
 }
 
 #deconnexion
@@ -123,6 +123,8 @@ h1
 body
 {
     background-color: #e9e5dc;
+    position: relative;
+    min-height: 950px;
 }
 
 #corps
@@ -132,20 +134,20 @@ body
     padding: 2%;
 }
 
-#message
+#retour
 {
-    background: #dd8500;
-    color: #ffffff;
-    border-radius: 5px;
-    padding: 1%;
-    width: 25%;
-    margin: 0% 37.5% 3% 37.5%;
+    text-decoration: none;
+    color: #dd8500;
 }
 
-h4
+#resultat_recherche
 {
-    text-align: center;
-    margin-bottom: 1%;
+    margin-bottom: 6%;
+}
+
+#aucun_resultat
+{
+    margin-bottom: 42.4%;
 }
 
 .photo_fournitures
@@ -157,12 +159,18 @@ table
 {
     width: 100%;
     text-align: center;
+    margin-bottom: 5%;
 }
 
 th, td
 {
     border-bottom: 1px #363636 solid;
     padding: 1% 0% 1% 0%;
+}
+
+#ajout_fourniture
+{
+    margin-top: 5%;
 }
 
 .confirm
@@ -175,37 +183,21 @@ th, td
     font-weight: bold;
 }
 
-.img_confirm
+.erreur
+{
+    background: #ee0000;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.3%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.img_confirm, .img_erreur
 {
     width: 1.1%;
     position: relative;
     top: 2px;
-}
-
-textarea
-{
-    background: #dd8500;
-    color: #ffffff;
-    margin: 0% 32.7% 1% 32.7%;
-    padding: 1%;
-    border: none;
-    border-radius: 5px;
-    resize: none;
-}
-
-#label_select
-{
-    margin-left: 38%;
-}
-
-select
-{
-    margin-right: 2%;
-}
-
-#liste_comptes
-{
-    margin: 5% 0% 5% 0%;
 }
 
 caption
@@ -214,25 +206,17 @@ caption
     font-weight: bold;
 }
 
-#col_message
-{
-    width: 20%;
-}
-
-#supprimer_message
-{
-    margin-top: 3%;
-}
-
 footer
 {
     display: flex;
     flex-wrap: wrap;
     background: #00062e;
     color: #c2c2c2;
-    width: auto;
+    width: 83%;
     margin-left: 15%;
     padding: 1%;
+    position: absolute;
+    bottom: 0;
 }
 
 #service, #categorie

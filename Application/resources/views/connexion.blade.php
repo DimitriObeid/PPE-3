@@ -16,11 +16,19 @@
             $refresh = $deconnexion ?? false;
             if ($refresh) {
                 header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+                exit;
+            }
+
+            if (isset($_GET['inactiviteprolonge'])) {
+                if ($_GET['inactiviteprolonge']) { ?>
+                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Déconnexion à cause d'une innactivée prolongée !</p>
+                <?php header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
+                }
             }
 
             if (isset($erreur)) {
                 if ($erreur == 'mail') { ?>
-                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> L\'adresse mail est incorrect !</p>
+                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> L'adresse mail est incorrect !</p>
                 <?php }
                 elseif ($erreur == 'mdp') { ?>
                     <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Le mot de passe est incorrect !</p>

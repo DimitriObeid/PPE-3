@@ -21,10 +21,12 @@ use App\Http\Controllers\ServiceController;
 |
 */
 
+// Page d'accueil
 Route::get('/', function () {
     return view('connexion');
 });
 
+// Gestion du personnel
 Route::post('/connexion', [PersonnelController::class, 'connexion']);
 
 Route::get('/inscription', [PersonnelController::class, 'creer']);
@@ -33,18 +35,25 @@ Route::post('/inscription', [PersonnelController::class, 'verif_creer']);
 
 Route::get('/deconnexion', [PersonnelController::class, 'deconnexion']);
 
-Route::get('/accueil', [PersonnelController::class, 'accueil']);
+Route::get('/accueil', [PersonnelController::class, 'afficher']);
 
 Route::post('/message', [PersonnelController::class, 'message']);
 
 Route::post('/supprimer', [PersonnelController::class, 'supprimer']);
 
-Route::post('/rechercher', [PersonnelController::class, 'rechercher']);
+// Gestion des fournitures
+Route::get('/fournitures', [FournituresController::class, 'afficher']);
 
+Route::post('/rechercher', [FournituresController::class, 'rechercher']);
+
+Route::post('/creationfourniture', [FournituresController::class, 'creationfourniture']);
+
+Route::post('/majquantite', [FournituresController::class, 'majquantite']);
+
+// Gestion des demandes spécifiques
 Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'afficher']);
-
-Route::get('/creationdemande', [DemandesSpecifiquesController::class, 'afficher']);
 
 Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);
 
-Route::post('/majetat', [DemandesSpecifiquesController::class, 'majetat']);
+// Gestion des changements d'états
+Route::post('/majetatdemande', [EtatController::class, 'majetatdemande']);

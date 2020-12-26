@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DemandesSpecifiques;
 use App\Models\Personnel;
-use App\Models\Fournitures;
-use App\Models\Categorie;
-use App\Models\Commandes;
-use App\Models\Etat;
-use App\Models\Service;
 
 class DemandesSpecifiquesController extends Controller
 {
     public function afficher()
     {
         session_start();
+
+        if (!isset($_SESSION['mail'])) {
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            exit;
+        }
 
         $demandes = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom')->orderby('demandes_specifiques.id', 'asc')->get();
 
@@ -57,22 +57,5 @@ class DemandesSpecifiquesController extends Controller
         $vrai = true;
 
         return view('demandesspecifiques', ['vrai'=>$vrai]);
-    }
-
-    public function majetat(Request $request)
-    {
-        session_start();
-
-        $idetat = Etat::select('id')->where('nomEtat', $request->etat)->get();
-
-        $DemandesSpecifiques = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->where('demandes_specifiques.id', $request->id)->update(['demandes_specifiques.idEtat' => $idetat[0]->id]);
-
-        $demandes_valid = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('service', 'personnels.idService', 'service.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
-
-        $_SESSION['demandes_valid'] = $demandes_valid;
-
-        $envoyer = true;
-
-        return view('demandesspecifiques', ['envoyer'=>$envoyer]);
     }
 }

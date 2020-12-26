@@ -20,13 +20,6 @@ class PersonnelController extends Controller
 
     public function verif_creer(Request $request)
     {
-        $validatedData = $request->validate([
-        'nom' => 'required|max:50',
-        'prenom' => 'required|max:50',
-        'email' => 'required|email',
-        'mdp' => 'required|max:50',
-        ]);
-
         $Personnel = new Personnel;
 
         $Personnel->nom = $request->nom;
@@ -44,11 +37,6 @@ class PersonnelController extends Controller
 
     public function connexion(Request $request)
     {
-        $validatedData = $request->validate([
-        'email' => 'required|email',
-        'mdp' => 'required',
-        ]);
-
         $Personnel = Personnel::join('service', 'personnels.idService', 'service.id')->join('categorie', 'personnels.idCategorie', 'categorie.id')->where('mail', $request->email)->get();
 
         $test = $Personnel->last();
@@ -111,7 +99,7 @@ class PersonnelController extends Controller
         return view('connexion', ['deconnexion'=>$deconnexion]);
     }
 
-    public function accueil()
+    public function afficher()
     {
         session_start();
 
@@ -120,10 +108,6 @@ class PersonnelController extends Controller
 
     public function message(Request $request)
     {
-        $validatedData = $request->validate([
-            'message' => 'required',
-        ]);
-
         $Personnel = Personnel::where('mail', $request->mail)->update(['message' => $request->message]);
 
         session_start();
@@ -157,16 +141,5 @@ class PersonnelController extends Controller
 
         return view('accueil', ['suppr'=>$suppr]);
 
-    }
-
-    public function rechercher(Request $request)
-    {
-        $validatedData = $request->validate([
-            'rechercher' => 'required',
-        ]);
-
-        session_start();
-
-        return view('accueil');
     }
 }

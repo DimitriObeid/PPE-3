@@ -1,6 +1,7 @@
 <?php
-    if (!isset($_SESSION['categorie'])) {
-        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+    if (!isset($_SESSION['mail'])) {
+        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+        exit;
     }
 ?>
 <!DOCTYPE html>
@@ -18,7 +19,7 @@
                 <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
                 <li><a class="menu" href="">DÉPARTEMENTS</a></li>
-                <li><a class="menu" href="">FOURNITURES</a></li>
+                <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
                     <li><a class="menu" href="">MÉSSAGERIE</a></li>
                     <li><a class="menu" href="">STATISTIQUE</a></li>
@@ -63,6 +64,7 @@
                 $refresh = $connexion ?? false;
                 if ($refresh) {
                     header('Refresh: 0; url=accueil');
+                    exit;
                 }
 
                 if ($_SESSION['categorie'] != 'Administrateur') {
@@ -71,6 +73,7 @@
                     <?php } ?>
 
                     <table>
+                        <caption>Liste de 6 fournitures :</caption>
                         <tr>
                             <th>Photo</th>
                             <th>Nom</th>

@@ -1,8 +1,3 @@
-<?php
-    if (!isset($_SESSION['categorie'])) {
-        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
-    }
-?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" />
     <head>
@@ -18,7 +13,7 @@
                 <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
                 <li><a class="menu" href="">DÉPARTEMENTS</a></li>
-                <li><a class="menu" href="">FOURNITURES</a></li>
+                <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
                     <li><a class="menu" href="">MÉSSAGERIE</a></li>
                     <li><a class="menu" href="">STATISTIQUE</a></li>
@@ -76,7 +71,7 @@
                     <h4>Effectuer une demande spécifique :</h4><br />
                     {!! Form::open(['url' => 'creationdemande']) !!}
                     {{ Form::label('nom_demande', 'Nom de la demande :') }}
-                    {{ Form::text('nom_demande', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau', 'required'=>'true']) }}
+                    {{ Form::text('nom_demande', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Lampe de projecteur', 'required'=>'true']) }}
                     {{ Form::label('quantite_demande', 'Quantitée demandée :') }}
                     {{ Form::number('quantite_demande', '1', ['min'=>'1', 'max'=>'50']) }}
                     {{ Form::label('lien_produit', 'Lien vers le produit :') }}
@@ -147,7 +142,7 @@
                                         } ?>
                                     </td>
                                     <td>
-                                        {!! Form::open(['url' => 'majetat']) !!}
+                                        {!! Form::open(['url' => 'majetatdemande']) !!}
                                         {{ Form::hidden('id', $_SESSION['demandes_valid'][$j]->id) }}
                                         {{ Form::select('etat',[
                                                 'Prise en compte' => 'Prise en compte',
