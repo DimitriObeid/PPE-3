@@ -31,8 +31,10 @@
             {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
             {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
             {!! Form::close() !!}
-            <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
-            <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            <div id="nom_deconnexion">
+                <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
+                <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            </div>
             <?php if (isset($_SESSION['commandes'][0])) { ?>
                 <table id="commandes_cours">
                     <caption>Commandes en cours</caption>
@@ -64,14 +66,27 @@
                                 <th>Nom</th>
                                 <th>Description</th>
                                 <th>Quantitée disponible</th>
+                            <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                                 <th>Quantitée demandée</th>
+                            <?php } ?>
                             </tr>
                         <?php for ($i=0; $i < $_SESSION['recherche']->count(); $i++) { ?>
                             <tr>
                                 <td><img class="photo_fournitures" src="http://localhost/PPE-3/Application/storage/app/public/{{ $_SESSION['recherche'][$i]->nomPhoto }}.jpg" /></td>
                                 <td>{{ $_SESSION['recherche'][$i]->nomFournitures }}</td>
                                 <td>{{ $_SESSION['recherche'][$i]->descriptionFournitures }}</td>
-                                <td>{{ $_SESSION['recherche'][$i]->quantiteDisponible }}</td>
+                                <td>
+                                <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                                    {!! Form::open(['url' => 'majquantite']) !!}
+                                    {{ Form::hidden('id', $_SESSION['recherche'][$i]->id) }}
+                                    {{ Form::number('quantite_disponible', $_SESSION['recherche'][$i]->quantiteDisponible, ['min'=>'0', 'max'=>'100']) }}
+                                    {{ Form::submit('Mettre à jour') }}
+                                    {!! Form::close() !!}
+                                <?php } else { ?>
+                                    {{ $_SESSION['recherche'][$i]->quantiteDisponible }}
+                                <?php } ?>
+                                </td>
+                            <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                                 <td>
                                     {!! Form::open(['url' => 'commander']) !!}
                                     {{ Form::hidden('id', $_SESSION['recherche'][$i]->id) }}
@@ -79,11 +94,12 @@
                                     {{ Form::submit('Commander') }}
                                     {!! Form::close() !!}
                                 </td>
+                            <?php } ?>
                             </tr>
                         <?php } ?>
                         </table>
                     <?php } else { ?>
-                        <p id="aucun_resultat">Aucun résultat trouvé pour votre recherche.</p>
+                        <p>Aucun résultat trouvé pour votre recherche.</p>
                     <?php }
                 } else {
                     $valide = $valider ?? false;
@@ -94,13 +110,19 @@
 
                     $fichiertropgros = $tropgros ?? false;
                     if ($fichiertropgros) { ?>
-                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de la photo est trop volumineux !</p><br />
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de la photo est trop volumineux ! (Max : 500Mo)</p><br />
                         <?php header('Refresh: 5; url=fournitures');
                     }
 
                     $formatinvalide = $invalide ?? false;
                     if ($formatinvalide) { ?>
                         <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le format de la photo n'est pas valide !</p><br />
+                        <?php header('Refresh: 5; url=fournitures');
+                    }
+
+                    $creation = $cree ?? false;
+                    if ($creation) { ?>
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> L'article a bien été créé</p><br />
                         <?php header('Refresh: 5; url=fournitures');
                     }
 
@@ -118,7 +140,7 @@
                                     {!! Form::open(['url' => 'creationfourniture', 'files' => true]) !!}
                                     {{ Form::file('photo_fournitures', ['required'=>'true']) }}
                                 </td>
-                                <td>{{ Form::text('nom_fourniture', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau Mapped', 'required'=>'true']) }}</td>
+                                <td>{{ Form::text('nom_fourniture', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau Maped', 'required'=>'true']) }}</td>
                                 <td>{{ Form::text('description_fourniture', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}</td>
                                 <td>
                                     {{ Form::number('quantite_disponible', '1', ['min'=>'1', 'max'=>'100']) }}
@@ -129,8 +151,8 @@
                         </table>
                     <?php } ?>
 
-                    <table>
-                        <caption id="liste_fourniture">Liste des fournitures :</caption>
+                    <table id="liste_fourniture">
+                        <caption>Liste des fournitures :</caption>
                         <tr>
                             <th>Photo</th>
                             <th>Nom</th>

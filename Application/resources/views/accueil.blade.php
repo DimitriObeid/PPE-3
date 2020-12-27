@@ -37,8 +37,10 @@
             {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
             {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
             {!! Form::close() !!}
-            <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
-            <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            <div id="nom_deconnexion">
+                <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
+                <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            </div>
             <?php if (isset($_SESSION['commandes'][0])) { ?>
                 <table id="commandes_cours">
                     <caption>Commandes en cours</caption>
@@ -72,7 +74,7 @@
                         <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
                     <?php } ?>
 
-                    <table>
+                    <table id="liste_fourniture">
                         <caption>Liste de 6 fournitures :</caption>
                         <tr>
                             <th>Photo</th>
@@ -156,7 +158,7 @@
                         </tr>
                     <?php } ?>
                     </table>
-                    <table>
+                    <table id="liste_commandes">
                         <caption>Commandes en cours</caption>
                         <tr>
                             <th>Nom</th>

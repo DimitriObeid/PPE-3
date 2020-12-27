@@ -66,6 +66,7 @@ nav li
 
 header
 {
+    position: relative;
     background-color: #00062e;
     color: #c2c2c2;
     display: flex;
@@ -100,14 +101,26 @@ h1
     right: 40px;
 }
 
+#nom_deconnexion
+{
+    position: absolute;
+    top: 45px;
+    right: 2%;
+    width: 25%;
+}
+
 #nom_prenom
 {
-    margin-left: 7%;
+    position: relative;
+    top: 4px;
+    float: left;
 }
 
 #deconnexion
 {
-    margin-left: 5%;
+    clear: both;
+    position: absolute;
+    right: 0;
 }
 
 #commandes_cours
@@ -123,6 +136,8 @@ h1
 body
 {
     background-color: #e9e5dc;
+    position: relative;
+    min-height: 950px;
 }
 
 #corps
@@ -142,13 +157,7 @@ h4
     margin-right: 5%;
 }
 
-#demandes_pers
-{
-    margin-top: 5%;
-    margin-bottom: 7.5%;
-}
-
-#demandes_spec
+#tab_ut
 {
     margin-top: 5%;
 }
@@ -156,18 +165,23 @@ h4
 #demandes_utilisateur
 {
     margin-top: 5%;
-    margin-bottom: 23.4%;
 }
 
-#tab_ut
+#demandes_pers
 {
     margin-top: 5%;
-    margin-bottom: 12.8%;
+    margin-bottom: 14%;
+}
+
+#demandes_spec
+{
+    margin-top: 5%;
+    margin-bottom: 14%;
 }
 
 #demandes_list
 {
-    margin-bottom: 31.7%;
+    margin-bottom: 14%;
 }
 
 .titre_demande
@@ -221,9 +235,11 @@ footer
     flex-wrap: wrap;
     background: #00062e;
     color: #c2c2c2;
-    width: auto;
+    width: 83%;
     margin-left: 15%;
     padding: 1%;
+    position: absolute;
+    bottom: 0;
 }
 
 #service, #categorie

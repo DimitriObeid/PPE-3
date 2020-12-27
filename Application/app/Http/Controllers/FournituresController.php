@@ -82,6 +82,21 @@ class FournituresController extends Controller
         imagejpeg($photo, $nomChemin);
 
         $Fournitures = new Fournitures;
+
+        $Fournitures->nomFournitures = $request->nom_fourniture;
+        $Fournitures->nomPhoto = $nomPhoto;
+        $Fournitures->descriptionFournitures = $request->description_fourniture;
+        $Fournitures->quantiteDisponible = $request->quantite_disponible;
+
+        $Fournitures->save();
+
+        $Fournitures = Fournitures::select('fournitures.*')->get();
+
+        $_SESSION['fournitures'] = $Fournitures;
+
+        $cree = true;
+
+        return view('fournitures', ['cree' => $cree]);
     }
 
     public function majquantite(Request $request)

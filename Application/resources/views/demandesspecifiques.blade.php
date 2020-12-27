@@ -31,8 +31,10 @@
             {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
             {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
             {!! Form::close() !!}
-            <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
-            <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            <div id="nom_deconnexion">
+                <p id="nom_prenom">{{ $_SESSION['prenom'] }} {{ $_SESSION['nom'] }}</p>
+                <button type="button" name="deconnexion" id="deconnexion" onclick="window.location.href='deconnexion'">Se déconnecter</button>
+            </div>
             <?php if (isset($_SESSION['commandes'][0])) { ?>
                 <table id="commandes_cours">
                     <caption>Commandes en cours</caption>
@@ -58,13 +60,13 @@
                 if ($_SESSION['categorie'] != 'Administrateur') {
                     $confirm = $vrai ?? false;
                     if ($confirm) { ?>
-                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande à bien été envoyée</p><br />
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande a bien été envoyée</p><br />
                     <?php header('Refresh: 5; url=demandesspecifiques');
                     }
 
                     $envoye = $envoyer ?? false;
                     if ($envoye) { ?>
-                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise à jour à bien été prise en compte</p><br />
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise a jour à bien été prise en compte</p><br />
                         <?php header('Refresh: 5; url=demandesspecifiques');
                     } ?>
 
@@ -79,7 +81,61 @@
                     {{ Form::submit('Envoyer la demande') }}
                     {!! Form::close() !!}
 
-                    <?php if (isset($_SESSION['demandes_pers'][0])) { ?>
+                    <?php if ($_SESSION['categorie'] == 'Valideur') {
+                        if (isset($_SESSION['demandes_valid'][0])) { ?>
+                            <table id="tab_ut">
+                                <caption class="titre_demande">Liste des demandes des utilisateurs</caption>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Nom de la demande</th>
+                                    <th>Quantitée demandée</th>
+                                    <th>Lien du produit</th>
+                                    <th>État</th>
+                                    <th>Création</th>
+                                    <th>Dernière mise à jour</th>
+                                    <th> </th>
+                                </tr>
+                                <?php for ($j=0; $j < $_SESSION['demandes_valid']->count(); $j++) { ?>
+                                    <tr>
+                                        <td>{{ $_SESSION['demandes_valid'][$j]->nom }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$j]->prenom }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$j]->nomDemande }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$j]->quantiteDemande }}</td>
+                                        <td class="lien_produit">
+                                            <?php if ($_SESSION['demandes_valid'][$j]->lienProduit != 'Aucun lien fourni') { ?>
+                                                <a href="{{ $_SESSION['demandes_valid'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</a>
+                                            <?php } else {
+                                                echo $_SESSION['demandes_valid'][$j]->lienProduit;
+                                            } ?>
+                                        </td>
+                                        <td>
+                                            {!! Form::open(['url' => 'majetatdemande']) !!}
+                                            {{ Form::hidden('id', $_SESSION['demandes_valid'][$j]->id) }}
+                                            {{ Form::select('etat',[
+                                            'Prise en compte' => 'Prise en compte',
+                                            'Validé' => 'Validé',
+                                            'En cours' => 'En cours',
+                                            'Terminer' => 'Terminer'
+                                            ], $_SESSION["demandes_valid"][$j]->nomEtat) }}
+                                        </td>
+                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->created_at)) }}</td>
+                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->updated_at)) }}</td>
+                                        <td>
+                                            {{ Form::submit('Envoyer') }}
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        <?php } else { ?>
+                            <section id="demandes_utilisateur">
+                                <h4>Demandes utilisateurs :</h4><br />
+                                <p>Vous n'avez pas de demandes d'utilisateurs.</p>
+                            </section>
+                        <?php   }
+                    }
+                    if (isset($_SESSION['demandes_pers'][0])) { ?>
                         <table id="demandes_pers">
                             <caption class="titre_demande">Liste des demandes effectuées :</caption>
                             <tr>
@@ -107,66 +163,12 @@
                             </tr>
                         <?php } ?>
                         </table>
-                <?php } else { ?>
-                    <section id="demandes_spec">
-                        <h4>Demandes spécifiques :</h4><br />
-                        <p>Vous n'avez pas encore effectué de demandes.</p>
-                    </section>
-                <?php }
-                    if ($_SESSION['categorie'] == 'Valideur') {
-                        if (isset($_SESSION['demandes_valid'][0])) { ?>
-                            <table id="tab_ut">
-                                <caption class="titre_demande">Liste des demandes des utilisateurs</caption>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Nom de la demande</th>
-                                    <th>Quantitée demandée</th>
-                                    <th>Lien du produit</th>
-                                    <th>État</th>
-                                    <th>Création</th>
-                                    <th>Dernière mise à jour</th>
-                                    <th> </th>
-                                </tr>
-                            <?php for ($j=0; $j < $_SESSION['demandes_valid']->count(); $j++) { ?>
-                                <tr>
-                                    <td>{{ $_SESSION['demandes_valid'][$j]->nom }}</td>
-                                    <td>{{ $_SESSION['demandes_valid'][$j]->prenom }}</td>
-                                    <td>{{ $_SESSION['demandes_valid'][$j]->nomDemande }}</td>
-                                    <td>{{ $_SESSION['demandes_valid'][$j]->quantiteDemande }}</td>
-                                    <td class="lien_produit">
-                                        <?php if ($_SESSION['demandes_valid'][$j]->lienProduit != 'Aucun lien fourni') { ?>
-                                        <a href="{{ $_SESSION['demandes_valid'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</a>
-                                        <?php } else {
-                                            echo $_SESSION['demandes_valid'][$j]->lienProduit;
-                                        } ?>
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['url' => 'majetatdemande']) !!}
-                                        {{ Form::hidden('id', $_SESSION['demandes_valid'][$j]->id) }}
-                                        {{ Form::select('etat',[
-                                                'Prise en compte' => 'Prise en compte',
-                                                'Validé' => 'Validé',
-                                                'En cours' => 'En cours',
-                                                'Terminer' => 'Terminer'
-                                            ], $_SESSION["demandes_valid"][$j]->nomEtat) }}
-                                    </td>
-                                    <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->created_at)) }}</td>
-                                    <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->updated_at)) }}</td>
-                                    <td>
-                                        {{ Form::submit('Envoyer') }}
-                                        {!! Form::close() !!}
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                            </table>
-                <?php   } else { ?>
-                            <section id="demandes_utilisateur">
-                                <h4>Demandes utilisateurs :</h4><br />
-                                <p>Vous n'avez pas de demandes d'utilisateurs.</p>
-                            </section>
-                <?php   }
-                    }
+              <?php } else { ?>
+                        <section id="demandes_spec">
+                            <h4>Demandes spécifiques :</h4><br />
+                            <p>Vous n'avez pas encore effectué de demandes.</p>
+                        </section>
+              <?php }
                 } else { ?>
                     <table id="demandes_list">
                         <caption>Liste des demandes spécifiques</caption>

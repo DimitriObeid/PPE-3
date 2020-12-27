@@ -66,6 +66,7 @@ nav li
 
 header
 {
+    position: relative;
     background-color: #00062e;
     color: #c2c2c2;
     display: flex;
@@ -100,14 +101,26 @@ h1
     right: 40px;
 }
 
+#nom_deconnexion
+{
+    position: absolute;
+    top: 45px;
+    right: 2%;
+    width: 25%;
+}
+
 #nom_prenom
 {
-    margin-left: 20%;
+    position: relative;
+    top: 4px;
+    float: left;
 }
 
 #deconnexion
 {
-    margin-left: 5%;
+    clear: both;
+    position: absolute;
+    right: 0;
 }
 
 #commandes_cours
@@ -123,6 +136,8 @@ h1
 body
 {
     background-color: #e9e5dc;
+    position: relative;
+    min-height: 950px;
 }
 
 #corps
@@ -140,6 +155,11 @@ body
     padding: 1%;
     width: 25%;
     margin: 0% 37.5% 3% 37.5%;
+}
+
+#liste_fourniture
+{
+    margin-bottom: 14%;
 }
 
 h4
@@ -208,6 +228,11 @@ select
     margin: 5% 0% 5% 0%;
 }
 
+#liste_commandes
+{
+    margin-bottom: 14%;
+}
+
 caption
 {
     font-size: 18px;
@@ -230,9 +255,11 @@ footer
     flex-wrap: wrap;
     background: #00062e;
     color: #c2c2c2;
-    width: auto;
+    width: 83%;
     margin-left: 15%;
     padding: 1%;
+    position: absolute;
+    bottom: 0;
 }
 
 #service, #categorie

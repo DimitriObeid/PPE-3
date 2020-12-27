@@ -66,6 +66,7 @@ nav li
 
 header
 {
+    position: relative;
     background-color: #00062e;
     color: #c2c2c2;
     display: flex;
@@ -100,14 +101,26 @@ h1
     right: 40px;
 }
 
+#nom_deconnexion
+{
+    position: absolute;
+    top: 45px;
+    right: 2%;
+    width: 25%;
+}
+
 #nom_prenom
 {
-    margin-left: 19%;
+    position: relative;
+    top: 4px;
+    float: left;
 }
 
 #deconnexion
 {
-    margin-left: 5%;
+    clear: both;
+    position: absolute;
+    right: 0;
 }
 
 #commandes_cours
@@ -142,12 +155,7 @@ body
 
 #resultat_recherche
 {
-    margin-bottom: 6%;
-}
-
-#aucun_resultat
-{
-    margin-bottom: 42.4%;
+    margin-bottom: 14%;
 }
 
 .photo_fournitures
@@ -159,7 +167,6 @@ table
 {
     width: 100%;
     text-align: center;
-    margin-bottom: 5%;
 }
 
 th, td
@@ -170,7 +177,12 @@ th, td
 
 #ajout_fourniture
 {
-    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+#liste_fourniture
+{
+    margin-bottom: 14%;
 }
 
 .confirm
