@@ -16,7 +16,7 @@
     <body>
         <nav>
             <ul>
-                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
+                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
@@ -32,6 +32,16 @@
             </ul>
         </nav>
         <header>
+            <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                {!! Form::open(['url' => 'modificationlogo', 'files' => true, 'id'=>'modificationlogo']) !!}
+                {{ Form::file('photo_logo', ['required'=>'true']) }}
+                {{ Form::submit('Modifier le logo') }}
+                {!! Form::close() !!}
+
+                {!! Form::open(['url' => 'suppressionlogo', 'files' => true, 'id'=>'suppressionlogo']) !!}
+                {{ Form::submit('Supprimer le logo') }}
+                {!! Form::close() !!}
+            <?php } ?>
             <h1>Accueil</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
             {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
@@ -101,15 +111,39 @@
 
             <?php }
                 else {
+                    $fichiertropgros = $tropgros ?? false;
+                    if ($fichiertropgros) { ?>
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de la photo est trop volumineux ! (Max : 500Mo)</p><br />
+                        <?php header('Refresh: 5; url=accueil');
+                    }
+
+                    $formatinvalide = $invalide ?? false;
+                    if ($formatinvalide) { ?>
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le format de la photo n'est pas valide !</p><br />
+                        <?php header('Refresh: 5; url=accueil');
+                    }
+
+                    $modifie = $modif ?? false;
+                    if ($modifie) { ?>
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le logo a bien été modifier</p><br />
+                        <?php header('Refresh: 5; url=accueil');
+                    }
+
+                    $confirmSupprlogo = $supprlogo ?? false;
+                    if ($confirmSupprlogo) { ?>
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le logo a bien été supprimé</p><br />
+                    <?php header('Refresh: 5; url=accueil');
+                    }
+
                     $confirm = $vrai ?? false;
                     if ($confirm) { ?>
-                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre message à bien été envoyé</p><br />
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre message a bien été envoyé</p><br />
                     <?php header('Refresh: 5; url=accueil');
                     }
 
                     $confirmSuppr = $suppr ?? false;
                     if ($confirmSuppr) { ?>
-                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le message à bien été supprimé</p><br />
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le message a bien été supprimé</p><br />
                     <?php header('Refresh: 5; url=accueil');
                     }
 

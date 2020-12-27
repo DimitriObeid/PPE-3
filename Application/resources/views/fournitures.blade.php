@@ -10,7 +10,7 @@
     <body>
         <nav>
             <ul>
-                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
+                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
@@ -66,7 +66,7 @@
                                 <th>Nom</th>
                                 <th>Description</th>
                                 <th>Quantitée disponible</th>
-                            <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                            <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
                                 <th>Quantitée demandée</th>
                             <?php } ?>
                             </tr>
@@ -76,7 +76,7 @@
                                 <td>{{ $_SESSION['recherche'][$i]->nomFournitures }}</td>
                                 <td>{{ $_SESSION['recherche'][$i]->descriptionFournitures }}</td>
                                 <td>
-                                <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                                <?php if ($_SESSION['categorie'] == 'Valideur') { ?>
                                     {!! Form::open(['url' => 'majquantite']) !!}
                                     {{ Form::hidden('id', $_SESSION['recherche'][$i]->id) }}
                                     {{ Form::number('quantite_disponible', $_SESSION['recherche'][$i]->quantiteDisponible, ['min'=>'0', 'max'=>'100']) }}
@@ -86,7 +86,7 @@
                                     {{ $_SESSION['recherche'][$i]->quantiteDisponible }}
                                 <?php } ?>
                                 </td>
-                            <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                            <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
                                 <td>
                                     {!! Form::open(['url' => 'commander']) !!}
                                     {{ Form::hidden('id', $_SESSION['recherche'][$i]->id) }}
@@ -126,7 +126,7 @@
                         <?php header('Refresh: 5; url=fournitures');
                     }
 
-                    if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                    if ($_SESSION['categorie'] == 'Valideur') { ?>
                         <table id="ajout_fourniture">
                             <caption>Ajouter une fourniture</caption>
                             <tr>
@@ -158,7 +158,7 @@
                             <th>Nom</th>
                             <th>Description</th>
                             <th>Quantitée disponible</th>
-                        <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                        <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
                             <th>Quantitée demandée</th>
                         <?php } ?>
                         </tr>
@@ -168,7 +168,7 @@
                             <td>{{ $_SESSION['fournitures'][$j]->nomFournitures }}</td>
                             <td>{{ $_SESSION['fournitures'][$j]->descriptionFournitures }}</td>
                             <td>
-                            <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                            <?php if ($_SESSION['categorie'] == 'Valideur') { ?>
                                 {!! Form::open(['url' => 'majquantite']) !!}
                                 {{ Form::hidden('id', $_SESSION['fournitures'][$j]->id) }}
                                 {{ Form::number('quantite_disponible', $_SESSION['fournitures'][$j]->quantiteDisponible, ['min'=>'0', 'max'=>'100']) }}
@@ -178,7 +178,7 @@
                                 {{ $_SESSION['fournitures'][$j]->quantiteDisponible }}
                             <?php } ?>
                             </td>
-                        <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                        <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
                             <td>
                                 {!! Form::open(['url' => 'commander']) !!}
                                 {{ Form::hidden('id', $_SESSION['fournitures'][$j]->id) }}

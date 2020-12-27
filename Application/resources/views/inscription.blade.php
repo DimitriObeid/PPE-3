@@ -9,7 +9,7 @@
     </head>
     <body>
         <header>
-            <img src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" />
+            <img src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" />
             <h1>Inscription</h1>
         </header>
         {!! Form::open(['url' => 'inscription']) !!}

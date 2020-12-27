@@ -142,6 +142,59 @@ class PersonnelController extends Controller
         return view('accueil', ['suppr'=>$suppr]);
     }
 
+    public function modificationlogo(Request $request)
+    {
+        session_start();
+
+        if ($request->file('photo_logo')->getsize() > 500000) {
+
+            $tropgros = true;
+
+            return view('accueil', ['tropgros' => $tropgros]);
+        }
+
+        $fichierTelecharger = $request->file('photo_logo');
+        switch (exif_imagetype($fichierTelecharger)) {
+            case IMAGETYPE_JPEG:
+                $photo = imagecreatefromjpeg($fichierTelecharger);
+                break;
+            case IMAGETYPE_GIF:
+                $photo = imagecreatefromgif($fichierTelecharger);
+                break;
+            case IMAGETYPE_BMP:
+                $photo = imagecreatefrombmp($fichierTelecharger);
+                break;
+            case IMAGETYPE_PNG:
+                $photo = imagecreatefrompng($fichierTelecharger);
+                $blanc = imagecolorallocate($photo, 255, 255, 255);
+                imagecolortransparent($photo, $blanc);
+                break;
+            default:
+                $invalide = true;
+                return view('accueil', ['invalide' => $invalide]);
+                break;
+        }
+
+        $nomChemin = '/var/www/html/PPE-3/Application/storage/app/public/logo-cci.png';
+
+        imagepng($photo, $nomChemin);
+
+        $modif = true;
+
+        return view('accueil', ['modif' => $modif]);
+    }
+
+    public function suppressionlogo()
+    {
+        session_start();
+
+        unlink('/var/www/html/PPE-3/Application/storage/app/public/logo-cci.png');
+
+        $supprlogo = true;
+
+        return view('accueil', ['supprlogo' => $supprlogo]);
+    }
+
     public function messagerie()
     {
         session_start();

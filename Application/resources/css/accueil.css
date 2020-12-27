@@ -37,6 +37,7 @@ nav li
 {
     width: 75%;
     padding-left: 5%;
+    color: #c2c2c2;
 }
 
 #li_logo
@@ -77,9 +78,24 @@ header
     padding: 2%;
 }
 
+#modificationlogo
+{
+    position: absolute;
+    top: 5%;
+    left: 0.5%;
+}
+
+#suppressionlogo
+{
+    position: absolute;
+    top: 5%;
+    left: 30%;
+}
+
 h1
 {
     font-weight: normal;
+    margin-right: 35.95%;
 }
 
 #recherche
@@ -90,7 +106,6 @@ h1
     width: 29.5%;
     padding: 1.6% 6% 1.5% 2%;
     border-radius: 25px;
-    margin-left: 65%;
 }
 
 #envoyer
@@ -195,7 +210,17 @@ th, td
     font-weight: bold;
 }
 
-.img_confirm
+.erreur
+{
+    background: #ee0000;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.3%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.img_confirm, .img_erreur
 {
     width: 1.1%;
     position: relative;

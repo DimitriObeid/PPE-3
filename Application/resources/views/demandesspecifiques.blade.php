@@ -6,11 +6,20 @@
         <link rel="icon" sizes="144x144" href="http://localhost/PPE-3/Application/storage/app/public/CCI.png" />
         <link rel="stylesheet" href="http://localhost/PPE-3/Application/resources/css/demandesspecifiques.css" />
         <title>Demandes spécifiques</title>
+        <script>
+            function imprimer(nomSection) {
+                var contenuAImprimer = document.getElementById(nomSection).innerHTML;
+                var contenuOriginel = document.body.innerHTML;
+                document.body.innerHTML = contenuAImprimer;
+                window.print();
+                document.body.innerHTML = contenuOriginel;
+                }
+        </script>
     </head>
     <body>
         <nav>
             <ul>
-                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
+                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
@@ -55,6 +64,9 @@
                 </table>
             <?php } ?>
         </header>
+        <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+            <div id="bouton_imprimer"><button onclick="imprimer('corps');">Imprimer</button></div>
+        <?php } ?>
         <section id="corps">
             <?php if ($_SESSION['categorie'] != 'Administrateur') {
                     $confirm = $vrai ?? false;
@@ -169,38 +181,38 @@
                         </section>
               <?php }
                   } else { ?>
-                    <table id="demandes_list">
-                        <caption>Liste des demandes spécifiques</caption>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Nom de la demande</th>
-                            <th>Quantitée demandée</th>
-                            <th>Lien du produit</th>
-                            <th>État</th>
-                            <th>Création</th>
-                            <th>Dernière mise à jour</th>
-                        </tr>
-                    <?php for ($k=0; $k < $_SESSION['demandes']->count(); $k++) { ?>
-                        <tr>
-                            <td>{{ $_SESSION['demandes'][$k]->nom }}</td>
-                            <td>{{ $_SESSION['demandes'][$k]->prenom }}</td>
-                            <td>{{ $_SESSION['demandes'][$k]->nomDemande }}</td>
-                            <td>{{ $_SESSION['demandes'][$k]->quantiteDemande }}</td>
-                            <td class="lien_produit">
-                                <?php if ($_SESSION['demandes'][$k]->lienProduit != 'Aucun lien fourni') { ?>
-                                <a href="{{ $_SESSION['demandes'][$k]->lienProduit }}" target="_blank">{{ $_SESSION['demandes'][$k]->lienProduit }}</a>
-                                <?php } else {
-                                    echo $_SESSION['demandes'][$k]->lienProduit;
-                                } ?>
-                            </td>
-                            <td>{{ $_SESSION['demandes'][$k]->nomEtat }}</td>
-                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->created_at)) }}</td>
-                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->updated_at)) }}</td>
-                        </tr>
-                    <?php } ?>
-                    </table>
-                <?php } ?>
+                      <table id="demandes_list">
+                          <caption>Liste des demandes spécifiques</caption>
+                          <tr>
+                              <th>Nom</th>
+                              <th>Prénom</th>
+                              <th>Nom de la demande</th>
+                              <th>Quantitée demandée</th>
+                              <th>Lien du produit</th>
+                              <th>État</th>
+                              <th>Création</th>
+                              <th>Dernière mise à jour</th>
+                          </tr>
+                      <?php for ($k=0; $k < $_SESSION['demandes']->count(); $k++) { ?>
+                          <tr>
+                              <td>{{ $_SESSION['demandes'][$k]->nom }}</td>
+                              <td>{{ $_SESSION['demandes'][$k]->prenom }}</td>
+                              <td>{{ $_SESSION['demandes'][$k]->nomDemande }}</td>
+                              <td>{{ $_SESSION['demandes'][$k]->quantiteDemande }}</td>
+                              <td class="lien_produit">
+                                  <?php if ($_SESSION['demandes'][$k]->lienProduit != 'Aucun lien fourni') { ?>
+                                  <a href="{{ $_SESSION['demandes'][$k]->lienProduit }}" target="_blank">{{ $_SESSION['demandes'][$k]->lienProduit }}</a>
+                                  <?php } else {
+                                      echo $_SESSION['demandes'][$k]->lienProduit;
+                                  } ?>
+                              </td>
+                              <td>{{ $_SESSION['demandes'][$k]->nomEtat }}</td>
+                              <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->created_at)) }}</td>
+                              <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->updated_at)) }}</td>
+                          </tr>
+                      <?php } ?>
+                      </table>
+            <?php } ?>
         </section>
         <footer>
             <?php if (isset($_SESSION['commandes_fini'][0])) { ?>

@@ -37,6 +37,7 @@ nav li
 {
     width: 75%;
     padding-left: 5%;
+    color: #c2c2c2;
 }
 
 #li_logo
@@ -80,6 +81,7 @@ header
 h1
 {
     font-weight: normal;
+    margin-right: 32.84%;
 }
 
 #recherche
@@ -90,7 +92,6 @@ h1
     width: 29.5%;
     padding: 1.6% 6% 1.5% 2%;
     border-radius: 25px;
-    margin-left: 65%;
 }
 
 #envoyer

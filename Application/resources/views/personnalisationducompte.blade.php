@@ -10,7 +10,7 @@
     <body>
         <nav>
             <ul>
-                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
+                <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
