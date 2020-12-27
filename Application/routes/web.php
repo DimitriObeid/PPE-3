@@ -41,6 +41,12 @@ Route::post('/message', [PersonnelController::class, 'message']);
 
 Route::post('/supprimer', [PersonnelController::class, 'supprimer']);
 
+Route::get('/messagerie', [PersonnelController::class, 'messagerie']);
+
+Route::get('/statistique', [PersonnelController::class, 'statistique']);
+
+Route::get('/personnalisationducompte', [PersonnelController::class, 'personnalisationducompte']);
+
 // Gestion des fournitures
 Route::get('/fournitures', [FournituresController::class, 'afficher']);
 
@@ -55,5 +61,10 @@ Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'affic
 
 Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);
 
-// Gestion des changements d'états
+// Gestion des d'états
+Route::get('/suivi', [EtatController::class, 'afficher']);
+
 Route::post('/majetatdemande', [EtatController::class, 'majetatdemande']);
+
+// Gestion des départements
+Route::get('/departements', [ServiceController::class, 'afficher']);

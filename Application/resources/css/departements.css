@@ -90,7 +90,7 @@ h1
     width: 29.5%;
     padding: 1.6% 6% 1.5% 2%;
     border-radius: 25px;
-    margin-left: 67.7%;
+    margin-left: 63%;
 }
 
 #envoyer
@@ -147,22 +147,6 @@ body
     padding: 2%;
 }
 
-#retour
-{
-    text-decoration: none;
-    color: #dd8500;
-}
-
-#resultat_recherche
-{
-    margin-bottom: 14%;
-}
-
-.photo_fournitures
-{
-    width: 35%;
-}
-
 table
 {
     width: 100%;
@@ -175,16 +159,6 @@ th, td
     padding: 1% 0% 1% 0%;
 }
 
-#ajout_fourniture
-{
-    margin-bottom: 5%
-}
-
-#liste_fourniture
-{
-    margin-bottom: 14%;
-}
-
 .confirm
 {
     background: #09b302;
@@ -195,17 +169,7 @@ th, td
     font-weight: bold;
 }
 
-.erreur
-{
-    background: #ee0000;
-    border-radius: 5px;
-    text-align: center;
-    padding: 0.3%;
-    color: #ffffff;
-    font-weight: bold;
-}
-
-.img_confirm, .img_erreur
+.img_confirm
 {
     width: 1.1%;
     position: relative;

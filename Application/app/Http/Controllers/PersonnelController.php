@@ -140,6 +140,41 @@ class PersonnelController extends Controller
         $suppr = true;
 
         return view('accueil', ['suppr'=>$suppr]);
+    }
 
+    public function messagerie()
+    {
+        session_start();
+
+        if (!isset($_SESSION['mail'])) {
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            exit;
+        }
+
+        return view('messagerie');
+    }
+
+    public function statistique()
+    {
+        session_start();
+
+        if (!isset($_SESSION['mail'])) {
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            exit;
+        }
+
+        return view('statistique');
+    }
+
+    public function personnalisationducompte()
+    {
+        session_start();
+
+        if (!isset($_SESSION['mail'])) {
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            exit;
+        }
+
+        return view('personnalisationducompte');
     }
 }

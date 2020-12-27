@@ -8,6 +8,18 @@ use App\Models\DemandesSpecifiques;
 
 class EtatController extends Controller
 {
+    public function afficher()
+    {
+        session_start();
+
+        if (!isset($_SESSION['mail'])) {
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            exit;
+        }
+
+        return view('suivi');
+    }
+
     public function majetatdemande(Request $request)
     {
         session_start();

@@ -12,16 +12,16 @@
             <ul>
                 <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci-alsace.png" alt="Logo de la CCI d'alsace" /></li>
                 <li><a class="menu" href="accueil">ACCUEIL</a></li>
-                <li><a class="menu" href="">DÉPARTEMENTS</a></li>
+                <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
-                    <li><a class="menu" href="">MÉSSAGERIE</a></li>
-                    <li><a class="menu" href="">STATISTIQUE</a></li>
+                    <li><a class="menu" href="messagerie">MÉSSAGERIE</a></li>
+                    <li><a class="menu" href="statistique">STATISTIQUE</a></li>
                 <?php } ?>
                 <li><a class="menu" href="demandesspecifiques">DEMANDE SPÉCIFIQUE</a></li>
-                <li><a class="menu" href="">SUIVI</a></li>
+                <li><a class="menu" href="suivi">SUIVI</a></li>
                 <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
-                    <li><a class="menu" id="personnalisation" href="">PERSONNALISATION DU COMPTE</a></li>
+                    <li><a class="menu" id="personnalisation" href="personnalisationducompte">PERSONNALISATION DU COMPTE</a></li>
                 <?php } ?>
             </ul>
         </nav>
@@ -56,8 +56,7 @@
             <?php } ?>
         </header>
         <section id="corps">
-            <?php
-                if ($_SESSION['categorie'] != 'Administrateur') {
+            <?php if ($_SESSION['categorie'] != 'Administrateur') {
                     $confirm = $vrai ?? false;
                     if ($confirm) { ?>
                         <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande a bien été envoyée</p><br />
@@ -169,7 +168,7 @@
                             <p>Vous n'avez pas encore effectué de demandes.</p>
                         </section>
               <?php }
-                } else { ?>
+                  } else { ?>
                     <table id="demandes_list">
                         <caption>Liste des demandes spécifiques</caption>
                         <tr>
