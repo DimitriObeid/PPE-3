@@ -110,13 +110,13 @@
 
                     $fichiertropgros = $tropgros ?? false;
                     if ($fichiertropgros) { ?>
-                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de la photo est trop volumineux ! (Max : 500Mo)</p><br />
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de l'image est trop volumineux ! (Max : 500Mo)</p><br />
                         <?php header('Refresh: 5; url=fournitures');
                     }
 
                     $formatinvalide = $invalide ?? false;
                     if ($formatinvalide) { ?>
-                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le format de la photo n'est pas valide !</p><br />
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le format de l'image n'est pas valide !</p><br />
                         <?php header('Refresh: 5; url=fournitures');
                     }
 
