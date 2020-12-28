@@ -37,7 +37,7 @@ class PersonnelController extends Controller
 
     public function connexion(Request $request)
     {
-        $Personnel = Personnel::join('service', 'personnels.idService', 'service.id')->join('categorie', 'personnels.idCategorie', 'categorie.id')->where('mail', $request->email)->get();
+        $Personnel = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->where('mail', $request->email)->get();
 
         $test = $Personnel->last();
 
@@ -57,9 +57,9 @@ class PersonnelController extends Controller
 
             $commande_fini = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'Terminer')->orderby('commandes.id', 'asc')->get();
 
-            $commande_liste = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.created_at', 'commandes.updated_at', 'personnels.nom', 'personnels.prenom', 'etats.nomEtat')->where('etats.nomEtat', 'En cours')->orderby('commandes.id', 'asc')->get();
+            $commande_liste = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.created_at', 'commandes.updated_at', 'personnels.nom', 'personnels.prenom', 'etats.nomEtat')->where('etats.nomEtat', 'En cours')->orderby('commandes.updated_at', 'asc')->get();
 
-            $Personnels = Personnel::join('service', 'personnels.idService', 'service.id')->join('categorie', 'personnels.idCategorie', 'categorie.id')->select('*')->orderby('personnels.id', 'asc')->get();
+            $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
             $Fournitures = Fournitures::select('fournitures.*')->get();
 
@@ -114,7 +114,7 @@ class PersonnelController extends Controller
 
         $Personnel = Personnel::where('mail', $_SESSION['mail'])->get();
 
-        $Personnels = Personnel::join('service', 'personnels.idService', 'service.id')->join('categorie', 'personnels.idCategorie', 'categorie.id')->select('*')->orderby('personnels.id', 'asc')->get();
+        $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
         $_SESSION['message'] = $Personnel[0]->message;
         $_SESSION['personnels'] = $Personnels;
@@ -132,7 +132,7 @@ class PersonnelController extends Controller
 
         $Personnel = Personnel::where('mail', $_SESSION['mail'])->get();
 
-        $Personnels = Personnel::join('service', 'personnels.idService', 'service.id')->join('categorie', 'personnels.idCategorie', 'categorie.id')->select('*')->orderby('personnels.id', 'asc')->get();
+        $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
         $_SESSION['message'] = $Personnel[0]->message;
         $_SESSION['personnels'] = $Personnels;

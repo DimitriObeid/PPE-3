@@ -65,10 +65,15 @@ Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'affic
 
 Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);
 
-// Gestion des d'états
-Route::get('/suivi', [EtatController::class, 'afficher']);
+// Gestion des commandes
+Route::get('/suivi', [CommandesController::class, 'afficher']);
 
+Route::post('/commander', [CommandesController::class, 'commander']);
+
+// Gestion des d'états
 Route::post('/majetatdemande', [EtatController::class, 'majetatdemande']);
+
+Route::post('/majetatcommande', [EtatController::class, 'majetatcommande']);
 
 // Gestion des départements
 Route::get('/departements', [ServiceController::class, 'afficher']);

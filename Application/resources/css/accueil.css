@@ -78,20 +78,6 @@ header
     padding: 2%;
 }
 
-#modificationlogo
-{
-    position: absolute;
-    top: 5%;
-    left: 0.5%;
-}
-
-#suppressionlogo
-{
-    position: absolute;
-    top: 5%;
-    left: 30%;
-}
-
 h1
 {
     font-weight: normal;
@@ -177,6 +163,11 @@ body
     margin-bottom: 14%;
 }
 
+.tabl_fourn
+{
+    width: 15%;
+}
+
 h4
 {
     text-align: center;
@@ -246,6 +237,18 @@ textarea
 select
 {
     margin-right: 2%;
+}
+
+#modificationlogo
+{
+    float: left;
+    margin: 0% 2% 4% 30%;
+}
+
+#suppressionlogo
+{
+    clear: right;
+    margin: 0% 0% 4% 0%;
 }
 
 #liste_comptes

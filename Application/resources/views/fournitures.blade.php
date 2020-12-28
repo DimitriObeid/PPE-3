@@ -63,10 +63,10 @@
                             <caption>Résultat de la recherche :</caption>
                             <tr>
                                 <th>Photo</th>
-                                <th>Nom</th>
-                                <th>Description</th>
+                                <th class="tabl_fourn">Nom</th>
+                                <th class="tabl_fourn">Description</th>
                                 <th>Quantitée disponible</th>
-                            <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
+                            <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                                 <th>Quantitée demandée</th>
                             <?php } ?>
                             </tr>
@@ -76,7 +76,7 @@
                                 <td>{{ $_SESSION['recherche'][$i]->nomFournitures }}</td>
                                 <td>{{ $_SESSION['recherche'][$i]->descriptionFournitures }}</td>
                                 <td>
-                                <?php if ($_SESSION['categorie'] == 'Valideur') { ?>
+                                <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
                                     {!! Form::open(['url' => 'majquantite']) !!}
                                     {{ Form::hidden('id', $_SESSION['recherche'][$i]->id) }}
                                     {{ Form::number('quantite_disponible', $_SESSION['recherche'][$i]->quantiteDisponible, ['min'=>'0', 'max'=>'100']) }}
@@ -86,11 +86,12 @@
                                     {{ $_SESSION['recherche'][$i]->quantiteDisponible }}
                                 <?php } ?>
                                 </td>
-                            <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
+                            <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                                 <td>
                                     {!! Form::open(['url' => 'commander']) !!}
                                     {{ Form::hidden('id', $_SESSION['recherche'][$i]->id) }}
-                                    {{ Form::number('quantite_disponible', '1', ['min'=>'1', 'max'=>$_SESSION['recherche'][$i]->quantiteDisponible]) }}
+                                    {{ Form::hidden('nom_fourniture', $_SESSION['recherche'][$i]->nomFournitures) }}
+                                    {{ Form::number('quantite_demande', '1', ['min'=>'1', 'max'=>$_SESSION['recherche'][$i]->quantiteDisponible]) }}
                                     {{ Form::submit('Commander') }}
                                     {!! Form::close() !!}
                                 </td>
@@ -126,7 +127,13 @@
                         <?php header('Refresh: 5; url=fournitures');
                     }
 
-                    if ($_SESSION['categorie'] == 'Valideur') { ?>
+                    $creation_commande = $commande_cree ?? false;
+                    if ($creation_commande) { ?>
+                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La commande a bien été prise en compte</p><br />
+                        <?php header('Refresh: 5; url=fournitures');
+                    }
+
+                    if ($_SESSION['categorie'] == 'Administrateur') { ?>
                         <table id="ajout_fourniture">
                             <caption>Ajouter une fourniture</caption>
                             <tr>
@@ -155,10 +162,10 @@
                         <caption>Liste des fournitures :</caption>
                         <tr>
                             <th>Photo</th>
-                            <th>Nom</th>
-                            <th>Description</th>
+                            <th class="tabl_fourn">Nom</th>
+                            <th class="tabl_fourn">Description</th>
                             <th>Quantitée disponible</th>
-                        <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
+                        <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                             <th>Quantitée demandée</th>
                         <?php } ?>
                         </tr>
@@ -168,7 +175,7 @@
                             <td>{{ $_SESSION['fournitures'][$j]->nomFournitures }}</td>
                             <td>{{ $_SESSION['fournitures'][$j]->descriptionFournitures }}</td>
                             <td>
-                            <?php if ($_SESSION['categorie'] == 'Valideur') { ?>
+                            <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
                                 {!! Form::open(['url' => 'majquantite']) !!}
                                 {{ Form::hidden('id', $_SESSION['fournitures'][$j]->id) }}
                                 {{ Form::number('quantite_disponible', $_SESSION['fournitures'][$j]->quantiteDisponible, ['min'=>'0', 'max'=>'100']) }}
@@ -178,11 +185,12 @@
                                 {{ $_SESSION['fournitures'][$j]->quantiteDisponible }}
                             <?php } ?>
                             </td>
-                        <?php if ($_SESSION['categorie'] != 'Valideur') { ?>
+                        <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                             <td>
                                 {!! Form::open(['url' => 'commander']) !!}
                                 {{ Form::hidden('id', $_SESSION['fournitures'][$j]->id) }}
-                                {{ Form::number('quantite_disponible', '1', ['min'=>'1', 'max'=>$_SESSION['fournitures'][$j]->quantiteDisponible]) }}
+                                {{ Form::hidden('nom_fourniture', $_SESSION['fournitures'][$j]->nomFournitures) }}
+                                {{ Form::number('quantite_demande', '1', ['min'=>'1', 'max'=>$_SESSION['fournitures'][$j]->quantiteDisponible]) }}
                                 {{ Form::submit('Commander') }}
                                 {!! Form::close() !!}
                             </td>

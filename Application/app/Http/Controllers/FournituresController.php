@@ -16,6 +16,19 @@ class FournituresController extends Controller
             exit;
         }
 
+        $Fournitures = Fournitures::select('fournitures.*')->get();
+
+        /* Ajout de la création de variables de session pour permettre de trier les fournitures par famille
+        $Familles = Familles::select('familles.*')->get();
+
+        for ($i=0; $i < $Familles->count(); $i++) {
+            $_SESSION["$Familles->nomFamille"] = Fournitures::join('familles', 'fournitures.idFamille', 'familles.id')->where('nomFamille', $Familles->nomFamille)->select('fourniture.*', 'nomFamille')->get();
+        }
+
+        $_SESSION['familles'] = $Familles;*/
+
+        $_SESSION['fournitures'] = $Fournitures;
+
         return view('fournitures');
     }
 

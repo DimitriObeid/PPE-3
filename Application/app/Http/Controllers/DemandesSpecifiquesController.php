@@ -21,7 +21,7 @@ class DemandesSpecifiquesController extends Controller
 
         $demandes_pers = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->orderby('demandes_specifiques.id', 'asc')->get();
 
-        $demandes_valid = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('service', 'personnels.idService', 'service.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
+        $demandes_valid = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
 
         $_SESSION['demandes'] = $demandes;
         $_SESSION['demandes_pers'] = $demandes_pers;
@@ -35,10 +35,6 @@ class DemandesSpecifiquesController extends Controller
         session_start();
 
         $id_personnel = Personnel::where('mail', $_SESSION['mail'])->select('id')->get();
-
-        $validatedData = $request->validate([
-        'nom_demande' => 'required',
-        ]);
 
         $DemandesSpecifiques = new DemandesSpecifiques;
 

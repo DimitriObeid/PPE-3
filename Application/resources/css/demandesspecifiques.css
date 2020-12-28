@@ -143,9 +143,10 @@ body
 
 #bouton_imprimer
 {
-    position: absolute;
-    top: 14.5%;
-    right: 2%;
+    position: relative;
+    width: 5%;
+    left: 93%;
+    top: 25px;
 }
 
 #corps
@@ -165,23 +166,12 @@ h4
     margin-right: 5%;
 }
 
-#tab_ut
+#tab_ut, #demandes_utilisateur
 {
     margin-top: 5%;
 }
 
-#demandes_utilisateur
-{
-    margin-top: 5%;
-}
-
-#demandes_pers
-{
-    margin-top: 5%;
-    margin-bottom: 14%;
-}
-
-#demandes_spec
+#demandes_pers, #demandes_spec
 {
     margin-top: 5%;
     margin-bottom: 14%;
@@ -189,6 +179,8 @@ h4
 
 #demandes_list
 {
+    position: relative;
+    top: -27px;
     margin-bottom: 14%;
 }
 

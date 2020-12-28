@@ -141,11 +141,36 @@ body
     min-height: 950px;
 }
 
+#bouton_imprimer
+{
+    position: relative;
+    width: 5%;
+    left: 93%;
+    top: 25px;
+}
+
 #corps
 {
     margin-left: 15%;
     width: auto;
     padding: 2%;
+}
+
+h4
+{
+    font-size: 18px;
+}
+
+#liste_commandes_utilisateur, #commande_util
+{
+    position: relative;
+    top: -27px;
+    margin-bottom: 3%;
+}
+
+#liste_commandes, #commande_pers
+{
+    margin-bottom: 14%;
 }
 
 table

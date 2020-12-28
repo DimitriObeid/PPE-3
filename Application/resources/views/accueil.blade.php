@@ -32,16 +32,6 @@
             </ul>
         </nav>
         <header>
-            <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
-                {!! Form::open(['url' => 'modificationlogo', 'files' => true, 'id'=>'modificationlogo']) !!}
-                {{ Form::file('photo_logo', ['required'=>'true']) }}
-                {{ Form::submit('Modifier le logo') }}
-                {!! Form::close() !!}
-
-                {!! Form::open(['url' => 'suppressionlogo', 'files' => true, 'id'=>'suppressionlogo']) !!}
-                {{ Form::submit('Supprimer le logo') }}
-                {!! Form::close() !!}
-            <?php } ?>
             <h1>Accueil</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
             {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
@@ -88,29 +78,30 @@
                         <caption>Liste de 6 fournitures :</caption>
                         <tr>
                             <th>Photo</th>
-                            <th>Nom</th>
-                            <th>Description</th>
+                            <th class="tabl_fourn">Nom</th>
+                            <th class="tabl_fourn">Description</th>
                             <th>Quantitée disponible</th>
                             <th>Quantitée demandée</th>
                         </tr>
-                        <?php for ($i=0; $i < 6; $i++) { ?>
-                                <tr>
-                                    <td><img class="photo_fournitures" src="http://localhost/PPE-3/Application/storage/app/public/{{ $_SESSION['fournitures'][$i]->nomPhoto }}.jpg" /></td>
-                                    <td>{{ $_SESSION['fournitures'][$i]->nomFournitures }}</td>
-                                    <td>{{ $_SESSION['fournitures'][$i]->descriptionFournitures }}</td>
-                                    <td>{{ $_SESSION['fournitures'][$i]->quantiteDisponible }}</td>
-                                    <td>
-                                        {!! Form::open(['url' => 'commander']) !!}
-                                        {{ Form::number('quantite_disponible', '1', ['min'=>'1', 'max'=>$_SESSION['fournitures'][$i]->quantiteDisponible]) }}
-                                        {{ Form::submit('Commander') }}
-                                        {!! Form::close() !!}
-                                    </td>
-                                </tr>
-                        <?php } ?>
+                    <?php for ($i=0; $i < 6; $i++) { ?>
+                        <tr>
+                            <td><img class="photo_fournitures" src="http://localhost/PPE-3/Application/storage/app/public/{{ $_SESSION['fournitures'][$i]->nomPhoto }}.jpg" /></td>
+                            <td>{{ $_SESSION['fournitures'][$i]->nomFournitures }}</td>
+                            <td>{{ $_SESSION['fournitures'][$i]->descriptionFournitures }}</td>
+                            <td>{{ $_SESSION['fournitures'][$i]->quantiteDisponible }}</td>
+                            <td>
+                                {!! Form::open(['url' => 'commander']) !!}
+                                {{ Form::hidden('id', $_SESSION['fournitures'][$i]->id) }}
+                                {{ Form::hidden('nom_fourniture', $_SESSION['fournitures'][$i]->nomFournitures) }}
+                                {{ Form::number('quantite_demande', '1', ['min'=>'1', 'max'=>$_SESSION['fournitures'][$i]->quantiteDisponible]) }}
+                                {{ Form::submit('Commander') }}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    <?php } ?>
                     </table>
 
-            <?php }
-                else {
+            <?php } else {
                     $fichiertropgros = $tropgros ?? false;
                     if ($fichiertropgros) { ?>
                         <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids du logo est trop volumineux ! (Max : 500Mo)</p><br />
@@ -150,6 +141,16 @@
                     if ($_SESSION['message'] != '') { ?>
                         <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
                     <?php } ?>
+
+                    <h4>Modification du logo :</h4>
+                    {!! Form::open(['url' => 'modificationlogo', 'files' => true, 'id'=>'modificationlogo']) !!}
+                    {{ Form::file('photo_logo', ['required'=>'true']) }}
+                    {{ Form::submit('Modifier le logo') }}
+                    {!! Form::close() !!}
+
+                    {!! Form::open(['url' => 'suppressionlogo', 'files' => true, 'id'=>'suppressionlogo']) !!}
+                    {{ Form::submit('Supprimer le logo') }}
+                    {!! Form::close() !!}
 
                     <h4>Envoyer un message à un utilisateur :</h4>
                     {!! Form::open(['url' => 'message']) !!}
@@ -193,7 +194,7 @@
                     <?php } ?>
                     </table>
                     <table id="liste_commandes">
-                        <caption>Commandes en cours</caption>
+                        <caption>Aperçu des commandes en cours</caption>
                         <tr>
                             <th>Nom</th>
                             <th>Prénom</th>
@@ -203,7 +204,13 @@
                             <th>Création</th>
                             <th>Dernière mise à jour</th>
                         </tr>
-                    <?php for ($l=0; $l < $_SESSION['commandes_liste']->count(); $l++) { ?>
+                    <?php
+                    if ($_SESSION['commandes_liste']->count() < 6) {
+                        $max = $_SESSION['commandes_liste']->count();
+                    } else {
+                        $max = 6;
+                    }
+                    for ($l=0; $l < $max; $l++) { ?>
                         <tr>
                             <td>{{ $_SESSION['commandes_liste'][$l]->nom }}</td>
                             <td>{{ $_SESSION['commandes_liste'][$l]->prenom }}</td>

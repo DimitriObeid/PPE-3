@@ -107,31 +107,31 @@
                                     <th>Dernière mise à jour</th>
                                     <th> </th>
                                 </tr>
-                                <?php for ($j=0; $j < $_SESSION['demandes_valid']->count(); $j++) { ?>
+                                <?php for ($i=0; $i < $_SESSION['demandes_valid']->count(); $i++) { ?>
                                     <tr>
-                                        <td>{{ $_SESSION['demandes_valid'][$j]->nom }}</td>
-                                        <td>{{ $_SESSION['demandes_valid'][$j]->prenom }}</td>
-                                        <td>{{ $_SESSION['demandes_valid'][$j]->nomDemande }}</td>
-                                        <td>{{ $_SESSION['demandes_valid'][$j]->quantiteDemande }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$i]->nom }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$i]->prenom }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$i]->nomDemande }}</td>
+                                        <td>{{ $_SESSION['demandes_valid'][$i]->quantiteDemande }}</td>
                                         <td class="lien_produit">
-                                            <?php if ($_SESSION['demandes_valid'][$j]->lienProduit != 'Aucun lien fourni') { ?>
-                                                <a href="{{ $_SESSION['demandes_valid'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$j]->lienProduit }}</a>
+                                            <?php if ($_SESSION['demandes_valid'][$i]->lienProduit != 'Aucun lien fourni') { ?>
+                                                <a href="{{ $_SESSION['demandes_valid'][$i]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$i]->lienProduit }}</a>
                                             <?php } else {
-                                                echo $_SESSION['demandes_valid'][$j]->lienProduit;
+                                                echo $_SESSION['demandes_valid'][$i]->lienProduit;
                                             } ?>
                                         </td>
                                         <td>
                                             {!! Form::open(['url' => 'majetatdemande']) !!}
-                                            {{ Form::hidden('id', $_SESSION['demandes_valid'][$j]->id) }}
+                                            {{ Form::hidden('id', $_SESSION['demandes_valid'][$i]->id) }}
                                             {{ Form::select('etat',[
                                             'Prise en compte' => 'Prise en compte',
                                             'Validé' => 'Validé',
                                             'En cours' => 'En cours',
                                             'Terminer' => 'Terminer'
-                                            ], $_SESSION["demandes_valid"][$j]->nomEtat) }}
+                                            ], $_SESSION["demandes_valid"][$i]->nomEtat) }}
                                         </td>
-                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->created_at)) }}</td>
-                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$j]->updated_at)) }}</td>
+                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$i]->created_at)) }}</td>
+                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$i]->updated_at)) }}</td>
                                         <td>
                                             {{ Form::submit('Envoyer') }}
                                             {!! Form::close() !!}
@@ -157,20 +157,20 @@
                                 <th>Création</th>
                                 <th>Dernière mise à jour</th>
                             </tr>
-                        <?php for ($i=0; $i < $_SESSION['demandes_pers']->count(); $i++) { ?>
+                        <?php for ($j=0; $j < $_SESSION['demandes_pers']->count(); $j++) { ?>
                             <tr>
-                                <td>{{ $_SESSION['demandes_pers'][$i]->nomDemande }}</td>
-                                <td>{{ $_SESSION['demandes_pers'][$i]->quantiteDemande }}</td>
+                                <td>{{ $_SESSION['demandes_pers'][$j]->nomDemande }}</td>
+                                <td>{{ $_SESSION['demandes_pers'][$j]->quantiteDemande }}</td>
                                 <td class="lien_produit">
-                                    <?php if ($_SESSION['demandes_pers'][$i]->lienProduit != 'Aucun lien fourni') { ?>
-                                    <a href="{{ $_SESSION['demandes_pers'][$i]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_pers'][$i]->lienProduit }}</a>
+                                    <?php if ($_SESSION['demandes_pers'][$j]->lienProduit != 'Aucun lien fourni') { ?>
+                                    <a href="{{ $_SESSION['demandes_pers'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_pers'][$j]->lienProduit }}</a>
                                     <?php } else {
-                                        echo $_SESSION['demandes_pers'][$i]->lienProduit;
+                                        echo $_SESSION['demandes_pers'][$j]->lienProduit;
                                     } ?>
                                 </td>
-                                <td>{{ $_SESSION['demandes_pers'][$i]->nomEtat }}</td>
-                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$i]->created_at)) }}</td>
-                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$i]->updated_at)) }}</td>
+                                <td>{{ $_SESSION['demandes_pers'][$j]->nomEtat }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$j]->created_at)) }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$j]->updated_at)) }}</td>
                             </tr>
                         <?php } ?>
                         </table>

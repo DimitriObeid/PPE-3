@@ -6,6 +6,15 @@
         <link rel="icon" sizes="144x144" href="http://localhost/PPE-3/Application/storage/app/public/CCI.png" />
         <link rel="stylesheet" href="http://localhost/PPE-3/Application/resources/css/suivi.css" />
         <title>Suivi</title>
+        <script>
+            function imprimer(nomSection) {
+                var contenuAImprimer = document.getElementById(nomSection).innerHTML;
+                var contenuOriginel = document.body.innerHTML;
+                document.body.innerHTML = contenuAImprimer;
+                window.print();
+                document.body.innerHTML = contenuOriginel;
+                }
+        </script>
     </head>
     <body>
         <nav>
@@ -55,9 +64,119 @@
                 </table>
             <?php } ?>
         </header>
+        <div id="bouton_imprimer"><button onclick="imprimer('corps');">Imprimer</button></div>
         <section id="corps">
-            <?php if ($_SESSION['categorie'] != 'Administrateur') {
-                  } else { ?>
+            <?php if ($_SESSION['categorie'] == 'Administrateur') {
+                $envoye = $envoyer ?? false;
+                if ($envoye) { ?>
+                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise a jour à bien été prise en compte</p><br />
+                    <?php header('Refresh: 5; url=demandesspecifiques');
+                }
+
+                if (isset($_SESSION['commande_complet'][0])) { ?>
+                    <table id="liste_commandes_utilisateur">
+                        <caption>Liste des commandes des utilisateurs</caption>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Nom de la commande</th>
+                            <th>Quantitée demandée</th>
+                            <th>État</th>
+                            <th>Création</th>
+                            <th>Dernière mise à jour</th>
+                        </tr>
+                    <?php for ($i=0; $i < $_SESSION['commande_complet']->count(); $i++) { ?>
+                        <tr>
+                            <td>{{ $_SESSION['commande_complet'][$i]->nom }}</td>
+                            <td>{{ $_SESSION['commande_complet'][$i]->prenom }}</td>
+                            <td>{{ $_SESSION['commande_complet'][$i]->nomCommandes }}</td>
+                            <td>{{ $_SESSION['commande_complet'][$i]->quantiteDemande }}</td>
+                            <td>{{ $_SESSION['commande_complet'][$i]->nomEtat }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_complet'][$i]->created_at)) }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_complet'][$i]->updated_at)) }}</td>
+                        </tr>
+                    <?php } ?>
+                    </table>
+                <?php } else { ?>
+                    <section id="commande_util">
+                        <h4>Liste des commandes des utilisateurs :</h4><br />
+                        <p>Il n'y a pas encore de commandes d'utilisateurs.</p>
+                    </section>
+                <?php } ?>
+            <?php }
+
+            if ($_SESSION['categorie'] == 'Valideur') {
+                if (isset($_SESSION['commande_valid'])) { ?>
+                    <table id="liste_commandes_utilisateur">
+                        <caption>Liste des commandes des utilisateurs</caption>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Nom de la commande</th>
+                            <th>Quantitée demandée</th>
+                            <th>État</th>
+                            <th>Création</th>
+                            <th>Dernière mise à jour</th>
+                            <th> </th>
+                        </tr>
+                    <?php for ($j=0; $j < $_SESSION['commande_valid']->count(); $j++) { ?>
+                        <tr>
+                            <td>{{ $_SESSION['commande_valid'][$j]->nom }}</td>
+                            <td>{{ $_SESSION['commande_valid'][$j]->prenom }}</td>
+                            <td>{{ $_SESSION['commande_valid'][$j]->nomCommandes }}</td>
+                            <td>{{ $_SESSION['commande_valid'][$j]->quantiteDemande }}</td>
+                            <td>
+                                {!! Form::open(['url' => 'majetatcommande']) !!}
+                                {{ Form::hidden('id', $_SESSION['commande_valid'][$j]->id) }}
+                                {{ Form::select('etat',[
+                                'Prise en compte' => 'Prise en compte',
+                                'Validé' => 'Validé',
+                                'En cours' => 'En cours',
+                                'Terminer' => 'Terminer'
+                                ], $_SESSION["commande_valid"][$j]->nomEtat) }}
+                            </td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_valid'][$j]->created_at)) }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_valid'][$j]->updated_at)) }}</td>
+                            <td>
+                                {{ Form::submit('Envoyer') }}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </table>
+                <?php } else { ?>
+                    <section id="commande_valid">
+                        <h4>Liste des commandes des utilisateurs :</h4><br />
+                        <p>Il n'y a pas encore de commandes d'utilisateurs.</p>
+                    </section>
+                <?php }
+            }
+
+            if (isset($_SESSION['commande_utilisateur'][0])) { ?>
+                <table id="liste_commandes">
+                    <caption>Liste des commandes</caption>
+                    <tr>
+                        <th>Nom de la commande</th>
+                        <th>Quantitée demandée</th>
+                        <th>État</th>
+                        <th>Création</th>
+                        <th>Dernière mise à jour</th>
+                    </tr>
+                <?php for ($k=0; $k < $_SESSION['commande_utilisateur']->count(); $k++) { ?>
+                    <tr>
+                        <td>{{ $_SESSION['commande_utilisateur'][$k]->nomCommandes }}</td>
+                        <td>{{ $_SESSION['commande_utilisateur'][$k]->quantiteDemande }}</td>
+                        <td>{{ $_SESSION['commande_utilisateur'][$k]->nomEtat }}</td>
+                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_utilisateur'][$k]->created_at)) }}</td>
+                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_utilisateur'][$k]->updated_at)) }}</td>
+                    </tr>
+                <?php } ?>
+                </table>
+            <?php } else { ?>
+                <section id="commande_pers">
+                    <h4>Liste des commandes :</h4><br />
+                    <p>Vous n'avez pas encore effectué de commandes.</p>
+                </section>
             <?php } ?>
         </section>
         <footer>
