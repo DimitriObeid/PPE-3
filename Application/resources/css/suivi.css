@@ -161,7 +161,20 @@ h4
     font-size: 18px;
 }
 
-#liste_commandes_utilisateur, #commande_util
+#choix_departements
+{
+    position: relative;
+    top: -40px;
+}
+
+#departements
+{
+    float: left;
+    font-weight: bold;
+    margin: 6px 5px 0px 0px;
+}
+
+#liste_commandes_utilisateur, #commande_util_dep, #commande_util, #liste_commandes_valid, #commande_valid
 {
     position: relative;
     top: -27px;

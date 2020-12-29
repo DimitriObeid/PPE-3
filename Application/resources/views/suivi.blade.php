@@ -13,7 +13,16 @@
                 document.body.innerHTML = contenuAImprimer;
                 window.print();
                 document.body.innerHTML = contenuOriginel;
+            }
+
+            function selectionServices() {
+                var service = document.getElementById("select_services").value;
+                if (service == 'Tous') {
+                    window.location.href = 'suivi';
+                } else {
+                    window.location.href = 'suivi?service=' + service ;
                 }
+            }
         </script>
     </head>
     <body>
@@ -53,12 +62,12 @@
                         <th class="tabl_comm">État</th>
                         <th class="tabl_comm">Dernière mise à jour</th>
                     </tr>
-                <?php for ($h=0; $h < $_SESSION['commandes']->count(); $h++) { ?>
+                <?php for ($f=0; $f < $_SESSION['commandes']->count(); $f++) { ?>
                     <tr>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomCommandes }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->quantiteDemande }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomEtat }}</td>
-                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes'][$h]->updated_at)) }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$f]->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$f]->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$f]->nomEtat }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes'][$f]->updated_at)) }}</td>
                     </tr>
                 <?php } ?>
                 </table>
@@ -67,36 +76,59 @@
         <div id="bouton_imprimer"><button onclick="imprimer('corps');">Imprimer</button></div>
         <section id="corps">
             <?php if ($_SESSION['categorie'] == 'Administrateur') {
-                $envoye = $envoyer ?? false;
-                if ($envoye) { ?>
-                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise a jour à bien été prise en compte</p><br />
-                    <?php header('Refresh: 5; url=demandesspecifiques');
-                }
-
                 if (isset($_SESSION['commande_complet'][0])) { ?>
-                    <table id="liste_commandes_utilisateur">
-                        <caption>Liste des commandes des utilisateurs</caption>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Nom de la commande</th>
-                            <th>Quantitée demandée</th>
-                            <th>État</th>
-                            <th>Création</th>
-                            <th>Dernière mise à jour</th>
-                        </tr>
-                    <?php for ($i=0; $i < $_SESSION['commande_complet']->count(); $i++) { ?>
-                        <tr>
-                            <td>{{ $_SESSION['commande_complet'][$i]->nom }}</td>
-                            <td>{{ $_SESSION['commande_complet'][$i]->prenom }}</td>
-                            <td>{{ $_SESSION['commande_complet'][$i]->nomCommandes }}</td>
-                            <td>{{ $_SESSION['commande_complet'][$i]->quantiteDemande }}</td>
-                            <td>{{ $_SESSION['commande_complet'][$i]->nomEtat }}</td>
-                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_complet'][$i]->created_at)) }}</td>
-                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commande_complet'][$i]->updated_at)) }}</td>
-                        </tr>
+                    <div id="choix_departements">
+                        <p id="departements">Départements :</p>
+                        <select id="select_services" onchange="selectionServices()">
+                            <option value="Tous">Tous</option>
+                        <?php for ($g=0; $g < $_SESSION['services']->count(); $g++) {
+                            if (isset($_GET['service']) AND $_GET['service'] == $_SESSION['services'][$g]->nomService) {
+                                echo '<option value='.$_SESSION['services'][$g]->nomService.' selected>'.$_SESSION['services'][$g]->nomService.'</option>';
+                            } else {
+                                echo '<option value='.$_SESSION['services'][$g]->nomService.'>'.$_SESSION['services'][$g]->nomService.'</option>';
+                            }
+                        } ?>
+                        </select>
+                    </div>
+
+                    <?php
+                        for ($h=0; $h < $_SESSION['services']->count(); $h++) {
+                            if (isset($_GET['service']) AND $_GET['service'] == $_SESSION['services'][$h]->nomService) {
+                                $nom = $_GET['service'];
+                            }
+                        }
+                        $nomService = $nom ?? 'commande_complet';
+
+                    if (isset($_SESSION["$nomService"][0])) { ?>
+                        <table id="liste_commandes_utilisateur">
+                            <caption>Liste des commandes des utilisateurs</caption>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Nom de la commande</th>
+                                <th>Quantitée demandée</th>
+                                <th>État</th>
+                                <th>Création</th>
+                                <th>Dernière mise à jour</th>
+                            </tr>
+                        <?php for ($i=0; $i < $_SESSION["$nomService"]->count(); $i++) { ?>
+                            <tr>
+                                <td>{{ $_SESSION["$nomService"][$i]->nom }}</td>
+                                <td>{{ $_SESSION["$nomService"][$i]->prenom }}</td>
+                                <td>{{ $_SESSION["$nomService"][$i]->nomCommandes }}</td>
+                                <td>{{ $_SESSION["$nomService"][$i]->quantiteDemande }}</td>
+                                <td>{{ $_SESSION["$nomService"][$i]->nomEtat }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION["$nomService"][$i]->created_at)) }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION["$nomService"][$i]->updated_at)) }}</td>
+                            </tr>
+                        <?php } ?>
+                        </table>
+                    <?php } else { ?>
+                        <section id="commande_util_dep">
+                            <h4>Liste des commandes des utilisateurs :</h4><br />
+                            <p>Il n'y a pas encore de commandes d'utilisateurs de ce département.</p>
+                        </section>
                     <?php } ?>
-                    </table>
                 <?php } else { ?>
                     <section id="commande_util">
                         <h4>Liste des commandes des utilisateurs :</h4><br />
@@ -106,8 +138,14 @@
             <?php }
 
             if ($_SESSION['categorie'] == 'Valideur') {
-                if (isset($_SESSION['commande_valid'])) { ?>
-                    <table id="liste_commandes_utilisateur">
+                $envoye = $envoyer ?? false;
+                if ($envoye) { ?>
+                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise a jour à bien été prise en compte</p><br />
+                    <?php header('Refresh: 5; url=demandesspecifiques');
+                }
+
+                if (isset($_SESSION['commande_valid'][0])) { ?>
+                    <table id="liste_commandes_valid">
                         <caption>Liste des commandes des utilisateurs</caption>
                         <tr>
                             <th>Nom</th>

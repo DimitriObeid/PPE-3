@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Commandes;
 use App\Models\Personnel;
 use App\Models\Fournitures;
+use App\Models\Service;
 
 class CommandesController extends Controller
 {
@@ -22,7 +23,15 @@ class CommandesController extends Controller
 
         $commande_complet = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat')->orderby('commandes.id', 'asc')->get();
 
-        $commande_valid = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat', 'nomService')->where('nomService', $_SESSION['service'])->orderby('commandes.id', 'asc')->get();
+        $commande_valid = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat', 'nomService')->where('nomService', $_SESSION['service'])->orderby('commandes.id', 'asc')->get();
+
+        $Service = Service::select('services.*')->get();
+
+        for ($i=0; $i < $Service->count(); $i++) {
+            $_SESSION[$Service[$i]->nomService] = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat', 'nomService')->where('nomService', $Service[$i]->nomService)->orderby('commandes.id', 'asc')->get();
+        }
+
+        $_SESSION['services'] = $Service;
 
         $_SESSION['commande_utilisateur'] = $commande_utilisateur;
         $_SESSION['commande_complet'] = $commande_complet;
