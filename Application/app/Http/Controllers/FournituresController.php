@@ -67,7 +67,7 @@ class FournituresController extends Controller
 
             $tropgros = true;
 
-            return view('fournitures', ['tropgros' => $tropgros]);
+            return view('fournitures', ['tropgros' => $tropgros, 'requete' => $request]);
         }
 
         $fichierTelecharger = $request->file('photo_fournitures');
@@ -86,7 +86,7 @@ class FournituresController extends Controller
                 break;
             default:
                 $invalide = true;
-                return view('fournitures', ['invalide' => $invalide]);
+                return view('fournitures', ['invalide' => $invalide, 'requete' => $request]);
                 break;
         }
 

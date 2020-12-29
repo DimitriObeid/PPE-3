@@ -111,15 +111,13 @@
 
                     $fichiertropgros = $tropgros ?? false;
                     if ($fichiertropgros) { ?>
-                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de l'image est trop volumineux ! (Max : 500Mo)</p><br />
-                        <?php header('Refresh: 5; url=fournitures');
-                    }
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le poids de l'image est trop volumineux ! (Max : 500ko)</p><br />
+                    <?php }
 
                     $formatinvalide = $invalide ?? false;
                     if ($formatinvalide) { ?>
                         <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Le format de l'image n'est pas valide !</p><br />
-                        <?php header('Refresh: 5; url=fournitures');
-                    }
+                    <?php }
 
                     $creation = $cree ?? false;
                     if ($creation) { ?>
@@ -147,10 +145,10 @@
                                     {!! Form::open(['url' => 'creationfourniture', 'files' => true]) !!}
                                     {{ Form::file('photo_fournitures', ['required'=>'true']) }}
                                 </td>
-                                <td>{{ Form::text('nom_fourniture', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau Maped', 'required'=>'true']) }}</td>
-                                <td>{{ Form::text('description_fourniture', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}</td>
+                                <td>{{ Form::text('nom_fourniture', $value = $requete->nom_fourniture ?? null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau Maped', 'required'=>'true']) }}</td>
+                                <td>{{ Form::text('description_fourniture', $value = $requete->description_fourniture ?? null, ['maxlength'=>'50', 'required'=>'true']) }}</td>
                                 <td>
-                                    {{ Form::number('quantite_disponible', '1', ['min'=>'1', 'max'=>'100']) }}
+                                    {{ Form::number('quantite_disponible', $requete->quantite_disponible ?? '1', ['min'=>'1', 'max'=>'100']) }}
                                     {{ Form::submit('Créer l\'article') }}
                                     {!! Form::close() !!}
                                 </td>
