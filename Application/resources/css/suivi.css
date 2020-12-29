@@ -163,6 +163,7 @@ h4
 
 #choix_departements
 {
+    width: 50%;
     position: relative;
     top: -40px;
 }
