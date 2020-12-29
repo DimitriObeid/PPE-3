@@ -16,6 +16,16 @@ class ServiceController extends Controller
             exit;
         }
 
+        $ServiceUtilvalideur = Service::join('personnels', 'services.id', 'personnels.idService')->join('categories', 'personnels.idCategorie', 'categories.id')->select('services.*', 'nom', 'prenom', 'mail', 'nomCategorie')->where('nomService', $_SESSION['service'])->where('nomCategorie', 'Valideur')->get();
+
+        $ServiceUtil = Service::select('services.*')->where('nomService', $_SESSION['service'])->get();
+
+        if (isset($ServiceUtilvalideur[0])) {
+            $_SESSION['service_util'] = $ServiceUtilvalideur;
+        } else {
+            $_SESSION['service_util'] = $ServiceUtil;
+        }
+
         return view('departements');
     }
 }

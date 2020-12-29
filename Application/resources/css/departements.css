@@ -160,6 +160,17 @@ th, td
     padding: 1% 0% 1% 0%;
 }
 
+h4
+{
+    font-size: 18px;
+}
+
+
+#service_util
+{
+    margin-bottom: 14%;
+}
+
 .confirm
 {
     background: #09b302;

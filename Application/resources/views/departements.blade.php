@@ -57,8 +57,31 @@
         </header>
         <section id="corps">
             <?php if ($_SESSION['categorie'] != 'Administrateur') {
-                  } else { ?>
-            <?php } ?>
+                  } ?>
+            <table id="service_util">
+                <caption>Départements d’attachement</caption>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Valideur rattaché</th>
+                    <th>Contact du valideur</th>
+                </tr>
+                <tr>
+                    <td>{{ $_SESSION['service_util'][0]->nomService }}</td>
+                    <td>{{ $_SESSION['service_util'][0]->descriptionService }}</td>
+                    <td><?php
+                        if (isset($_SESSION['service_util'][0]->nom)) {
+                            $nom_prenom = $_SESSION['service_util'][0]->nom.' '.$_SESSION['service_util'][0]->prenom;
+                        }
+                        echo $nom_prenom ?? 'Aucun';
+                        ?>
+                    </td>
+                    <td><?php
+                        $mail = $_SESSION['service_util'][0]->mail ?? 'N/A'; echo $mail;
+                        ?>
+                    </td>
+                </tr>
+            </table>
         </section>
         <footer>
             <?php if (isset($_SESSION['commandes_fini'][0])) { ?>
