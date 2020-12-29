@@ -6,7 +6,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categorie` (
+CREATE TABLE `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nomCategorie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descriptionCategorie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `commandes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -39,11 +39,11 @@ CREATE TABLE `demandes_specifiques` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `etat` (
+CREATE TABLE `etats` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nomEtat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descriptionEtat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -58,8 +58,10 @@ CREATE TABLE `fournitures` (
   `nomPhoto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descriptionFournitures` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantiteDisponible` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -88,10 +90,12 @@ CREATE TABLE `personnels` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `service` (
+CREATE TABLE `services` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nomService` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descriptionService` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -103,26 +107,32 @@ CREATE TABLE `service` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 
-INSERT INTO `categorie` VALUES (1,'Utilisateur','Toute personne ayant uniquement accès à la base des fournitures pour établir sa liste.');
-INSERT INTO `categorie` VALUES (2,'Valideur','La personne en charge de confirmer la demande auprès des SG.');
-INSERT INTO `categorie` VALUES (3,'Administrateur','Accès à toute la base et paramètre de l’outil et gestion des stocks');
+INSERT INTO `categories` VALUES (1,'Utilisateur','Toute personne ayant uniquement accès à la base des fournitures pour établir sa liste.');
+INSERT INTO `categories` VALUES (2,'Valideur','La personne en charge de confirmer la demande auprès des SG.');
+INSERT INTO `categories` VALUES (3,'Administrateur','Accès à toute la base et paramètre de l’outil et gestion des stocks');
 
 INSERT INTO `commandes` VALUES (1,3,5,2,'Lot de 4 stylo bic cristal',1,'2020-12-21 13:04:04','2020-12-21 13:04:04');
 INSERT INTO `commandes` VALUES (2,4,3,2,'Stylo bic cristal rouge',2,'2020-12-14 14:37:16','2020-12-20 09:21:54');
+INSERT INTO `commandes` VALUES (3,1,8,1,'Papier d\'imprimante Clairefontaine',3,'2020-12-28 14:56:32','2020-12-28 14:56:32');
 
 INSERT INTO `demandes_specifiques` VALUES (1,1,2,'Ciseau de bureau',1,'https://dactylbureau-calipage.fournituredebureau.com/Detail.aspx?ProductId=4315838','2020-12-09 08:33:41','2020-12-09 08:33:41');
+INSERT INTO `demandes_specifiques` VALUES (2,3,2,'Stick de colle UHU',3,'https://dactylbureau-calipage.fournituredebureau.com/Detail.aspx?ProductId=59108','2020-12-22 12:04:37','2020-12-22 14:27:17');
+INSERT INTO `demandes_specifiques` VALUES (3,1,2,'Vidéo projecteur',1,'Aucun lien fourni','2020-12-24 17:41:17','2020-12-24 17:41:17');
 
-INSERT INTO `etat` VALUES (1,'Prise en compte','La commande à été prise en compte.');
-INSERT INTO `etat` VALUES (2,'Validé','La commande à été validé.');
-INSERT INTO `etat` VALUES (3,'En cours','La commande est en cours.');
-INSERT INTO `etat` VALUES (4,'Terminer','La commande est terminé.');
+INSERT INTO `etats` VALUES (1,'Prise en compte','La commande à été prise en compte.');
+INSERT INTO `etats` VALUES (2,'Validé','La commande à été validé.');
+INSERT INTO `etats` VALUES (3,'En cours','La commande est en cours.');
+INSERT INTO `etats` VALUES (4,'Livré','La commande est livré.');
 
-INSERT INTO `fournitures` VALUES (1,'Stylo bic cristal bleu','stylo-bic-cristal-bleu','Stylo bic cristal bleu',5);
-INSERT INTO `fournitures` VALUES (2,'Stylo bic cristal vert','stylo-bic-cristal-vert','Stylo bic cristal vert',12);
-INSERT INTO `fournitures` VALUES (3,'Stylo bic cristal rouge','stylo-bic-cristal-rouge','Stylo bic cristal rouge',8);
-INSERT INTO `fournitures` VALUES (4,'Stylo bic cristal noir','stylo-bic-cristal-noir','Stylo bic cristal noir',3);
-INSERT INTO `fournitures` VALUES (5,'Lot de 4 stylo bic cristal','lot-stylo-bic-cristal','Lot de 4 stylo bic cristal',7);
-INSERT INTO `fournitures` VALUES (6,'Stylo bic quatre couleurs','stylo-bic-quatre-couleurs','Stylo bic quatre couleurs',16);
+INSERT INTO `fournitures` VALUES (1,'Stylo bic cristal bleu','stylo-bic-cristal-bleu','Stylo bic cristal bleu',7,'2020-12-10 14:22:28','2020-12-29 17:37:18');
+INSERT INTO `fournitures` VALUES (2,'Stylo bic cristal vert','stylo-bic-cristal-vert','Stylo bic cristal vert',9,'2020-12-10 14:22:28','2020-12-29 17:31:29');
+INSERT INTO `fournitures` VALUES (3,'Stylo bic cristal rouge','stylo-bic-cristal-rouge','Stylo bic cristal rouge',8,'2020-12-10 14:22:28','2020-12-27 11:01:47');
+INSERT INTO `fournitures` VALUES (4,'Stylo bic cristal noir','stylo-bic-cristal-noir','Stylo bic cristal noir',3,'2020-12-10 14:22:28','2020-12-10 14:22:28');
+INSERT INTO `fournitures` VALUES (5,'Lot de 4 stylo bic cristal','lot-stylo-bic-cristal','Lot de 4 stylo bic cristal',7,'2020-12-10 14:22:28','2020-12-10 14:22:28');
+INSERT INTO `fournitures` VALUES (6,'Stylo bic quatre couleurs','stylo-bic-quatre-couleurs','Stylo bic quatre couleurs',16,'2020-12-10 14:22:28','2020-12-10 14:22:28');
+INSERT INTO `fournitures` VALUES (7,'Ciseaux Maped','ciseaux-maped','Ciseaux de la marque Maped',11,'2020-12-27 13:47:04','2020-12-27 13:47:04');
+INSERT INTO `fournitures` VALUES (8,'Papier d\'imprimante Clairefontaine','papier-d\'imprimante-clairefontaine','Papier d\'imprimante Clairefontaine',21,'2020-12-27 14:00:27','2020-12-28 17:01:13');
+INSERT INTO `fournitures` VALUES (9,'Papier canson','papier-canson','Papier de la marque canson',10,'2020-12-29 17:37:47','2020-12-29 17:37:47');
 
 INSERT INTO `migrations` VALUES (1,'2020_10_28_144756_create_commandes_table',1);
 INSERT INTO `migrations` VALUES (2,'2020_10_28_144825_create_fournitures_table',1);
@@ -133,9 +143,9 @@ INSERT INTO `migrations` VALUES (6,'2020_11_14_093006_create_etat_table',1);
 INSERT INTO `migrations` VALUES (7,'2020_12_21_163451_create_demandes_specifiques_table',1);
 
 INSERT INTO `personnels` VALUES (1,3,3,'Admin','Admin','admin@admin.fr','$2y$10$ULxajwbfdCsNz5I/XNQkzerWXwozwXj09rNQKMQyCODEsYuO9Hpb.','','2020-12-05 14:51:03','2020-12-08 19:40:55');
-INSERT INTO `personnels` VALUES (2,1,2,'Test','Test','test@test.fr','$2y$10$q7GCKywYWI7YITg2cWM57.4JIU8tOTcbxhjiGzTzUtUebnxtjUMFC','','2020-12-06 12:32:17','2020-12-21 16:09:31');
+INSERT INTO `personnels` VALUES (2,1,2,'Test','Test','test@test.fr','$2y$10$q7GCKywYWI7YITg2cWM57.4JIU8tOTcbxhjiGzTzUtUebnxtjUMFC','Bienvenue à la CCI d\'Alsace Eurométropole !','2020-12-06 11:32:17','2020-12-29 18:05:16');
 INSERT INTO `personnels` VALUES (3,2,1,'Valideur','Valideur','valideur@valideur.fr','$2y$10$/JC5vIKOKlxzKdaR0u7IKuuzmtlv6sRhFDnpGct1iLuO4rFzFgYim','','2020-12-21 10:26:58','2020-12-21 16:07:15');
 
-INSERT INTO `service` VALUES (1,'Accueil','Le service d\'accueil de la CCI.');
-INSERT INTO `service` VALUES (2,'Comptabilité','Le service de comptabilité de la CCI.');
-INSERT INTO `service` VALUES (3,'Administration','Le service d\'administration de la CCI.');
+INSERT INTO `services` VALUES (1,'Accueil','Le service d\'accueil de la CCI.','2020-12-09 09:45:22','2020-12-09 09:45:22');
+INSERT INTO `services` VALUES (2,'Comptabilité','Le service de comptabilité de la CCI.','2020-12-09 09:45:22','2020-12-09 09:45:22');
+INSERT INTO `services` VALUES (3,'Administration','Le service d\'administration de la CCI.','2020-12-09 09:45:22','2020-12-09 09:45:22');
