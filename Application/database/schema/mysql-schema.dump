@@ -48,7 +48,7 @@ CREATE TABLE `etats` (
   `nomEtat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descriptionEtat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -123,6 +123,7 @@ INSERT INTO `etats` VALUES (1,'Prise en compte','La commande à été prise en c
 INSERT INTO `etats` VALUES (2,'Validé','La commande à été validé.');
 INSERT INTO `etats` VALUES (3,'En cours','La commande est en cours.');
 INSERT INTO `etats` VALUES (4,'Livré','La commande est livré.');
+INSERT INTO `etats` VALUES (5,'Annulé','La commande à été annulé.');
 
 INSERT INTO `fournitures` VALUES (1,'Stylo bic cristal bleu','stylo-bic-cristal-bleu','Stylo bic cristal bleu',7,'2020-12-10 14:22:28','2020-12-29 17:37:18');
 INSERT INTO `fournitures` VALUES (2,'Stylo bic cristal vert','stylo-bic-cristal-vert','Stylo bic cristal vert',9,'2020-12-10 14:22:28','2020-12-29 17:31:29');

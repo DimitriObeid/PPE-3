@@ -161,30 +161,35 @@ h4
     font-size: 18px;
 }
 
-#choix_departements
+#choix_departements, #choix_etat
 {
     width: 50%;
     position: relative;
     top: -40px;
 }
 
-#departements
+#departements, #etats
 {
     float: left;
     font-weight: bold;
     margin: 6px 5px 0px 0px;
 }
 
-#liste_commandes_utilisateur, #commande_util_dep, #commande_util, #liste_commandes_valid, #commande_valid
+#liste_commandes_utilisateur, #commande_util_dep, #commande_util, #liste_commandes, #commande_pers, #commande_pers_etat
 {
     position: relative;
-    top: -27px;
+    top: -10px;
     margin-bottom: 3%;
 }
 
-#liste_commandes, #commande_pers
+#liste_commandes_valid, #commande_valid
 {
     margin-bottom: 14%;
+}
+
+#livre
+{
+    margin-bottom: 5%;
 }
 
 table
@@ -202,6 +207,8 @@ th, td
 .confirm
 {
     background: #09b302;
+    position: relative;
+    top: -10px;
     border-radius: 5px;
     text-align: center;
     padding: 0.3%;

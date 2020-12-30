@@ -13,7 +13,16 @@
                 document.body.innerHTML = contenuAImprimer;
                 window.print();
                 document.body.innerHTML = contenuOriginel;
+            }
+
+            function selectionServices() {
+                var service = document.getElementById("select_services").value;
+                if (service == 'Tous') {
+                    window.location.href = 'demandesspecifiques';
+                } else {
+                    window.location.href = 'demandesspecifiques?service=' + service ;
                 }
+            }
         </script>
     </head>
     <body>
@@ -53,12 +62,12 @@
                         <th class="tabl_comm">État</th>
                         <th class="tabl_comm">Dernière mise à jour</th>
                     </tr>
-                <?php for ($h=0; $h < $_SESSION['commandes']->count(); $h++) { ?>
+                <?php for ($g=0; $g < $_SESSION['commandes']->count(); $g++) { ?>
                     <tr>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomCommandes }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->quantiteDemande }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomEtat }}</td>
-                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes'][$h]->updated_at)) }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$g]->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$g]->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes'][$g]->nomEtat }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes'][$g]->updated_at)) }}</td>
                     </tr>
                 <?php } ?>
                 </table>
@@ -69,149 +78,222 @@
         <?php } ?>
         <section id="corps">
             <?php if ($_SESSION['categorie'] != 'Administrateur') {
-                    $confirm = $vrai ?? false;
-                    if ($confirm) { ?>
-                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande a bien été envoyée</p><br />
+                $confirm = $vrai ?? false;
+                if ($confirm) { ?>
+                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Votre demande a bien été envoyée</p><br />
+                <?php header('Refresh: 5; url=demandesspecifiques');
+                }
+
+                $envoye = $envoyer ?? false;
+                if ($envoye) { ?>
+                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La demande à bien été mise à jour</p><br />
                     <?php header('Refresh: 5; url=demandesspecifiques');
-                    }
+                } ?>
 
-                    $envoye = $envoyer ?? false;
-                    if ($envoye) { ?>
-                        <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise a jour à bien été prise en compte</p><br />
-                        <?php header('Refresh: 5; url=demandesspecifiques');
-                    } ?>
+                <h4>Effectuer une demande spécifique :</h4><br />
+                {!! Form::open(['url' => 'creationdemande']) !!}
+                {{ Form::label('nom_demande', 'Nom de la demande :') }}
+                {{ Form::text('nom_demande', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Lampe de projecteur', 'required'=>'true']) }}
+                {{ Form::label('quantite_demande', 'Quantitée demandée :') }}
+                {{ Form::number('quantite_demande', '1', ['min'=>'1', 'max'=>'50']) }}
+                {{ Form::label('lien_produit', 'Lien vers le produit :') }}
+                {{ Form::text('lien_produit', $value = null, ['maxlength'=>'200', 'placeholder'=>'Optionnel']) }}
+                {{ Form::submit('Envoyer la demande') }}
+                {!! Form::close() !!}
 
-                    <h4>Effectuer une demande spécifique :</h4><br />
-                    {!! Form::open(['url' => 'creationdemande']) !!}
-                    {{ Form::label('nom_demande', 'Nom de la demande :') }}
-                    {{ Form::text('nom_demande', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Lampe de projecteur', 'required'=>'true']) }}
-                    {{ Form::label('quantite_demande', 'Quantitée demandée :') }}
-                    {{ Form::number('quantite_demande', '1', ['min'=>'1', 'max'=>'50']) }}
-                    {{ Form::label('lien_produit', 'Lien vers le produit :') }}
-                    {{ Form::text('lien_produit', $value = null, ['maxlength'=>'200', 'placeholder'=>'Optionnel']) }}
-                    {{ Form::submit('Envoyer la demande') }}
-                    {!! Form::close() !!}
-
-                    <?php if ($_SESSION['categorie'] == 'Valideur') {
-                        if (isset($_SESSION['demandes_valid'][0])) { ?>
-                            <table id="tab_ut">
-                                <caption class="titre_demande">Liste des demandes des utilisateurs</caption>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Nom de la demande</th>
-                                    <th>Quantitée demandée</th>
-                                    <th>Lien du produit</th>
-                                    <th>État</th>
-                                    <th>Création</th>
-                                    <th>Dernière mise à jour</th>
-                                    <th> </th>
-                                </tr>
-                                <?php for ($i=0; $i < $_SESSION['demandes_valid']->count(); $i++) { ?>
-                                    <tr>
-                                        <td>{{ $_SESSION['demandes_valid'][$i]->nom }}</td>
-                                        <td>{{ $_SESSION['demandes_valid'][$i]->prenom }}</td>
-                                        <td>{{ $_SESSION['demandes_valid'][$i]->nomDemande }}</td>
-                                        <td>{{ $_SESSION['demandes_valid'][$i]->quantiteDemande }}</td>
-                                        <td class="lien_produit">
-                                            <?php if ($_SESSION['demandes_valid'][$i]->lienProduit != 'Aucun lien fourni') { ?>
-                                                <a href="{{ $_SESSION['demandes_valid'][$i]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$i]->lienProduit }}</a>
-                                            <?php } else {
-                                                echo $_SESSION['demandes_valid'][$i]->lienProduit;
-                                            } ?>
-                                        </td>
-                                        <td>
-                                            {!! Form::open(['url' => 'majetatdemande']) !!}
-                                            {{ Form::hidden('id', $_SESSION['demandes_valid'][$i]->id) }}
-                                            {{ Form::select('etat',[
-                                            'Prise en compte' => 'Prise en compte',
-                                            'Validé' => 'Validé',
-                                            'En cours' => 'En cours',
-                                            'Terminer' => 'Terminer'
-                                            ], $_SESSION["demandes_valid"][$i]->nomEtat) }}
-                                        </td>
-                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$i]->created_at)) }}</td>
-                                        <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$i]->updated_at)) }}</td>
-                                        <td>
-                                            {{ Form::submit('Envoyer') }}
-                                            {!! Form::close() !!}
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </table>
-                        <?php } else { ?>
-                            <section id="demandes_utilisateur">
-                                <h4>Demandes utilisateurs :</h4><br />
-                                <p>Vous n'avez pas de demandes d'utilisateurs.</p>
-                            </section>
-                        <?php   }
-                    }
-                    if (isset($_SESSION['demandes_pers'][0])) { ?>
-                        <table id="demandes_pers">
-                            <caption class="titre_demande">Liste des demandes effectuées :</caption>
+                <?php if ($_SESSION['categorie'] == 'Valideur') {
+                    if (isset($_SESSION['demandes_valid'][0])) { ?>
+                        <table id="tab_ut">
+                            <caption class="titre_demande">Liste des demandes des utilisateurs</caption>
                             <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
                                 <th>Nom de la demande</th>
                                 <th>Quantitée demandée</th>
                                 <th>Lien du produit</th>
                                 <th>État</th>
                                 <th>Création</th>
                                 <th>Dernière mise à jour</th>
+                                <th>
+                                <?php for ($h=0; $h < $_SESSION['demandes_valid']->count(); $h++) {
+                                    if (($_SESSION["demandes_valid"][$h]->nomEtat == 'Prise en compte') AND !isset($afficher)) {
+                                        echo 'Modifier l\'état';
+                                        $afficher = true;
+                                    }
+                                } ?>
+                                </th>
                             </tr>
-                        <?php for ($j=0; $j < $_SESSION['demandes_pers']->count(); $j++) { ?>
+                            <?php for ($i=0; $i < $_SESSION['demandes_valid']->count(); $i++) { ?>
+                                <tr>
+                                    <td>{{ $_SESSION['demandes_valid'][$i]->nom }}</td>
+                                    <td>{{ $_SESSION['demandes_valid'][$i]->prenom }}</td>
+                                    <td>{{ $_SESSION['demandes_valid'][$i]->nomDemande }}</td>
+                                    <td>{{ $_SESSION['demandes_valid'][$i]->quantiteDemande }}</td>
+                                    <td class="lien_produit">
+                                        <?php if ($_SESSION['demandes_valid'][$i]->lienProduit != 'Aucun lien fourni') { ?>
+                                            <a href="{{ $_SESSION['demandes_valid'][$i]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_valid'][$i]->lienProduit }}</a>
+                                        <?php } else {
+                                            echo $_SESSION['demandes_valid'][$i]->lienProduit;
+                                        } ?>
+                                    </td>
+                                    <td>{{ $_SESSION["demandes_valid"][$i]->nomEtat }}</td>
+                                    <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$i]->created_at)) }}</td>
+                                    <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_valid'][$i]->updated_at)) }}</td>
+                                    <td>
+                                    <?php if ($_SESSION["demandes_valid"][$i]->nomEtat == 'Prise en compte') { ?>
+                                        {!! Form::open(['url' => 'majetatdemande']) !!}
+                                        {{ Form::hidden('id', $_SESSION['demandes_valid'][$i]->id) }}
+                                        {{ Form::hidden('id_etat', '2') }}
+                                        {{ Form::submit('Valider') }}
+                                        {!! Form::close() !!}
+                                    <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    <?php } else { ?>
+                        <section id="demandes_utilisateur">
+                            <h4>Demandes utilisateurs :</h4><br />
+                            <p>Vous n'avez pas de demandes d'utilisateurs.</p>
+                        </section>
+                    <?php }
+                }
+                if (isset($_SESSION['demandes_pers'][0])) { ?>
+                    <table id="demandes_pers">
+                        <caption class="titre_demande">Liste des demandes effectuées :</caption>
+                        <tr>
+                            <th>Nom de la demande</th>
+                            <th>Quantitée demandée</th>
+                            <th>Lien du produit</th>
+                            <th>État</th>
+                            <th>Création</th>
+                            <th>Dernière mise à jour</th>
+                        </tr>
+                    <?php for ($j=0; $j < $_SESSION['demandes_pers']->count(); $j++) { ?>
+                        <tr>
+                            <td>{{ $_SESSION['demandes_pers'][$j]->nomDemande }}</td>
+                            <td>{{ $_SESSION['demandes_pers'][$j]->quantiteDemande }}</td>
+                            <td class="lien_produit">
+                                <?php if ($_SESSION['demandes_pers'][$j]->lienProduit != 'Aucun lien fourni') { ?>
+                                <a href="{{ $_SESSION['demandes_pers'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_pers'][$j]->lienProduit }}</a>
+                                <?php } else {
+                                    echo $_SESSION['demandes_pers'][$j]->lienProduit;
+                                } ?>
+                            </td>
+                            <td>{{ $_SESSION['demandes_pers'][$j]->nomEtat }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$j]->created_at)) }}</td>
+                            <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$j]->updated_at)) }}</td>
+                        </tr>
+                    <?php } ?>
+                    </table>
+                <?php } else { ?>
+                    <section id="demandes_spec">
+                        <h4>Demandes spécifiques :</h4><br />
+                        <p>Vous n'avez pas encore effectué de demandes.</p>
+                    </section>
+                <?php }
+            } else {
+                if (isset($_SESSION['demandes'][0])) { ?>
+                    <div id="choix_departements">
+                        <p id="departements">Départements :</p>
+                        <select id="select_services" onchange="selectionServices()">
+                            <option value="Tous">Tous</option>
+                        <?php for ($k=0; $k < $_SESSION['services']->count(); $k++) {
+                            if (isset($_GET['service']) AND $_GET['service'] == $_SESSION['services'][$k]->nomService) {
+                                echo '<option value="'.$_SESSION['services'][$k]->nomService.'" selected>'.$_SESSION['services'][$k]->nomService.'</option>';
+                            } else {
+                                echo '<option value="'.$_SESSION['services'][$k]->nomService.'">'.$_SESSION['services'][$k]->nomService.'</option>';
+                            }
+                        } ?>
+                        </select>
+                    </div>
+
+                    <?php for ($l=0; $l < $_SESSION['services']->count(); $l++) {
+                        if (isset($_GET['service']) AND $_GET['service'] == $_SESSION['services'][$l]->nomService) {
+                            $nom = $_GET['service'];
+                        }
+                    }
+                    $nomService = $nom ?? 'demandes';
+
+                    $envoye = $envoyer ?? false;
+                    if ($envoye) { ?>
+                        <p id="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La demande à bien été mise à jour</p><br />
+                        <?php header('Refresh: 5; url=demandesspecifiques');
+                    }
+
+                    if (isset($_SESSION["$nomService"][0])) { ?>
+                        <table id="demandes_list">
+                            <caption>Liste des demandes spécifiques</caption>
                             <tr>
-                                <td>{{ $_SESSION['demandes_pers'][$j]->nomDemande }}</td>
-                                <td>{{ $_SESSION['demandes_pers'][$j]->quantiteDemande }}</td>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Nom de la demande</th>
+                                <th>Quantitée demandée</th>
+                                <th>Lien du produit</th>
+                                <th>État</th>
+                                <th>Création</th>
+                                <th>Dernière mise à jour</th>
+                                <th>
+                                <?php for ($m=0; $m < $_SESSION["$nomService"]->count(); $m++) {
+                                    if (($_SESSION["$nomService"][$m]->nomEtat == 'Validé' OR $_SESSION["$nomService"][$m]->nomEtat == 'En cours') AND !isset($afficher)) {
+                                        echo 'Modifier l\'état';
+                                        $afficher = true;
+                                    }
+                                } ?>
+                                </th>
+                            </tr>
+                        <?php for ($n=0; $n < $_SESSION["$nomService"]->count(); $n++) { ?>
+                            <tr>
+                                <td>{{ $_SESSION["$nomService"][$n]->nom }}</td>
+                                <td>{{ $_SESSION["$nomService"][$n]->prenom }}</td>
+                                <td>{{ $_SESSION["$nomService"][$n]->nomDemande }}</td>
+                                <td>{{ $_SESSION["$nomService"][$n]->quantiteDemande }}</td>
                                 <td class="lien_produit">
-                                    <?php if ($_SESSION['demandes_pers'][$j]->lienProduit != 'Aucun lien fourni') { ?>
-                                    <a href="{{ $_SESSION['demandes_pers'][$j]->lienProduit }}" target="_blank">{{ $_SESSION['demandes_pers'][$j]->lienProduit }}</a>
+                                    <?php if ($_SESSION["$nomService"][$n]->lienProduit != 'Aucun lien fourni') { ?>
+                                        <a href="<?php echo $_SESSION["$nomService"][$n]->lienProduit; ?>" target="_blank">{{ $_SESSION["$nomService"][$n]->lienProduit }}</a>
                                     <?php } else {
-                                        echo $_SESSION['demandes_pers'][$j]->lienProduit;
+                                        echo $_SESSION["$nomService"][$n]->lienProduit;
                                     } ?>
                                 </td>
-                                <td>{{ $_SESSION['demandes_pers'][$j]->nomEtat }}</td>
-                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$j]->created_at)) }}</td>
-                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes_pers'][$j]->updated_at)) }}</td>
+                                <td>{{ $_SESSION["$nomService"][$n]->nomEtat }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION["$nomService"][$n]->created_at)) }}</td>
+                                <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION["$nomService"][$n]->updated_at)) }}</td>
+                                <td>
+                                <?php if ($_SESSION["$nomService"][$n]->nomEtat == 'Validé') { ?>
+                                    {!! Form::open(['url' => 'majetatdemande']) !!}
+                                    {{ Form::hidden('id', $_SESSION["$nomService"][$n]->id) }}
+                                    {{ Form::hidden('id_etat', '3') }}
+                                    {{ Form::submit('En Cours') }}
+                                    {!! Form::close() !!}
+                                <?php } elseif ($_SESSION["$nomService"][$n]->nomEtat == 'En cours') { ?>
+                                    {!! Form::open(['url' => 'majetatdemande', 'id' => 'livre']) !!}
+                                    {{ Form::hidden('id', $_SESSION["$nomService"][$n]->id) }}
+                                    {{ Form::hidden('id_etat', '4') }}
+                                    {{ Form::submit('Livré') }}
+                                    {!! Form::close() !!}
+
+                                    {!! Form::open(['url' => 'majetatdemande']) !!}
+                                    {{ Form::hidden('id', $_SESSION["$nomService"][$n]->id) }}
+                                    {{ Form::hidden('id_etat', '5') }}
+                                    {{ Form::submit('Annulé') }}
+                                    {!! Form::close() !!}
+                                <?php } ?>
+                                </td>
                             </tr>
                         <?php } ?>
                         </table>
-              <?php } else { ?>
-                        <section id="demandes_spec">
-                            <h4>Demandes spécifiques :</h4><br />
-                            <p>Vous n'avez pas encore effectué de demandes.</p>
+                    <?php } else { ?>
+                        <section id="demande_util_dep">
+                            <h4>Liste des demandes des utilisateurs :</h4><br />
+                            <p>Il n'y a pas encore de demandes d'utilisateurs de ce département.</p>
                         </section>
-              <?php }
-                  } else { ?>
-                      <table id="demandes_list">
-                          <caption>Liste des demandes spécifiques</caption>
-                          <tr>
-                              <th>Nom</th>
-                              <th>Prénom</th>
-                              <th>Nom de la demande</th>
-                              <th>Quantitée demandée</th>
-                              <th>Lien du produit</th>
-                              <th>État</th>
-                              <th>Création</th>
-                              <th>Dernière mise à jour</th>
-                          </tr>
-                      <?php for ($k=0; $k < $_SESSION['demandes']->count(); $k++) { ?>
-                          <tr>
-                              <td>{{ $_SESSION['demandes'][$k]->nom }}</td>
-                              <td>{{ $_SESSION['demandes'][$k]->prenom }}</td>
-                              <td>{{ $_SESSION['demandes'][$k]->nomDemande }}</td>
-                              <td>{{ $_SESSION['demandes'][$k]->quantiteDemande }}</td>
-                              <td class="lien_produit">
-                                  <?php if ($_SESSION['demandes'][$k]->lienProduit != 'Aucun lien fourni') { ?>
-                                  <a href="{{ $_SESSION['demandes'][$k]->lienProduit }}" target="_blank">{{ $_SESSION['demandes'][$k]->lienProduit }}</a>
-                                  <?php } else {
-                                      echo $_SESSION['demandes'][$k]->lienProduit;
-                                  } ?>
-                              </td>
-                              <td>{{ $_SESSION['demandes'][$k]->nomEtat }}</td>
-                              <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->created_at)) }}</td>
-                              <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['demandes'][$k]->updated_at)) }}</td>
-                          </tr>
-                      <?php } ?>
-                      </table>
+                    <?php } ?>
+                <?php } else { ?>
+                    <section id="demande_util">
+                        <h4>Liste des demandes des utilisateurs :</h4><br />
+                        <p>Il n'y a pas encore de demandes d'utilisateurs.</p>
+                    </section>
+                <?php } ?>
             <?php } ?>
         </section>
         <footer>
@@ -224,12 +306,12 @@
                         <th class="tabl_comm">État</th>
                         <th class="tabl_comm">Dernière mise à jour</th>
                     </tr>
-                <?php for ($m=0; $m < $_SESSION['commandes_fini']->count(); $m++) { ?>
+                <?php for ($o=0; $o < $_SESSION['commandes_fini']->count(); $o++) { ?>
                     <tr>
-                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$m]->nomCommandes }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$m]->quantiteDemande }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$m]->nomEtat }}</td>
-                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_fini'][$m]->updated_at)) }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$o]->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$o]->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $_SESSION['commandes_fini'][$o]->nomEtat }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_fini'][$o]->updated_at)) }}</td>
                     </tr>
                 <?php } ?>
                 </table>

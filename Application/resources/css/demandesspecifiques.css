@@ -177,11 +177,30 @@ h4
     margin-bottom: 14%;
 }
 
-#demandes_list
+#choix_departements
+{
+    width: 50%;
+    position: relative;
+    top: -40px;
+}
+
+#departements
+{
+    float: left;
+    font-weight: bold;
+    margin: 6px 5px 0px 0px;
+}
+
+#demandes_list, #demande_util_dep, #demande_util
 {
     position: relative;
     top: -10px;
     margin-bottom: 14%;
+}
+
+#livre
+{
+    margin-bottom: 5%;
 }
 
 .titre_demande
@@ -209,6 +228,18 @@ th, td
 .confirm
 {
     background: #09b302;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.3%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#confirm
+{
+    background: #09b302;
+    position: relative;
+    top: -10px;
     border-radius: 5px;
     text-align: center;
     padding: 0.3%;

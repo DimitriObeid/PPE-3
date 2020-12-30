@@ -53,11 +53,22 @@ class PersonnelController extends Controller
         }
         elseif ($request->email == $Personnel[0]->mail AND password_verify($request->mdp, $Personnel[0]->pass))
         {
-            $commande = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'En cours')->orderby('commandes.id', 'asc')->get();
+            $commande_fini = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'Livré')->orWhere('etats.nomEtat', 'Annulé')->orderby('commandes.id', 'asc')->get();
 
-            $commande_fini = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'Terminer')->orderby('commandes.id', 'asc')->get();
+            for ($i=0; $i < $commande_fini->count(); $i++) {
+                $dateActuel = date_create(date('Y-m-d'));
+                $dateCommande = date_create(date('Y-m-d', strtotime($commande_fini[$i]->updated_at)));
+                $diff = date_diff($dateActuel, $dateCommande);
+                if ($diff->format('%a') > 14) {
+                    $commande_suppr = Commandes::where('id', $commande_fini[$i]->id)->delete();
 
-            $commande_liste = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.created_at', 'commandes.updated_at', 'personnels.nom', 'personnels.prenom', 'etats.nomEtat')->where('etats.nomEtat', 'En cours')->orderby('commandes.updated_at', 'asc')->get();
+                    $commande_fini = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'Livré')->orWhere('etats.nomEtat', 'Annulé')->orderby('commandes.id', 'asc')->get();
+                }
+            }
+
+            $commande = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'En cours')->orderby('commandes.id', 'asc')->get();
+
+            $commande_liste = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.created_at', 'commandes.updated_at', 'personnels.nom', 'personnels.prenom', 'etats.nomEtat')->where('etats.nomEtat', 'En cours')->orderby('commandes.updated_at', 'asc')->get();
 
             $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
@@ -108,7 +119,11 @@ class PersonnelController extends Controller
 
     public function message(Request $request)
     {
-        $Personnel = Personnel::where('mail', $request->mail)->update(['message' => $request->message]);
+        if ($request->mail == 'tous') {
+            $Personnel = Personnel::select('*')->update(['message' => $request->message]);
+        } else {
+            $Personnel = Personnel::where('mail', $request->mail)->update(['message' => $request->message]);
+        }
 
         session_start();
 

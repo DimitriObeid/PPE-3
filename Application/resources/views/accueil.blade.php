@@ -71,7 +71,7 @@
 
                 if ($_SESSION['categorie'] != 'Administrateur') {
                     if ($_SESSION['message'] != '') { ?>
-                        <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
+                        <section id="message">{{ $_SESSION["message"] }}</section>
                     <?php } ?>
 
                     <table id="liste_fourniture">
@@ -139,7 +139,7 @@
                     }
 
                     if ($_SESSION['message'] != '') { ?>
-                        <section id="message"><h4>Message :</h4>{{ $_SESSION["message"] }}</section>
+                        <section id="message">{{ $_SESSION["message"] }}</section>
                     <?php } ?>
 
                     <h4>Modification du logo :</h4>
@@ -157,6 +157,7 @@
                     {{ Form::textarea('message', $value = null, ['required'=>'true']) }}
                     {{ Form::label('mail', 'Utilisateur :', ['id'=>'label_select']) }}
                         <select name="mail">
+                            <option value="tous">Tous</option>
                             <?php for ($j=0; $j < $_SESSION['personnels']->count(); $j++) {
                                 echo '<option value='.$_SESSION['personnels'][$j]->mail.'>'.$_SESSION['personnels'][$j]->mail.'</option>';
                             } ?>

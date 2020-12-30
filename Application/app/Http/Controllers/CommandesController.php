@@ -7,6 +7,7 @@ use App\Models\Commandes;
 use App\Models\Personnel;
 use App\Models\Fournitures;
 use App\Models\Service;
+use App\Models\Etat;
 
 class CommandesController extends Controller
 {
@@ -19,9 +20,9 @@ class CommandesController extends Controller
             exit;
         }
 
-        $commande_utilisateur = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.*', 'mail', 'nomEtat')->where('mail', $_SESSION['mail'])->orderby('commandes.id', 'asc')->get();
+        $commande_utilisateur = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'mail', 'nomEtat')->where('mail', $_SESSION['mail'])->orderby('commandes.id', 'asc')->get();
 
-        $commande_complet = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat')->orderby('commandes.id', 'asc')->get();
+        $commande_complet = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat')->orderby('commandes.id', 'asc')->get();
 
         $commande_valid = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat', 'nomService')->where('nomService', $_SESSION['service'])->orderby('commandes.id', 'asc')->get();
 
@@ -31,8 +32,14 @@ class CommandesController extends Controller
             $_SESSION[$Service[$i]->nomService] = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'nom', 'prenom', 'nomEtat', 'nomService')->where('nomService', $Service[$i]->nomService)->orderby('commandes.id', 'asc')->get();
         }
 
-        $_SESSION['services'] = $Service;
+        $Etat = Etat::select('*')->get();
 
+        for ($i=0; $i < $Etat->count(); $i++) {
+            $_SESSION[$Etat[$i]->nomEtat] = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.*', 'nom', 'prenom', 'mail', 'nomEtat')->where('mail', $_SESSION['mail'])->where('nomEtat', $Etat[$i]->nomEtat)->orderby('commandes.id', 'asc')->get();
+        }
+
+        $_SESSION['etats'] = $Etat;
+        $_SESSION['services'] = $Service;
         $_SESSION['commande_utilisateur'] = $commande_utilisateur;
         $_SESSION['commande_complet'] = $commande_complet;
         $_SESSION['commande_valid'] = $commande_valid;

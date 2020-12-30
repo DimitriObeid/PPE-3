@@ -56,7 +56,7 @@
             <?php } ?>
         </header>
         <section id="corps">
-            <?php if ($_SESSION['categorie'] != 'Administrateur') {
+            <?php if ($_SESSION['categorie'] == 'Administrateur') {
                   } ?>
             <table id="service_util">
                 <caption>Départements d’attachement</caption>

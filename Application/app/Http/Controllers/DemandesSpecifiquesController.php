@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DemandesSpecifiques;
 use App\Models\Personnel;
+use App\Models\Service;
 
 class DemandesSpecifiquesController extends Controller
 {
@@ -23,6 +24,26 @@ class DemandesSpecifiquesController extends Controller
 
         $demandes_valid = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->select('demandes_specifiques.*', 'nomEtat', 'nom', 'prenom', 'nomService')->where('nomService', $_SESSION['service'])->orderby('demandes_specifiques.id', 'asc')->get();
 
+        $demande_fini = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->where('etats.nomEtat', 'Livré')->orWhere('etats.nomEtat', 'Annulé')->orderby('demandes_specifiques.id', 'asc')->get();
+
+        for ($i=0; $i < $demande_fini->count(); $i++) {
+            $dateActuel = date_create(date('Y-m-d'));
+            $dateCommande = date_create(date('Y-m-d', strtotime($demande_fini[$i]->updated_at)));
+            $diff = date_diff($dateActuel, $dateCommande);
+            if ($diff->format('%a') > 14) {
+                $commande_suppr = DemandesSpecifiques::where('id', $demande_fini[$i]->id)->delete();
+
+                $demande_fini = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->where('etats.nomEtat', 'Livré')->orWhere('etats.nomEtat', 'Annulé')->orderby('demandes_specifiques.id', 'asc')->get();
+            }
+        }
+
+        $Service = Service::select('services.*')->get();
+
+        for ($j=0; $j < $Service->count(); $j++) {
+            $_SESSION[$Service[$j]->nomService] = DemandesSpecifiques::join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->join('services', 'personnels.idService', 'services.id')->join('etats', 'demandes_specifiques.idEtat', 'etats.id')->select('demandes_specifiques.*', 'nom', 'prenom', 'nomEtat', 'nomService')->where('nomService', $Service[$j]->nomService)->orderby('demandes_specifiques.id', 'asc')->get();
+        }
+
+        $_SESSION['services'] = $Service;
         $_SESSION['demandes'] = $demandes;
         $_SESSION['demandes_pers'] = $demandes_pers;
         $_SESSION['demandes_valid'] = $demandes_valid;
