@@ -32,19 +32,6 @@ Route::post('/user_login','UsersController@login');
 Route::get('/logout','UsersController@logout');
 //////  valideur ////////
 
-
-//////  Authentications des utilisateurs ///////////
-Route::group(['middleware'=>'FrontLogin_middleware'],function (){
-    Route::get('/myaccount','UsersController@account');
-    Route::put('/update-profile/{id}','UsersController@updateprofile');
-    Route::put('/update-password/{id}','UsersController@updatepassword');
-    Route::get('/check-out','CheckOutController@index');
-    Route::post('/submit-checkout','CheckOutController@submitcheckout');
-    Route::get('/order-review','OrdersController@index');
-    Route::post('/submit-order','OrdersController@order');
-    Route::get('/cod','OrdersController@cod');
-    Route::get('/paypal','OrdersController@paypal');
-});
 ///
 
 /* Admin */
