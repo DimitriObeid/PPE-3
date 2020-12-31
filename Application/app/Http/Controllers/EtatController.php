@@ -11,6 +11,11 @@ class EtatController extends Controller
 {
     public function majetatdemande(Request $request)
     {
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'id_etat' => 'required|min:2|max:5',
+        ]);
+
         session_start();
 
         $DemandesSpecifiques = DemandesSpecifiques::where('id', $request->id)->update(['idEtat' => $request->id_etat]);
@@ -32,6 +37,11 @@ class EtatController extends Controller
 
     public function majetatcommande(Request $request)
     {
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'id_etat' => 'required|min:2|max:5',
+        ]);
+
         session_start();
 
         $Commandes = Commandes::where('id', $request->id)->update(['idEtat' => $request->id_etat]);

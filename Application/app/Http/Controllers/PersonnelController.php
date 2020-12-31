@@ -20,6 +20,15 @@ class PersonnelController extends Controller
 
     public function verif_creer(Request $request)
     {
+        $validatedData = $request->validate([
+            'nom' => 'required|max:50',
+            'prenom' => 'required|max:50',
+            'email' => 'required|max:50|email',
+            'mdp' => 'required',
+            'categorie' => 'required',
+            'service' => 'required',
+        ]);
+
         $Personnel = new Personnel;
 
         $Personnel->nom = $request->nom;
@@ -37,6 +46,11 @@ class PersonnelController extends Controller
 
     public function connexion(Request $request)
     {
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'mdp' => 'required',
+        ]);
+
         $Personnel = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->where('mail', $request->email)->get();
 
         $test = $Personnel->last();
@@ -119,6 +133,11 @@ class PersonnelController extends Controller
 
     public function message(Request $request)
     {
+        $validatedData = $request->validate([
+            'message' => 'required|max:1500',
+            'mail' => 'required',
+        ]);
+
         if ($request->mail == 'tous') {
             $Personnel = Personnel::select('*')->update(['message' => $request->message]);
         } else {
@@ -141,6 +160,10 @@ class PersonnelController extends Controller
 
     public function supprimer(Request $request)
     {
+        $validatedData = $request->validate([
+            'mail' => 'required|email',
+        ]);
+
         $Personnel = Personnel::where('mail', $request->mail)->update(['message' => '']);
 
         session_start();
@@ -159,6 +182,10 @@ class PersonnelController extends Controller
 
     public function modificationlogo(Request $request)
     {
+        $validatedData = $request->validate([
+            'photo_logo' => 'required',
+        ]);
+
         session_start();
 
         if ($request->file('photo_logo')->getsize() > 500000) {

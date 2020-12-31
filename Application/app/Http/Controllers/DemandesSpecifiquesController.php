@@ -53,6 +53,10 @@ class DemandesSpecifiquesController extends Controller
 
     public function creation(Request $request)
     {
+        $validatedData = $request->validate([
+            'nom_demande' => 'required',
+        ]);
+
         session_start();
 
         $id_personnel = Personnel::where('mail', $_SESSION['mail'])->select('id')->get();

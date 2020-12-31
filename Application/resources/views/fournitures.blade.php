@@ -28,7 +28,7 @@
         <header>
             <h1>Fournitures</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
-            {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
+            {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required']) }}
             {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
             {!! Form::close() !!}
             <div id="nom_deconnexion">
@@ -143,10 +143,10 @@
                             <tr>
                                 <td>
                                     {!! Form::open(['url' => 'creationfourniture', 'files' => true]) !!}
-                                    {{ Form::file('photo_fournitures', ['required'=>'true']) }}
+                                    {{ Form::file('photo_fournitures', ['required']) }}
                                 </td>
-                                <td>{{ Form::text('nom_fourniture', $value = $requete->nom_fourniture ?? null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau Maped', 'required'=>'true']) }}</td>
-                                <td>{{ Form::text('description_fourniture', $value = $requete->description_fourniture ?? null, ['maxlength'=>'50', 'required'=>'true']) }}</td>
+                                <td>{{ Form::text('nom_fourniture', $value = $requete->nom_fourniture ?? null, ['maxlength'=>'50', 'placeholder'=>'Ex: Ciseau Maped', 'required']) }}</td>
+                                <td>{{ Form::text('description_fourniture', $value = $requete->description_fourniture ?? null, ['maxlength'=>'50', 'required']) }}</td>
                                 <td>
                                     {{ Form::number('quantite_disponible', $requete->quantite_disponible ?? '1', ['min'=>'1', 'max'=>'100']) }}
                                     {{ Form::submit('Créer l\'article') }}

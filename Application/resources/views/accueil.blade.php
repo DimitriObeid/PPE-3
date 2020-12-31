@@ -34,7 +34,7 @@
         <header>
             <h1>Accueil</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
-            {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required'=>'true']) }}
+            {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required']) }}
             {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
             {!! Form::close() !!}
             <div id="nom_deconnexion">
@@ -144,17 +144,15 @@
 
                     <h4>Modification du logo :</h4>
                     {!! Form::open(['url' => 'modificationlogo', 'files' => true, 'id'=>'modificationlogo']) !!}
-                    {{ Form::file('photo_logo', ['required'=>'true']) }}
+                    {{ Form::file('photo_logo', ['required']) }}
                     {{ Form::submit('Modifier le logo') }}
                     {!! Form::close() !!}
 
-                    {!! Form::open(['url' => 'suppressionlogo', 'files' => true, 'id'=>'suppressionlogo']) !!}
-                    {{ Form::submit('Supprimer le logo') }}
-                    {!! Form::close() !!}
+                    <button type="button" id="suppressionlogo" onclick="window.location.href='suppressionlogo'">Supprimer le logo</button>
 
                     <h4>Envoyer un message à un utilisateur :</h4>
                     {!! Form::open(['url' => 'message']) !!}
-                    {{ Form::textarea('message', $value = null, ['required'=>'true']) }}
+                    {{ Form::textarea('message', $value = null, ['maxlength' => '1500', 'required']) }}
                     {{ Form::label('mail', 'Utilisateur :', ['id'=>'label_select']) }}
                         <select name="mail">
                             <option value="tous">Tous</option>

@@ -34,6 +34,10 @@ class FournituresController extends Controller
 
     public function rechercher(Request $request)
     {
+        $validatedData = $request->validate([
+            'recherche' => 'required',
+        ]);
+
         session_start();
 
         $rechercheExplode = explode(' ', $request->recherche);
@@ -55,6 +59,13 @@ class FournituresController extends Controller
 
     public function creationfourniture(Request $request)
     {
+        $validatedData = $request->validate([
+            'photo_fournitures' => 'required',
+            'nom_fourniture'=> 'required|max50',
+            'description_fourniture' => 'required|max:50'
+            'quantite_disponible' => 'required|min:1|max100',
+        ]);
+
         session_start();
 
         $nomMinuscules = strtolower($request->nom_fourniture);
@@ -114,6 +125,11 @@ class FournituresController extends Controller
 
     public function majquantite(Request $request)
     {
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'quantite_disponible' => 'required|min:0|max100',
+        ]);
+
         session_start();
 
         $majquantite = Fournitures::where('id', $request->id)->update(['quantiteDisponible' => $request->quantite_disponible]);

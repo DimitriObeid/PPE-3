@@ -43,7 +43,7 @@ Route::post('/supprimer', [PersonnelController::class, 'supprimer']);
 
 Route::post('/modificationlogo', [PersonnelController::class, 'modificationlogo']);
 
-Route::post('/suppressionlogo', [PersonnelController::class, 'suppressionlogo']);
+Route::get('/suppressionlogo', [PersonnelController::class, 'suppressionlogo']);
 
 Route::get('/messagerie', [PersonnelController::class, 'messagerie']);
 

@@ -49,6 +49,12 @@ class CommandesController extends Controller
 
     public function commander(Request $request)
     {
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'nom_fourniture' => 'required',
+            'quantite_demande' => 'required|min:1'
+        ]);
+
         session_start();
 
         $id_personnel = Personnel::where('mail', $_SESSION['mail'])->select('id')->get();

@@ -37,10 +37,10 @@
         ?>
         {!! Form::open(['url' => 'connexion']) !!}
         {{ Form::label('email', 'Adresse mail') }}
-        {{ Form::email('email', $value = null, ['required'=>'true']) }}
+        {{ Form::email('email', $value = null, ['required']) }}
         <br>
         {{ Form::label('mdp', 'Mot de passe') }}
-        {{ Form::password('mdp', ['required'=>'true']) }}
+        {{ Form::password('mdp', ['required']) }}
         <br>
         {{ Form::submit('Se connecter', ['class'=>'submit']) }}
         {{ Form::button('Créer un compte', ['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php/inscription"']) }}

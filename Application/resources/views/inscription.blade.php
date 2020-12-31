@@ -14,16 +14,16 @@
         </header>
         {!! Form::open(['url' => 'inscription']) !!}
         {{ Form::label('nom', 'Nom') }}
-        {{ Form::text('nom', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}
+        {{ Form::text('nom', $value = null, ['maxlength'=>'50', 'required']) }}
         <br>
         {{ Form::label('prenom', 'Prénom') }}
-        {{ Form::text('prenom', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}
+        {{ Form::text('prenom', $value = null, ['maxlength'=>'50', 'required']) }}
         <br>
         {{ Form::label('email', 'Adresse mail') }}
-        {{ Form::email('email', $value = null, ['maxlength'=>'50', 'required'=>'true']) }}
+        {{ Form::email('email', $value = null, ['maxlength'=>'50', 'required']) }}
         <br>
         {{ Form::label('mdp', 'Mot de passe') }}
-        {{ Form::password('mdp', ['required'=>'true']) }}
+        {{ Form::password('mdp', ['required']) }}
         <br>
         {{ Form::label('categorie', 'Catégorie') }}
         {{ Form::select('categorie',[
