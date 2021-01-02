@@ -165,6 +165,10 @@ h4
     font-size: 18px;
 }
 
+#ajout_service, #service_complet
+{
+    margin-bottom: 5%;
+}
 
 #service_util
 {

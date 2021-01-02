@@ -157,7 +157,7 @@
                         <select name="mail">
                             <option value="tous">Tous</option>
                             <?php for ($j=0; $j < $_SESSION['personnels']->count(); $j++) {
-                                echo '<option value='.$_SESSION['personnels'][$j]->mail.'>'.$_SESSION['personnels'][$j]->mail.'</option>';
+                                echo '<option value="'.$_SESSION['personnels'][$j]->mail.'">'.$_SESSION['personnels'][$j]->mail.'</option>';
                             } ?>
                         </select>
                     {{ Form::submit('Envoyer') }}

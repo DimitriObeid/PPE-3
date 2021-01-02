@@ -77,3 +77,7 @@ Route::post('/majetatcommande', [EtatController::class, 'majetatcommande']);
 
 // Gestion des départements
 Route::get('/departements', [ServiceController::class, 'afficher']);
+
+Route::post('/creationdepartement', [ServiceController::class, 'creationdepartement']);
+
+Route::post('/modificationvalideur', [ServiceController::class, 'modificationvalideur']);

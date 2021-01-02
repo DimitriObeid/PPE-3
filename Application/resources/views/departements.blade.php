@@ -57,7 +57,97 @@
         </header>
         <section id="corps">
             <?php if ($_SESSION['categorie'] == 'Administrateur') {
-            } ?>
+                $creation = $cree ?? false;
+                if ($creation) { ?>
+                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> Le département a bien été créé</p><br />
+                    <?php header('Refresh: 5; url=departements');
+                }
+
+                $valide = $valider ?? false;
+                if ($valide) { ?>
+                    <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La mise à jour à bien été prise en compte</p><br />
+                    <?php header('Refresh: 5; url=departements');
+                } ?>
+
+                <table id="ajout_service">
+                    <caption>Ajouter un département</caption>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <!--<th>Valideur rattaché</th>-->
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {!! Form::open(['url' => 'creationdepartement']) !!}
+                            {{ Form::text('nom_departement', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Direction', 'required']) }}
+                        </td>
+                        <td>{{ Form::text('description_departement', $value = null, ['maxlength'=>'50', 'required']) }}</td>
+                        <!--<td>
+                            <select name="mail">
+                                <option value="Aucun">Aucun</option>
+                                <?php /*for ($i=0; $i < $_SESSION['personnels']->count(); $i++) {
+                                    echo '<option value="'.$_SESSION['personnels'][$i]->mail.'">'.$_SESSION['personnels'][$i]->mail.'</option>';
+                                }*/ ?>
+                            </select>
+                        </td>-->
+                        <td>
+                            {{ Form::submit('Créer le département') }}
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                </table>
+
+                <table id="service_complet">
+                    <caption>Liste des départements</caption>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Valideur rattaché</th>
+                        <th>Contact du valideur</th>
+                        <th></th>
+                    </tr>
+                    <?php for ($j=0; $j < $_SESSION['services']->count(); $j++) { ?>
+                        <tr>
+                            <td>{{ $_SESSION['services'][$j]->nomService }}</td>
+                            <td>{{ $_SESSION['services'][$j]->descriptionService }}</td>
+                            <td>
+                                {!! Form::open(['url' => 'modificationvalideur']) !!}
+                                <select name="nom_prenom">
+                                    <option value="Aucun">Aucun</option>
+                                    <?php for ($k=0; $k < $_SESSION['personnels']->count(); $k++) {
+                                        if ($_SESSION['personnels'][$k]->nomService == $_SESSION['services'][$j]->nomService) {
+                                            if ($_SESSION['personnels'][$k]->nomCategorie == 'Valideur') {
+                                                echo '<option value="'.$_SESSION['personnels'][$k]->nom.' '.$_SESSION['personnels'][$k]->prenom.'" selected>'.$_SESSION['personnels'][$k]->nom.' '.$_SESSION['personnels'][$k]->prenom.'</option>';
+                                            } else {
+                                                echo '<option value="'.$_SESSION['personnels'][$k]->nom.' '.$_SESSION['personnels'][$k]->prenom.'">'.$_SESSION['personnels'][$k]->nom.' '.$_SESSION['personnels'][$k]->prenom.'</option>';
+                                            }
+                                        }
+                                    } ?>
+                                </select>
+                            </td>
+                            <td>
+                                <?php
+                                for ($l=0; $l < $_SESSION['personnels']->count(); $l++) {
+                                    if ($_SESSION['personnels'][$l]->nomService == $_SESSION['services'][$j]->nomService) {
+                                        if ($_SESSION['personnels'][$l]->nomCategorie == 'Valideur') {
+                                            echo $_SESSION['personnels'][$l]->mail;
+                                            echo '<input type="hidden" name="mail_ancien_valideur" value="'.$_SESSION['personnels'][$l]->mail.'">';
+                                        } else {
+                                            echo 'N/A';
+                                        }
+                                    }
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                {{ Form::submit('Modifier le valideur') }}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            <?php } ?>
             <table id="service_util">
                 <caption>Départements d’attachement</caption>
                 <tr>
@@ -76,9 +166,10 @@
                         echo $nom_prenom ?? 'Aucun';
                         ?>
                     </td>
-                    <td><?php
+                    <td>
+                    <?php
                         $mail = $_SESSION['service_util'][0]->mail ?? 'N/A'; echo $mail;
-                        ?>
+                    ?>
                     </td>
                 </tr>
             </table>
