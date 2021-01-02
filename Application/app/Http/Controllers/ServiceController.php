@@ -68,8 +68,6 @@ class ServiceController extends Controller
         if ($request->nom_prenom != 'Aucun') {
             $nomPrenom = explode(' ', $request->nom_prenom);
             $majNouvValid = Personnel::where('nom', $nomPrenom[0])->where('prenom', $nomPrenom[1])->update(['idCategorie' => '2']);
-        } else {
-            return view('departements');
         }
 
         if (isset($request->mail_ancien_valideur)) {

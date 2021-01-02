@@ -129,13 +129,9 @@
                             <td>
                                 <?php
                                 for ($l=0; $l < $_SESSION['personnels']->count(); $l++) {
-                                    if ($_SESSION['personnels'][$l]->nomService == $_SESSION['services'][$j]->nomService) {
-                                        if ($_SESSION['personnels'][$l]->nomCategorie == 'Valideur') {
-                                            echo $_SESSION['personnels'][$l]->mail;
-                                            echo '<input type="hidden" name="mail_ancien_valideur" value="'.$_SESSION['personnels'][$l]->mail.'">';
-                                        } else {
-                                            echo 'N/A';
-                                        }
+                                    if ($_SESSION['personnels'][$l]->nomService == $_SESSION['services'][$j]->nomService AND $_SESSION['personnels'][$l]->nomCategorie == 'Valideur') {
+                                        echo $_SESSION['personnels'][$l]->mail;
+                                        echo '<input type="hidden" name="mail_ancien_valideur" value="'.$_SESSION['personnels'][$l]->mail.'">';
                                     }
                                 }
                                 ?>

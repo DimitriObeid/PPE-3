@@ -20,7 +20,7 @@
             }
 
             if (isset($_GET['inactiviteprolonge'])) {
-                if ($_GET['inactiviteprolonge']) { ?>
+                if ($_GET['inactiviteprolonge'] == 'true') { ?>
                     <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Déconnexion à cause d'une innactivée prolongée !</p>
                 <?php //header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
                 }

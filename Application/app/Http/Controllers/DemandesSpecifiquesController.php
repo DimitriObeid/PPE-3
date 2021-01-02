@@ -55,6 +55,7 @@ class DemandesSpecifiquesController extends Controller
     {
         $validatedData = $request->validate([
             'nom_demande' => 'required',
+            'quantite_demande' => 'required|min:1|max:50',
         ]);
 
         session_start();
@@ -71,10 +72,12 @@ class DemandesSpecifiquesController extends Controller
 
         $DemandesSpecifiques->save();
 
+        // Mise à jour des demandes personnels
         $demandes_pers = DemandesSpecifiques::join('etats', 'demandes_specifiques.idEtat', 'etats.id')->join('personnels', 'demandes_specifiques.idPersonnel', 'personnels.id')->select('demandes_specifiques.*', 'nomEtat', 'mail')->where('mail', $_SESSION['mail'])->orderby('demandes_specifiques.id', 'asc')->get();
 
         $_SESSION['demandes_pers'] = $demandes_pers;
 
+        // Renvoi d'une variable afin d'afficher un message de confirmation
         $vrai = true;
 
         return view('demandesspecifiques', ['vrai'=>$vrai]);
