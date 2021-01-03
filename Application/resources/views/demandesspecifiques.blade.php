@@ -6,7 +6,7 @@
         <link rel="icon" sizes="144x144" href="http://localhost/PPE-3/Application/storage/app/public/CCI.png" />
         <link rel="stylesheet" href="http://localhost/PPE-3/Application/resources/css/demandesspecifiques.css" />
         <title>Demandes spécifiques</title>
-        <script>
+        <script type="text/javascript">
             function imprimer(nomSection) {
                 var contenuAImprimer = document.getElementById(nomSection).innerHTML;
                 var contenuOriginel = document.body.innerHTML;
@@ -33,6 +33,7 @@
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                    <li><a class="menu" href="famillesfournitures">FAMILLES FOURNITURES</a></li>
                     <li><a class="menu" href="messagerie">MÉSSAGERIE</a></li>
                     <li><a class="menu" href="statistique">STATISTIQUE</a></li>
                 <?php } ?>

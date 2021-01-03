@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Fournitures;
+use App\Models\FamillesFournitures;
 
 class FournituresController extends Controller
 {
@@ -16,17 +17,15 @@ class FournituresController extends Controller
             exit;
         }
 
-        $Fournitures = Fournitures::select('fournitures.*')->get();
+        $Fournitures = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fournitures.*', 'nomFamille')->orderby('fournitures.id', 'asc')->get();
 
-        /* Ajout de la création de variables de session pour permettre de trier les fournitures par famille
-        $Familles = Familles::select('familles.*')->get();
+        $Familles = FamillesFournitures::select('*')->get();
 
         for ($i=0; $i < $Familles->count(); $i++) {
-            $_SESSION["$Familles->nomFamille"] = Fournitures::join('familles', 'fournitures.idFamille', 'familles.id')->where('nomFamille', $Familles->nomFamille)->select('fourniture.*', 'nomFamille')->get();
+            $_SESSION[$Familles[$i]->nomFamille] = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->where('nomFamille', $Familles[$i]->nomFamille)->select('fournitures.*', 'nomFamille')->get();
         }
 
-        $_SESSION['familles'] = $Familles;*/
-
+        $_SESSION['famillesfournitures'] = $Familles;
         $_SESSION['fournitures'] = $Fournitures;
 
         return view('fournitures');
@@ -44,7 +43,7 @@ class FournituresController extends Controller
 
         $recherche = implode('%', $rechercheExplode);
 
-        $resultat = Fournitures::where('nomFournitures', 'like', '%'.$recherche.'%')->get();
+        $resultat = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fournitures.*', 'nomFamille')->where('nomFournitures', 'like', '%'.$recherche.'%')->orWhere('nomFamille', 'like', '%'.$recherche.'%')->orderby('fournitures.id', 'asc')->get();
 
         $_SESSION['recherche'] = $resultat;
 
@@ -105,8 +104,11 @@ class FournituresController extends Controller
 
         imagejpeg($photo, $nomChemin);
 
+        $idFamille = FamillesFournitures::select('id')->where('nomFamille', $request->nom_famille)->get();
+
         $Fournitures = new Fournitures;
 
+        $Fournitures->idFamille = $idFamille[0]->id;
         $Fournitures->nomFournitures = $request->nom_fourniture;
         $Fournitures->nomPhoto = $nomPhoto;
         $Fournitures->descriptionFournitures = $request->description_fourniture;
@@ -114,7 +116,7 @@ class FournituresController extends Controller
 
         $Fournitures->save();
 
-        $Fournitures = Fournitures::select('fournitures.*')->get();
+        $Fournitures = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fournitures.*', 'nomFamille')->orderby('fournitures.id', 'asc')->get();
 
         $_SESSION['fournitures'] = $Fournitures;
 
@@ -134,7 +136,7 @@ class FournituresController extends Controller
 
         $majquantite = Fournitures::where('id', $request->id)->update(['quantiteDisponible' => $request->quantite_disponible]);
 
-        $Fournitures = Fournitures::select('fournitures.*')->get();
+        $Fournitures = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fournitures.*', 'nomFamille')->orderby('fournitures.id', 'asc')->get();
 
         $_SESSION['fournitures'] = $Fournitures;
 

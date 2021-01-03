@@ -30,7 +30,7 @@ nav li
     justify-content: center;
     list-style-type: none;
     width: 100%;
-    height: 12.5%;
+    height: 11.5%;
 }
 
 #logo
@@ -51,11 +51,11 @@ nav li
     height: 100%;
     padding-left: 5%;
     padding-right: 1%;
-    padding-top: 13%;
+    padding-top: 11.5%;
     color: #c2c2c2;
 }
 
-.menu:hover
+.menu:hover, .menu_lateral:hover
 {
     background: #910000;
 }
@@ -63,6 +63,34 @@ nav li
 #personnalisation
 {
     padding-top: 9%;
+}
+
+#menu_lateral
+{
+    visibility: hidden;
+    height: 237px;
+    top: 238px;
+    left: 275px;
+}
+
+#ul_menu_lateral
+{
+    height: 100%;
+}
+
+#li_menu_lateral
+{
+    height: 33.3%;
+}
+
+.menu_lateral
+{
+    text-decoration: none;
+    height: 100%;
+    padding-left: 5%;
+    padding-right: 1%;
+    padding-top: 11.5%;
+    color: #c2c2c2;
 }
 
 header
@@ -159,9 +187,32 @@ body
     margin: 0% 37.5% 3% 37.5%;
 }
 
+#haut_page
+{
+    background: #dd8500;
+    width: 25px;
+    height: 25px;
+    padding: 5px 2px 3px 7px;
+    border-radius: 7px;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 1;
+}
+
+#img_haut_page
+{
+    width: 75%;
+}
+
 #liste_fourniture
 {
     margin-bottom: 14%;
+}
+
+.submit
+{
+    margin-top: 5%;
 }
 
 .tabl_fourn
@@ -177,7 +228,7 @@ h4
 
 .photo_fournitures
 {
-    width: 35%;
+    width: 200px;
 }
 
 table
@@ -252,9 +303,20 @@ select
     margin: 0% 0% 4% 0%;
 }
 
+#navlistecomptes
+{
+    position: relative;
+    top: 50px;
+}
+
 #liste_comptes
 {
-    margin: 5% 0% 5% 0%;
+    margin: 5% 0% 0% 0%;
+}
+
+#supprimer_tous
+{
+    margin: 1% 0% 5% 82.5%;
 }
 
 #liste_commandes

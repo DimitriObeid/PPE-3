@@ -4,8 +4,8 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" sizes="144x144" href="http://localhost/PPE-3/Application/storage/app/public/CCI.png" />
-        <link rel="stylesheet" href="http://localhost/PPE-3/Application/resources/css/messagerie.css" />
-        <title>Méssagerie</title>
+        <link rel="stylesheet" href="http://localhost/PPE-3/Application/resources/css/famillesfournitures.css" />
+        <title>Familles Fournitures</title>
     </head>
     <body>
         <nav>
@@ -27,7 +27,7 @@
             </ul>
         </nav>
         <header>
-            <h1>Méssagerie</h1>
+            <h1>Familles Fournitures</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
             {{ Form::search('recherche', $value = null, ['id'=>'recherche', 'placeholder'=>'Recherche', 'required']) }}
             {{ Form::image('http://localhost/PPE-3/Application/storage/app/public/icon-search.png', 'envoyer', ['id'=>'envoyer', 'alt'=>'Icone de loupe']) }}
@@ -57,9 +57,44 @@
             <?php } ?>
         </header>
         <section id="corps">
-            <?php if ($_SESSION['categorie'] != 'Administrateur') {
-                  } else { ?>
-            <?php } ?>
+            <?php $creation = $cree ?? false;
+            if ($creation) { ?>
+                <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La famille a bien été créé</p><br />
+                <?php header('Refresh: 5; url=famillesfournitures');
+            } ?>
+            <table id="ajout_famille">
+                <caption>Ajouter une famille</caption>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        {!! Form::open(['url' => 'creationfamille']) !!}
+                        {{ Form::text('nom_famille', $value = null, ['maxlength'=>'50', 'placeholder'=>'Ex: Marqueurs', 'required']) }}
+                    </td>
+                    <td>{{ Form::text('description_famille', $value = null, ['maxlength'=>'50', 'required']) }}</td>
+                    <td>
+                        {{ Form::submit('Créer la famille') }}
+                        {!! Form::close() !!}
+                    </td>
+                </tr>
+            </table>
+
+            <table id="liste_famille">
+                <caption>Liste des familles</caption>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                </tr>
+                <?php for ($i=0; $i < $_SESSION['famillesfournitures']->count(); $i++) { ?>
+                    <tr>
+                        <td>{{ $_SESSION['famillesfournitures'][$i]->nomFamille }}</td>
+                        <td>{{ $_SESSION['famillesfournitures'][$i]->descriptionFamille }}</td>
+                    </tr>
+                <?php } ?>
+            </table>
         </section>
         <footer>
             <?php if (isset($_SESSION['commandes_fini'][0])) { ?>

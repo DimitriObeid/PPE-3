@@ -42,6 +42,7 @@
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                    <li><a class="menu" href="famillesfournitures">FAMILLES FOURNITURES</a></li>
                     <li><a class="menu" href="messagerie">MÉSSAGERIE</a></li>
                     <li><a class="menu" href="statistique">STATISTIQUE</a></li>
                 <?php } ?>
@@ -230,7 +231,7 @@
                     <?php } else { ?>
                         <section id="commande_pers_etat">
                             <h4>Liste des commandes :</h4><br />
-                            <p>Vous n'avez pas encore de commandes avec cet état.</p>
+                            <p>Vous n'avez pas de commandes avec cet état.</p>
                         </section>
                     <?php } ?>
                 <?php } else { ?>

@@ -86,7 +86,7 @@ class PersonnelController extends Controller
 
             $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
-            $Fournitures = Fournitures::select('fournitures.*')->get();
+            $Fournitures = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fournitures.*', 'nomFamille')->orderby('fournitures.id', 'asc')->get();
 
             session_start();
 
@@ -178,6 +178,24 @@ class PersonnelController extends Controller
         $suppr = true;
 
         return view('accueil', ['suppr'=>$suppr]);
+    }
+
+    public function suppressionmessages()
+    {
+        $Personnel = Personnel::select('*')->update(['message' => '']);
+
+        session_start();
+
+        $Personnel = Personnel::where('mail', $_SESSION['mail'])->get();
+
+        $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
+
+        $_SESSION['message'] = $Personnel[0]->message;
+        $_SESSION['personnels'] = $Personnels;
+
+        $supprtous = true;
+
+        return view('accueil', ['supprtous'=>$supprtous]);
     }
 
     public function modificationlogo(Request $request)

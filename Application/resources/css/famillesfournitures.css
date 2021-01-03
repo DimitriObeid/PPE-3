@@ -81,7 +81,7 @@ header
 h1
 {
     font-weight: normal;
-    margin-right: 29.36%;
+    margin-right: 23.4%;
 }
 
 #recherche
@@ -160,19 +160,19 @@ th, td
     padding: 1% 0% 1% 0%;
 }
 
-h4
+#ajout_famille
 {
-    font-size: 18px;
+    margin-bottom: 5%
 }
 
-#ajout_service, #service_complet
-{
-    margin-bottom: 5%;
-}
-
-#service_util
+#liste_famille
 {
     margin-bottom: 14%;
+}
+
+.tabl_fourn
+{
+    width: 15%;
 }
 
 .confirm

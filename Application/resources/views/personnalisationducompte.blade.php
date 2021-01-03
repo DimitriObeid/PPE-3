@@ -15,6 +15,7 @@
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
+                    <li><a class="menu" href="famillesfournitures">FAMILLES FOURNITURES</a></li>
                     <li><a class="menu" href="messagerie">MÉSSAGERIE</a></li>
                     <li><a class="menu" href="statistique">STATISTIQUE</a></li>
                 <?php } ?>

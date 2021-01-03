@@ -6,6 +6,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommandesController;
 use App\Http\Controllers\DemandesSpecifiquesController;
 use App\Http\Controllers\EtatController;
+use App\Http\Controllers\FamillesFournituresController;
 use App\Http\Controllers\FournituresController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ServiceController;
@@ -26,6 +27,7 @@ Route::get('/', function () {
     return view('connexion');
 });
 
+
 // Gestion du personnel
 Route::post('/connexion', [PersonnelController::class, 'connexion']);
 
@@ -41,6 +43,8 @@ Route::post('/message', [PersonnelController::class, 'message']);
 
 Route::post('/supprimer', [PersonnelController::class, 'supprimer']);
 
+Route::get('/suppressionmessages', [PersonnelController::class, 'suppressionmessages']);
+
 Route::post('/modificationlogo', [PersonnelController::class, 'modificationlogo']);
 
 Route::get('/suppressionlogo', [PersonnelController::class, 'suppressionlogo']);
@@ -51,6 +55,7 @@ Route::get('/statistique', [PersonnelController::class, 'statistique']);
 
 Route::get('/personnalisationducompte', [PersonnelController::class, 'personnalisationducompte']);
 
+
 // Gestion des fournitures
 Route::get('/fournitures', [FournituresController::class, 'afficher']);
 
@@ -60,20 +65,32 @@ Route::post('/creationfourniture', [FournituresController::class, 'creationfourn
 
 Route::post('/majquantite', [FournituresController::class, 'majquantite']);
 
+
+// Gestion des familles des fournitures
+Route::get('/famillesfournitures', [FamillesFournituresController::class, 'afficher']);
+
+Route::post('/creationfamille', [FamillesFournituresController::class, 'creationfamille']);
+
+Route::post('/modificationfamille', [FamillesFournituresController::class, 'modificationfamille']);
+
+
 // Gestion des demandes spécifiques
 Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'afficher']);
 
 Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);
+
 
 // Gestion des commandes
 Route::get('/suivi', [CommandesController::class, 'afficher']);
 
 Route::post('/commander', [CommandesController::class, 'commander']);
 
+
 // Gestion des d'états
 Route::post('/majetatdemande', [EtatController::class, 'majetatdemande']);
 
 Route::post('/majetatcommande', [EtatController::class, 'majetatcommande']);
+
 
 // Gestion des départements
 Route::get('/departements', [ServiceController::class, 'afficher']);
