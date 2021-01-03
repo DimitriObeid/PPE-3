@@ -15,6 +15,7 @@ class CreateFournituresTable extends Migration
     {
         Schema::create('fournitures', function (Blueprint $table) {
             $table->id();
+            $table->integer('idFamille');
             $table->string('nomFournitures', 255);
             $table->string('nomPhoto', 255);
             $table->string('descriptionFournitures', 255);

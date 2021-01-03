@@ -13,10 +13,11 @@ class CreateServiceTable extends Migration
      */
     public function up()
     {
-        Schema::create('service', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('nomService', 255);
             $table->string('descriptionService', 255);
+            $table->timestamps();
         });
     }
 
