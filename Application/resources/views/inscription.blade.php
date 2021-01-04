@@ -32,11 +32,11 @@
             ]) }}
         <br>
         {{ Form::label('service', 'Service') }}
-        {{ Form::select('service',[
-                '1' => 'Accueil',
-                '2' => 'Comptabilité',
-                '3' => 'Administration'
-            ]) }}
+        <select name="service">
+            <?php for ($i=0; $i < $Services->count(); $i++) { ?>
+                <option value="{{ $Services[$i]->id }}">{{ $Services[$i]->nomService }}</option>
+            <?php } ?>
+        </select>
         <br>
         {{ Form::submit('Créer un compte', ['class'=>'submit']) }}
         {{ Form::button('Retour à la page de connexion', ['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php"']) }}

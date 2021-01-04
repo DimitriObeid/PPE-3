@@ -11,7 +11,7 @@ nav
     width: 15%;
     height: 100%;
     position: fixed;
-    box-shadow: 0px 0px 20px #232523;
+    box-shadow: 2px 0px 20px #232523;
 }
 
 nav ul
@@ -67,10 +67,13 @@ nav li
 
 #menu_lateral
 {
+    background: #002d4b;
+    box-shadow: 0px 0px 0px;
     visibility: hidden;
     height: 237px;
-    top: 238px;
-    left: 275px;
+    top: 8.4%;
+    left: 15%;
+    z-index: 1;
 }
 
 #ul_menu_lateral
@@ -78,7 +81,7 @@ nav li
     height: 100%;
 }
 
-#li_menu_lateral
+.li_menu_lateral
 {
     height: 33.3%;
 }

@@ -75,7 +75,7 @@ class CommandesController extends Controller
 
         $Commandes->save();
 
-        $Fournitures = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fourniture.*', 'nomFamille')->orderby('fournitures.id', 'asc')->get();
+        $Fournitures = Fournitures::join('familles_fournitures', 'fournitures.idFamille', 'familles_fournitures.id')->select('fournitures.*', 'nomFamille')->orderby('fournitures.id', 'asc')->get();
 
         $commande_utilisateur = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->join('fournitures', 'commandes.idFournitures', 'fournitures.id')->select('commandes.*', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $_SESSION['mail'])->orderby('commandes.id', 'asc')->get();
 

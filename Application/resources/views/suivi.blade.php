@@ -6,7 +6,7 @@
         <link rel="icon" sizes="144x144" href="http://localhost/PPE-3/Application/storage/app/public/CCI.png" />
         <link rel="stylesheet" href="http://localhost/PPE-3/Application/resources/css/suivi.css" />
         <title>Suivi</title>
-        <script>
+        <script type="text/javascript">
             function imprimer(nomSection) {
                 var contenuAImprimer = document.getElementById(nomSection).innerHTML;
                 var contenuOriginel = document.body.innerHTML;
@@ -32,13 +32,25 @@
                     window.location.href = 'suivi?etat=' + etat ;
                 }
             }
+
+            function afficherMenu(menu) {
+                menu.style.visibility = "visible";
+            }
+
+            function cacherMenu(menu) {
+                menu.style.visibility = "hidden";
+            }
         </script>
     </head>
     <body>
         <nav>
             <ul>
                 <li id="li_logo"><img id="logo" src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" /></li>
-                <li><a class="menu" href="accueil">ACCUEIL</a></li>
+                <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
+                    <li><a class="menu" href="accueil">ACCUEIL</a></li>
+                <?php } else { ?>
+                    <li><a class="menu" href="accueil" onmouseover="afficherMenu(menu_lateral)" onmouseout="cacherMenu(menu_lateral)">ACCUEIL</a></li>
+                <?php } ?>
                 <li><a class="menu" href="departements">DÉPARTEMENTS</a></li>
                 <li><a class="menu" href="fournitures">FOURNITURES</a></li>
                 <?php if ($_SESSION['categorie'] == 'Administrateur') { ?>
@@ -51,6 +63,13 @@
                 <?php if ($_SESSION['categorie'] != 'Administrateur') { ?>
                     <li><a class="menu" id="personnalisation" href="personnalisationducompte">PERSONNALISATION DU COMPTE</a></li>
                 <?php } ?>
+            </ul>
+        </nav>
+        <nav id="menu_lateral"  onmouseover="afficherMenu(menu_lateral)" onmouseout="cacherMenu(menu_lateral)">
+            <ul id="ul_menu_lateral">
+                <li class="li_menu_lateral"><a class="menu_lateral" href="accueil#navlistecomptes">Liste des comptes</a></li>
+                <li class="li_menu_lateral"><a class="menu_lateral" href="accueil#supprimer_tous">Supprimer tous les messages</a></li>
+                <li class="li_menu_lateral"><a class="menu_lateral" href="accueil#liste_commandes">Liste des commandes en cours</a></li>
             </ul>
         </nav>
         <header>
@@ -242,7 +261,13 @@
                 <?php }
 
                 if ($_SESSION['categorie'] == 'Valideur') {
-                    if (isset($_SESSION['commande_valid'][0])) { ?>
+                    if (isset($_SESSION['commande_valid'][0])) {
+                        $envoye = $envoyer ?? false;
+                        if ($envoye) { ?>
+                            <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La commande à bien été mise à jour</p><br />
+                            <?php header('Refresh: 5; url=suivi');
+                        } ?>
+
                         <table id="liste_commandes_valid">
                             <caption>Liste des commandes des utilisateurs</caption>
                             <tr>

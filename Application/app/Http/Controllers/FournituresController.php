@@ -62,7 +62,7 @@ class FournituresController extends Controller
             'photo_fournitures' => 'required',
             'nom_fourniture'=> 'required|max50',
             'description_fourniture' => 'required|max:50',
-            'quantite_disponible' => 'required|min:1|max100',
+            'quantite_disponible' => 'required|min:1|max:100',
         ]);
 
         session_start();
@@ -129,7 +129,7 @@ class FournituresController extends Controller
     {
         $validatedData = $request->validate([
             'id' => 'required',
-            'quantite_disponible' => 'required|min:0|max100',
+            'quantite_disponible' => 'required|min:0|max:100',
         ]);
 
         session_start();

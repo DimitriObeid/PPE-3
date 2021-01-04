@@ -15,7 +15,9 @@ class PersonnelController extends Controller
 {
     public function creer()
     {
-        return view('inscription');
+        $Services = Service::select('services.*')->orderby('id', 'asc')->get();
+
+        return view('inscription', ['Services'=>$Services]);
     }
 
     public function verif_creer(Request $request)
