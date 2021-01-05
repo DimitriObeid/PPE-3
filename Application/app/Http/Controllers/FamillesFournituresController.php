@@ -13,7 +13,7 @@ class FamillesFournituresController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=famillesfournitures');
             exit;
         }
 
@@ -21,7 +21,12 @@ class FamillesFournituresController extends Controller
 
         $_SESSION['famillesfournitures'] = $FamillesFournitures;
 
-        return view('famillesfournitures');
+        if ($_SESSION['categorie'] != 'Administrateur') {
+            $droitinsuf = true;
+            return view('accueil', ['droitinsuf' => $droitinsuf]);
+        } else {
+            return view('famillesfournitures');
+        }
     }
 
     public function creationfamille(Request $request)

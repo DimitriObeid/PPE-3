@@ -12,30 +12,56 @@
             <img src="http://localhost/PPE-3/Application/storage/app/public/logo-cci.png" alt="Logo de la CCI" />
             <h1>Connexion</h1>
         </header>
-        <?php
-            $refresh = $deconnexion ?? false;
-            if ($refresh) {
-                header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
-                exit;
-            }
+        <?php $refresh = $deconnexion ?? false;
+        if ($refresh) {
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+            exit;
+        }
 
-            if (isset($_GET['inactiviteprolonge'])) {
-                if ($_GET['inactiviteprolonge'] == 'true') { ?>
-                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Déconnexion à cause d'une innactivée prolongée !</p>
-                <?php //header('Refresh: 5; url=http://localhost/PPE-3/Application/server.php');
-                }
+        if (isset($_GET['page'])) {
+            switch ($_GET['page']) {
+                case 'departements':
+                    $page = 'departements';
+                    break;
+                case 'fournitures':
+                    $page = 'fournitures';
+                    break;
+                case 'famillesfournitures':
+                    $page = 'famillesfournitures';
+                    break;
+                case 'messagerie':
+                    $page = 'messagerie';
+                    break;
+                case 'statistique':
+                    $page = 'statistique';
+                    break;
+                case 'demandesspecifiques':
+                    $page = 'demandesspecifiques';
+                    break;
+                case 'suivi':
+                    $page = 'suivi';
+                    break;
+                case 'personnalisationducompte':
+                    $page = 'personnalisationducompte';
+                    break;
+                default:
+                    $page = 'accueil';
+                    break;
             }
+        } else {
+            $page = 'accueil';
+        }
 
-            if (isset($erreur)) {
-                if ($erreur == 'mail') { ?>
-                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> L'adresse mail est incorrect !</p>
-                <?php }
-                elseif ($erreur == 'mdp') { ?>
-                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Le mot de passe est incorrect !</p>
-                <?php }
-            }
-        ?>
+        if (isset($erreur)) {
+            if ($erreur == 'mail') { ?>
+                <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> L'adresse mail est incorrect !</p>
+            <?php } elseif ($erreur == 'mdp') { ?>
+                <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Le mot de passe est incorrect !</p>
+            <?php }
+        } ?>
+
         {!! Form::open(['url' => 'connexion']) !!}
+        {{ Form::hidden('page', $page) }}
         {{ Form::label('email', 'Adresse mail') }}
         {{ Form::email('email', $value = null, ['required']) }}
         <br>

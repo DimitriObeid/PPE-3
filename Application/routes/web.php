@@ -37,7 +37,7 @@ Route::post('/inscription', [PersonnelController::class, 'verif_creer']);
 
 Route::get('/deconnexion', [PersonnelController::class, 'deconnexion']);
 
-Route::get('/accueil', [PersonnelController::class, 'afficher']);
+Route::get('/accueil', [PersonnelController::class, 'afficher'])->name('accueil');
 
 Route::post('/message', [PersonnelController::class, 'message']);
 
@@ -49,15 +49,15 @@ Route::post('/modificationlogo', [PersonnelController::class, 'modificationlogo'
 
 Route::get('/suppressionlogo', [PersonnelController::class, 'suppressionlogo']);
 
-Route::get('/messagerie', [PersonnelController::class, 'messagerie']);
+Route::get('/messagerie', [PersonnelController::class, 'messagerie'])->name('messagerie');
 
-Route::get('/statistique', [PersonnelController::class, 'statistique']);
+Route::get('/statistique', [PersonnelController::class, 'statistique'])->name('statistique');
 
-Route::get('/personnalisationducompte', [PersonnelController::class, 'personnalisationducompte']);
+Route::get('/personnalisationducompte', [PersonnelController::class, 'personnalisationducompte'])->name('personnalisationducompte');
 
 
 // Gestion des fournitures
-Route::get('/fournitures', [FournituresController::class, 'afficher']);
+Route::get('/fournitures', [FournituresController::class, 'afficher'])->name('fournitures');
 
 Route::post('/rechercher', [FournituresController::class, 'rechercher']);
 
@@ -67,7 +67,7 @@ Route::post('/majquantite', [FournituresController::class, 'majquantite']);
 
 
 // Gestion des familles des fournitures
-Route::get('/famillesfournitures', [FamillesFournituresController::class, 'afficher']);
+Route::get('/famillesfournitures', [FamillesFournituresController::class, 'afficher'])->name('famillesfournitures');
 
 Route::post('/creationfamille', [FamillesFournituresController::class, 'creationfamille']);
 
@@ -75,13 +75,13 @@ Route::post('/modificationfamille', [FamillesFournituresController::class, 'modi
 
 
 // Gestion des demandes spécifiques
-Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'afficher']);
+Route::get('/demandesspecifiques', [DemandesSpecifiquesController::class, 'afficher'])->name('demandesspecifiques');
 
 Route::post('/creationdemande', [DemandesSpecifiquesController::class, 'creation']);
 
 
 // Gestion des commandes
-Route::get('/suivi', [CommandesController::class, 'afficher']);
+Route::get('/suivi', [CommandesController::class, 'afficher'])->name('suivi');
 
 Route::post('/commander', [CommandesController::class, 'commander']);
 
@@ -93,7 +93,7 @@ Route::post('/majetatcommande', [EtatController::class, 'majetatcommande']);
 
 
 // Gestion des départements
-Route::get('/departements', [ServiceController::class, 'afficher']);
+Route::get('/departements', [ServiceController::class, 'afficher'])->name('departements');
 
 Route::post('/creationdepartement', [ServiceController::class, 'creationdepartement']);
 

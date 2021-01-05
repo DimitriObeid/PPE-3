@@ -1,6 +1,6 @@
 <?php
     if (!isset($_SESSION['mail'])) {
-        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
         exit;
     }
 ?>
@@ -45,6 +45,7 @@
                 <?php } ?>
             </ul>
         </nav>
+        <?php //if ($_SESSION['categorie'] == 'Administrateur') { ?>
         <nav id="menu_lateral"  onmouseover="afficherMenu(menu_lateral)" onmouseout="cacherMenu(menu_lateral)">
             <ul id="ul_menu_lateral">
                 <li class="li_menu_lateral"><a class="menu_lateral" href="accueil#navlistecomptes">Liste des comptes</a></li>
@@ -52,6 +53,7 @@
                 <li class="li_menu_lateral"><a class="menu_lateral" href="accueil#liste_commandes">Liste des commandes en cours</a></li>
             </ul>
         </nav>
+        <?php //} ?>
         <header>
             <h1>Accueil</h1>
             {!! Form::open(['url' => 'rechercher']) !!}
@@ -71,12 +73,12 @@
                         <th class="tabl_comm">État</th>
                         <th class="tabl_comm">Dernière mise à jour</th>
                     </tr>
-                <?php for ($h=0; $h < $_SESSION['commandes']->count(); $h++) { ?>
+                <?php foreach ($_SESSION['commandes'] as $lignes => $colonnes) { ?>
                     <tr>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomCommandes }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->quantiteDemande }}</td>
-                        <td class="tabl_comm">{{ $_SESSION['commandes'][$h]->nomEtat }}</td>
-                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes'][$h]->updated_at)) }}</td>
+                        <td class="tabl_comm">{{ $colonnes->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $colonnes->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $colonnes->nomEtat }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($colonnes->updated_at)) }}</td>
                     </tr>
                 <?php } ?>
                 </table>
@@ -91,6 +93,12 @@
                 }
 
                 if ($_SESSION['categorie'] != 'Administrateur') {
+                    $droitinsuffisant = $droitinsuf ?? false;
+                    if ($droitinsuffisant) { ?>
+                        <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> Vous n'avez pas les droits pour accéder à cette page !</p><br />
+                        <?php header('Refresh: 5; url=accueil');
+                    }
+
                     if ($_SESSION['message'] != '') { ?>
                         <section id="message">{{ $_SESSION["message"] }}</section>
                     <?php } ?>

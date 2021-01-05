@@ -51,13 +51,12 @@ class PersonnelController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|email',
             'mdp' => 'required',
+            'page' => 'required',
         ]);
 
         $Personnel = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->where('mail', $request->email)->get();
 
-        $test = $Personnel->last();
-
-        if ($test == null)
+        if ($Personnel->isEmpty())
         {
             $erreur = 'mail';
             return view('connexion', ['erreur'=>$erreur]);
@@ -105,9 +104,7 @@ class PersonnelController extends Controller
             $_SESSION['personnels'] = $Personnels;
             $_SESSION['fournitures'] = $Fournitures;
 
-            $connexion = true;
-
-            return view('accueil', ['connexion'=>$connexion]);
+            return redirect()->route($request->page);
         }
     }
 
@@ -262,11 +259,16 @@ class PersonnelController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=messagerie');
             exit;
         }
 
-        return view('messagerie');
+        if ($_SESSION['categorie'] != 'Administrateur') {
+            $droitinsuf = true;
+            return view('accueil', ['droitinsuf' => $droitinsuf]);
+        } else {
+            return view('messagerie');
+        }
     }
 
     public function statistique()
@@ -274,11 +276,16 @@ class PersonnelController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=statistique');
             exit;
         }
 
-        return view('statistique');
+        if ($_SESSION['categorie'] != 'Administrateur') {
+            $droitinsuf = true;
+            return view('accueil', ['droitinsuf' => $droitinsuf]);
+        } else {
+            return view('statistique');
+        }
     }
 
     public function personnalisationducompte()
@@ -286,7 +293,7 @@ class PersonnelController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?inactiviteprolonge=true');
+            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=personnalisationducompte');
             exit;
         }
 
