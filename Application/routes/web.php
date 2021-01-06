@@ -25,3 +25,4 @@ Route::get('/', function () {
 });
 
 Route::get('/connexion', [PersonnelController::class, 'connexion']);
+Route::get('contact','PagesController@contact');
