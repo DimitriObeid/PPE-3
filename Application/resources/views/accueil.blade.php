@@ -1,6 +1,6 @@
 <?php
     if (!isset($_SESSION['mail'])) {
-        header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+        header('Refresh: 0; url='.url('/'));
         exit;
     }
 ?>

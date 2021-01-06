@@ -259,7 +259,7 @@ class PersonnelController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=messagerie');
+            header('Refresh: 0; url='.url('?page=messagerie'));
             exit;
         }
 
@@ -276,7 +276,7 @@ class PersonnelController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=statistique');
+            header('Refresh: 0; url='.url('?page=statistique'));
             exit;
         }
 
@@ -293,7 +293,7 @@ class PersonnelController extends Controller
         session_start();
 
         if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=personnalisationducompte');
+            header('Refresh: 0; url='.url('?page=personnalisationducompte'));
             exit;
         }
 

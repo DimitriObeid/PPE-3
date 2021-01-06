@@ -261,13 +261,7 @@
                 <?php }
 
                 if ($_SESSION['categorie'] == 'Valideur') {
-                    if (isset($_SESSION['commande_valid'][0])) {
-                        $envoye = $envoyer ?? false;
-                        if ($envoye) { ?>
-                            <p class="confirm"><img class="img_confirm" src="http://localhost/PPE-3/Application/storage/app/public/confirm.png" alt="Icon de confirmation" /> La commande à bien été mise à jour</p><br />
-                            <?php header('Refresh: 5; url=suivi');
-                        } ?>
-
+                    if (isset($_SESSION['commande_valid'][0])) { ?>
                         <table id="liste_commandes_valid">
                             <caption>Liste des commandes des utilisateurs</caption>
                             <tr>
