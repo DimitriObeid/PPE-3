@@ -74,37 +74,19 @@
         </div>
     </div><!--/header-middle-->
 
-    <div class="header-bottom"><!--header-bottom-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="{{url('/')}}" class="active">Accueil</a></li>
-                            <li class="dropdown"><a href="#">Menu<i class="fa fa-angle-down"></i></a>
+                            <li class="dropdown"><a href="#"><i class="fa fa-angle-down">Tous</i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="{{url('/list-products')}}">Produits</a></li>
-                                    <li><a href="{{url('/myaccount')}}">Compte</a></li>
-                                    <li><a href="{{url('/viewcart')}}">Coupon</a></li>
+                                    <li><a href="{{url('/viewcart')}}"></a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{url('/')}}" target="_blank">Contact</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="search_box pull-right">
-                        <input type="text" placeholder="Recherche"/>
-                    </div>
-                </div>
+              
             </div>
         </div>
     </div><!--/header-bottom-->

@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title','Add Products Page')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Products</a> <a href="{{route('product.create')}}" class="current">Add New Product</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Article</a> <a href="{{route('product.create')}}" class="current">Ajouter un nouveau Article</a> </div>
     <div class="container-fluid">
         @if(Session::has('message'))
             <div class="alert alert-success text-center" role="alert">
@@ -10,7 +10,7 @@
         @endif
         <div class="widget-box">
             <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                <h5>Ajouter un nouveau produit</h5>
+                <h5>Ajouter un nouveau Article</h5>
             </div>
             <div class="widget-content nopadding">
                 <form action="{{route('product.store')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
@@ -82,7 +82,7 @@
                     <div class="control-group">
                         <label for="" class="control-label"></label>
                         <div class="controls">
-                            <button type="submit" class="btn btn-success">Ajouter un produit</button>
+                            <button type="submit" class="btn btn-success">Ajouter un Article</button>
                         </div>
                     </div>
                 </form>

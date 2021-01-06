@@ -3,7 +3,7 @@
 @section('content')
     <!--breadcrumbs-->
     <div id="content-header">
-        <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Setting</a> </div>
+        <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Retourner à l'accueil" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="#" class="current">Parametre</a> </div>
     </div>
     <!--End-breadcrumbs-->
     <div class="container-fluid">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <input type="submit" value="Update Password" class="btn btn-success">
+                                <input type="submit" value="Mise à jour du Mot de passe " class="btn btn-success">
                             </div>
                         </form>
                     </div>

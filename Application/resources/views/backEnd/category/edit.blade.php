@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title','Edit Category')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('category.index')}}">Categories</a> <a href="#" class="current">Modifier Categorie</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Retourner à l'accueil!" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('category.index')}}">Categories</a> <a href="#" class="current">Modifier Categorie</a> </div>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">

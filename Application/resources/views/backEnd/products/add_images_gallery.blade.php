@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title','Add Images Gallery')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Produits</a> <a href="#" class="current">Ajouter des images aux galerie</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Article</a> <a href="#" class="current">Ajouter des images aux galerie</a> </div>
     <div class="container-fluid">
         @if(Session::has('message'))
             <div class="alert alert-success text-center" role="alert">
@@ -12,7 +12,7 @@
             <div class="span6">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
-                        <h5>Product : {{$product->p_name}}</h5>
+                        <h5>Article : {{$product->p_name}}</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <ul class="recent-posts">
@@ -20,7 +20,7 @@
                                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{url('products/small',$product->image)}}"> </div>
                                 <div class="article-post">
                                     <span class="user-info">Product Code : <b>{{$product->p_code}}</b></span>
-                                    <p>Product Color : <b>{{$product->p_color}}</b></p>
+                                    <p>Article Color : <b>{{$product->p_color}}</b></p>
                                 </div>
                             </li>
                             <li>

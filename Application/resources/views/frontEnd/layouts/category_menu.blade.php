@@ -33,6 +33,6 @@
                 @endif
             </div>
         @endforeach
-    </div><!--/category-products-->
+    </div><!--/categories des articles-->
 
 </div>

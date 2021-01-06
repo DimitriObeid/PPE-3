@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title','Add Attribute')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Produits</a> <a href="#" class="current">Ajouter Attribut</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Articles</a> <a href="#" class="current">Ajouter Attribut</a> </div>
     <div class="container-fluid">
         @if(Session::has('message'))
             <div class="alert alert-success text-center" role="alert">
@@ -12,15 +12,15 @@
                 <div class="span6">
                     <div class="widget-box">
                         <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
-                            <h5>Produit : {{$product->p_name}}</h5>
+                            <h5>Article : {{$product->p_name}}</h5>
                         </div>
                         <div class="widget-content nopadding">
                             <ul class="recent-posts">
                                 <li>
                                     <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{url('products/small',$product->image)}}"> </div>
                                     <div class="article-post">
-                                        <span class="user-info">Produit Code : <b>{{$product->p_code}}</b></span>
-                                        <p>Couleur du Produit: <b>{{$product->p_color}}</b></p>
+                                        <span class="user-info"> Code : <b>{{$product->p_code}}</b></span>
+                                        <p>Couleur du Article: <b>{{$product->p_color}}</b></p>
                                     </div>
                                 </li>
                                 <li>
@@ -32,7 +32,7 @@
                                             <input type="text" class="form-control" name="sku" value="{{old('sku')}}" id="sku" placeholder="Couleur" required>
                                             <input type="text" class="form-control" name="size" value="{{old('size')}}" id="size" placeholder="Taille" required>
                                             <input type="text" class="form-control" name="prix" value="{{old('price')}}" id="price" placeholder="prix" required>
-                                            <span style="color: red;">{{$errors->first('price')}}</span>
+                                            <span style="color: red;">{{$errors->first('price')}}</span> -->
                                             <input type="number" class="form-control" name="stock" value="{{old('stock')}}" id="stock" placeholder="Stock" required>
                                         </div>
                                         <button type="submit" class="btn btn-success">Ajouter</button>
@@ -45,7 +45,7 @@
                 <div class="span6">
                     <div class="widget-box">
                         <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-                            <h5>Liste Produits Attributs</h5>
+                            <h5>Liste Articles Attributs</h5>
                         </div>
                         <div class="widget-content nopadding">
                             <form action="{{route('product_attr.update',$product->id)}}" method="post" role="form">
@@ -66,14 +66,14 @@
                                     <input type="hidden" name="id[]" value="{{$attribute->id}}">
                                 <tr>
                                     <td class="taskDesc">
-                                        <input type="text" name="produit[]" id="sku" class="form-control" value="{{$attribute->sku}}" required="required" style="width: 75px;">
+                                        <input type="text" name="Article[]" id="sku" class="form-control" value="{{$attribute->sku}}" required="required" style="width: 75px;">
                                     </td>
                                     <td class="taskStatus">
                                         <input type="text" name="taille[]" id="size" class="form-control" value="{{$attribute->size}}" required="required" style="width: 75px;">
                                     </td>
-                                    <td class="taskOptions">
+                                <!--    <td class="taskOptions">
                                         <input type="text" name="prix[]" id="price" class="form-control" value="{{$attribute->price}}" required="required" style="width: 75px;">
-                                    </td>
+                                    </td> -->
                                     <td class="taskOptions">
                                         <input type="text" name="stock[]" id="stock" class="form-control" value="{{$attribute->stock}}" required="required" style="width: 75px;">
                                     </td>

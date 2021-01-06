@@ -39,7 +39,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function checkCateName(Request $request){
+   public function checkCateName(Request $request){
         $data=$request->all();
         $category_name=$data['name'];
         $ch_cate_name_atDB=Category_model::select('name')->where('name',$category_name)->first();
@@ -111,14 +111,14 @@ class CategoryController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $delete=Category_model::findOrFail($id);
-        $delete->delete();
-        return redirect()->route('category.index')->with('message','Supprimé avec succès!');
-    }
-}
+          *
+          * @param  int  $id
+          * @return \Illuminate\Http\Response
+          */
+         public function destroy($id)
+         {
+             $delete=Category_model::findOrFail($id);
+             $delete->delete();
+             return redirect()->route('category.index')->with('message','Supprimé avec succès!');
+         }
+     }

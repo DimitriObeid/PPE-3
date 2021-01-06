@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title','Add Category')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="{{route('category.index')}}">Categories</a> <a href="{{route('category.create')}}" class="current">Ajouter un nouveau Categorie</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Retouner à l'accueil" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('category.index')}}">Categories</a> <a href="{{route('category.create')}}" class="current">Ajouter un nouveau Categorie</a> </div>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
@@ -15,12 +15,12 @@
                         <div class="control-group{{$errors->has('name')?' has-error':''}}">
                             <label class="control-label">Nom categorie:</label>
                             <div class="controls">
-                                <input type="text" name="name" id="name" value="{{old('name')}}" required>
+                                <input type="text" name="Nom" id="name" value="{{old('name')}}" required>
                                 <span class="text-danger" id="chCategory_name" style="color: red;">{{$errors->first('name')}}</span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label"> Lavel categorie:</label>
+                            <label class="control-label">  categorie:</label>
                             <div class="controls" style="width: 245px;">
                                 <select name="parent_id" id="parent_id">
                                         @foreach($cate_levels as $key=>$value)
@@ -62,7 +62,7 @@
                         <div class="control-group">
                             <label for="control-label"></label>
                             <div class="controls">
-                                <input type="submit" value="Add New" class="btn btn-success">
+                                <input type="submit" value="Ajouter un nouveau" class="btn btn-success">
                             </div>
                         </div>
                     </form>
@@ -85,3 +85,4 @@
     <script src="{{ asset('js/matrix.tables.js') }}"></script>
     <script src="{{ asset('js/matrix.popover.js') }}"></script>
 @endsection
+seach

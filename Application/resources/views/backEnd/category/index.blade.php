@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
-@section('title','List Categories')
+@section('title','Liste des Categories')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('category.index')}}" class="current">Categories</a></div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Retourner à l'accueil" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('category.index')}}" class="current">Catégories</a></div>
     <div class="container-fluid">
         @if(Session::has('message'))
             <div class="alert alert-success text-center" role="alert">
@@ -16,21 +16,21 @@
                 <table class="table table-bordered data-table">
                     <thead>
                     <tr>
-                        <th>Nom du Categorie</th>
-                        <th>Categorie parent</th>
-                        <th>Créer à</th>
+                        <th>Nom du Catégorie</th>
+                        <th>Catégorie parent</th>
+                        <th>Créer</th>
                         <th>Statut</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($categories as $category)
-                            <?php
-                                $parent_cates = DB::table('categories')->select('name')->where('id',$category->parent_id)->get();
-                            ?>
+                       @foreach($categories as $category)
+                       <?php
+                              $parent_cates = DB::table('categories')->select('name')->where('id',$category->parent_id)->get();
+                        ?>
                             <tr class="gradeC">
                                 <td>{{$category->name}}</td>
-                                <td>
+                               <td>
                                     @foreach($parent_cates as $parent_cate)
                                         {{$parent_cate->name}}
                                     @endforeach
@@ -39,7 +39,8 @@
                                 <td style="text-align: center;">{{($category->status==0)?' desactiver':'activer'}}</td>
                                 <td style="text-align: center;">
                                     <a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-mini">modifier</a>
-                                    <a href="javascript:" rel="{{$category->id}}" rel1="delete-category" class="btn btn-danger btn-mini deleteRecord">suppimer</a>
+                                    <a href="javascript:" rel="{{$category->id}}" rel1="delete-category" class="btn btn-danger btn-mini deleteRecord">Supprimer</a>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -60,25 +61,25 @@
     <script src="{{asset('js/matrix.tables.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <script>
-        $(".deleteRecord").click(function () {
-           var id=$(this).attr('rel');
-           var deleteFunction=$(this).attr('rel1');
-           swal({
-               title:'Etes-vous sure?',
-               text:"Vous ne pouurez pas annuler cela!",
-               type:'Attention',
-               showCancelButton:true,
-               confirmButtonColor:'#3085d6',
-               cancelButtonColor:'#d33',
-               confirmButtonText:'OUI, supprimer cela!',
-               cancelButtonText:'NON, Annuler!',
-               confirmButtonClass:'btn btn-success',
-               cancelButtonClass:'btn btn-danger',
-               buttonsStyling:false,
-               reverseButtons:true
-           },function () {
-              window.location.href="/admin/"+deleteFunction+"/"+id;
-           });
-        });
-    </script>
+    $(".deleteRecord").click(function () {
+       var id=$(this).attr('rel');
+       var deleteFunction=$(this).attr('rel1');
+       swal({
+           title:'Vous etes sur?',
+           text:"Vous pourrez pas retourner en arrière!",
+           type:'warning',
+           showCancelButton:true,
+           confirmButtonColor:'#f50f16',
+           cancelButtonColor:'#d33',
+           confirmButtonText:'Oui, supprimé!',
+           cancelButtonText:'Non, Annulé!',
+           confirmButtonClass:'btn btn-success',
+           cancelButtonClass:'btn btn-danger',
+           buttonsStyling:false,
+           reverseButtons:true
+       },function () {
+          window.location.href="/admin/"+deleteFunction+"/"+id;
+       });
+    });
+  </script>
 @endsection

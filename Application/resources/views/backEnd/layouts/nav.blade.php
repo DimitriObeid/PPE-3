@@ -13,10 +13,10 @@
                 <li><a href="{{route('category.index')}}">Liste des Categories</a></li>
             </ul>
         </li>
-        <li class="submenu {{$menu_active==3? ' active':''}}"> <a href="#"><i class="icon icon-th-list"></i> <span>Produits</span></a>
+        <li class="submenu {{$menu_active==3? ' active':''}}"> <a href="#"><i class="icon icon-th-list"></i> <span>Articles</span></a>
             <ul>
-                <li><a href="{{url('/admin/product/create')}}">Aouter de nouveaux Produits</a></li>
-                <li><a href="{{route('product.index')}}">Liste des Produits</a></li>
+                <li><a href="{{url('/admin/product/create')}}">Aouter de nouveaux Articles</a></li>
+                <li><a href="{{route('product.index')}}">Liste des Articles</a></li>
             </ul>
         </li>
         <li class="submenu {{$menu_active==4? ' active':''}}"> <a href="#"><i class="icon icon-th-list"></i> <span>Coupons</span></a>

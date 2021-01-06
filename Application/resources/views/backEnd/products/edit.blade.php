@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title','Add Products Page')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Produits</a> <a href="#" class="current">Modifier produit</a> </div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}">Article</a> <a href="#" class="current">Modifier Article</a> </div>
     <div class="container-fluid">
         @if(Session::has('message'))
             <div class="alert alert-success text-center" role="alert">
@@ -10,7 +10,7 @@
         @endif
         <div class="widget-box">
             <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                <h5>Ajouter un nouveau produit</h5>
+                <h5>Ajouter un nouveau Article</h5>
             </div>
             <div class="widget-content nopadding">
                 <form action="{{route('product.update',$edit_product->id)}}" method="post" class="form-horizontal" enctype="multipart/form-data">
@@ -64,7 +64,7 @@
                             <span class="text-danger">{{$errors->first('description')}}</span>
                         </div>
                     </div>
-                    <div class="control-group">
+               <div class="control-group">
                         <label for="price" class="control-label">Prix</label>
                         <div class="controls{{$errors->has('price')?' has-error':''}}">
                             <div class="input-prepend"> <span class="add-on">€</span>
@@ -72,7 +72,7 @@
                                 <span class="text-danger">{{$errors->first('price')}}</span>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div class="control-group">
                         <label class="control-label">Mise à jour l'image</label>
                         <div class="controls">
@@ -80,7 +80,7 @@
                             <span class="text-danger">{{$errors->first('image')}}</span>
                             @if($edit_product->image!='')
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="javascript:" rel="{{$edit_product->id}}" rel1="delete-image" class="btn btn-danger btn-mini deleteRecord">Delete Old Image</a>
+                                <a href="javascript:" rel="{{$edit_product->id}}" rel1="delete-image" class="btn btn-danger btn-mini deleteRecord">suppr ancienne image</a>
                                 <img src="{{url('products/small/',$edit_product->image)}}" width="35" alt="">
                             @endif
                         </div>
@@ -88,7 +88,7 @@
                     <div class="control-group">
                         <label for="" class="control-label"></label>
                         <div class="controls">
-                            <button type="submit" class="btn btn-success">Modifier Produit</button>
+                            <button type="submit" class="btn btn-success">Modifier Article</button>
                         </div>
                     </div>
                 </form>

@@ -14,11 +14,11 @@
                 <table class="table table-condensed">
                     <thead>
                     <tr class="cart_menu">
-                        <td class="image">Element</td>
+                        <td class="image">Produit</td>
                         <td class="description">Caractéristique</td>
-                        <td class="price">Prix</td>
-                        <td class="quantity">Quanttité</td>
-                        <td class="total">Total</td>
+                        <td class="etat">Supprimer</td>
+                        <td class="quantity"></td>
+                        <td class="total"></td>
                         <td></td>
                     </tr>
                     </thead>
@@ -37,21 +37,6 @@
                                     <h4><a href="">{{$cart_data->product_name}}</a></h4>
                                     <p>{{$cart_data->product_code}} | {{$cart_data->size}}</p>
                                 </td>
-                                <td class="cart_price">
-                                    <p>€{{$cart_data->price}}</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href="{{url('/cart/update-quantity/'.$cart_data->id.'/1')}}"> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="{{$cart_data->quantity}}" autocomplete="off" size="2">
-                                        @if($cart_data->quantity>1)
-                                            <a class="cart_quantity_down" href="{{url('/cart/update-quantity/'.$cart_data->id.'/-1')}}"> - </a>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">€ {{$cart_data->price*$cart_data->quantity}}</p>
-                                </td>
                                 <td class="cart_delete">
                                     <a class="cart_quantity_delete" href="{{url('/cart/deleteItem',$cart_data->id)}}"><i class="fa fa-times"></i></a>
                                 </td>
@@ -61,53 +46,18 @@
                 </table>
             </div>
         </div>
-    </section> <!--/#cart_items-->
-<!--
-    <section id="do_action">
-        <div class="container">
-            <div class="heading">
-                <h3>What would you like to do next?</h3>
-                <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    @if(Session::has('message_coupon'))
-                        <div class="alert alert-danger text-center" role="alert">
-                            {{Session::get('message_coupon')}}
-                        </div>
-                    @endif
-                    <div class="chose_area" style="padding: 20px;">
-                        <form action="{{url('/apply-coupon')}}" method="post" role="form">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <input type="hidden" name="Total_amountPrice" value="{{$total_price}}">
-                            <div class="form-group">
-                                <label for="coupon_code">Coupon Code</label>
-                                <div class="controls {{$errors->has('coupon_code')?'has-error':''}}">
-                                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" placeholder="Promotion By Coupon">
-                                    <span class="text-danger">{{$errors->first('coupon_code')}}</span>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Apply</button>
-                            </div>
-                        </form>
-                    </div>
-                </div> -->
+
+    </section>
                 <div class="col-sm-6">
                     @if(Session::has('message_apply_sucess'))
                         <div class="alert alert-success text-center" role="alert">
                             {{Session::get('message_apply_sucess')}}
                         </div>
+                        <div style="margin-left: 20px;"><a class="btn btn-default check_out" href="{{url('/check-out')}}">Envoyer</a></div>
+                    </div>
                     @endif
-                    <div class="total_area">
-                        <ul>
-                            @if(Session::has('discount_amount_price'))
-                                <li><span>€ {{$total_price}}</span></li>
-                              <!--  <li>Coupon Discount (Code : {{Session::get('coupon_code')}}) <span>$ {{Session::get('discount_amount_price')}}</span></li> -->
-                                <li>Total <span>€ {{$total_price-Session::get('discount_amount_price')}}</span></li>
-                            @else
-                                <li>Total <span>€ {{$total_price}}</span></li>
-                            @endif
                         </ul>
-                        <div style="margin-left: 20px;"><a class="btn btn-default check_out" href="{{url('/check-out')}}">Valider</a></div>
+                        <div style="margin-left: 20px;"><a class="btn btn-default check_out" href="{{url('/check-out')}}">Envoyer</a></div>
                     </div>
                 </div>
             </div>

@@ -15,13 +15,13 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $menu_active=3;
-        $i=0;
-        $products=Products_model::orderBy('created_at','desc')->get();
-        return view('backEnd.products.index',compact('menu_active','products','i'));
-    }
+     public function index()
+     {
+         $menu_active=3;
+         $i=0;
+         $products=Products_model::orderBy('created_at','desc')->get();
+         return view('backEnd.products.index',compact('menu_active','products','i'));
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -76,7 +76,7 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function Afficher($id)
     {
     }
 

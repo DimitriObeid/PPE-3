@@ -21,7 +21,7 @@
                             <input type="checkbox" class="checkbox">
                             garde moi connecté
                         </span>
-                        <button type="submit" class="btn btn-default">Login</button>
+                        <button type="submit" class="btn btn-default">Se connecter</button>
                     </form>
                 </div><!--/login form-->
             </div>

@@ -74,7 +74,7 @@
                             <input type="password" class="form-control" name="newPassword_confirmation" id="newPassword_confirmation" placeholder="Confirm Password">
                             <span class="text-danger">{{$errors->first('newPassword_confirmation')}}</span>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="float: right;">Update Password</button>
+                        <button type="submit" class="btn btn-primary" style="float: right;">Mise à jour du mot de passe</button>
                     </form>
                 </div><!--/sign up form-->
             </div>

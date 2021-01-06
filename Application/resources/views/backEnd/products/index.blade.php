@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
-@section('title','List Products')
+@section('title','Liste des Produits')
 @section('content')
-    <div id="breadcrumb"> <a href="{{url('/admin')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}" class="current">Products</a></div>
+    <div id="breadcrumb"> <a href="{{url('/admin')}}" title=" Retourner à l'Accueil" class="tip-bottom"><i class="icon-home"></i> Accueil</a> <a href="{{route('product.index')}}" class="current">Article</a></div>
     <div class="container-fluid">
         @if(Session::has('message'))
             <div class="alert alert-success text-center" role="alert">
@@ -10,7 +10,7 @@
         @endif
         <div class="widget-box">
             <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                <h5>Liste des produits</h5>
+                <h5>Liste des Articles</h5>
             </div>
             <div class="widget-content nopadding">
                 <table class="table table-bordered data-table">
@@ -18,27 +18,27 @@
                     <tr>
                         <th>ID</th>
                         <th>Image</th>
-                        <th>Nom Produit</th>
+                        <th>Nom de l'article</th>
                         <th>Sous-Category</th>
-                        <th>Code du Product</th>
-                        <th> Couleur Produit</th>
-                        <th>Prix</th>
-                        <th>Image Gallerie</th>
+                        <th>Code du Article</th>
+                        <th> Couleur de l'Article</th>
+                        <th>Stock</th>
+                        <th>Image Galerie</th>
                         <th>Ajouter Attribut</th>
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    @foreach($products as $product)
-                        <?php $i++; ?>
-                        <tr class="gradeC">
-                            <td>{{$i}}</td>
+                   <tbody>
+                     @foreach($products as $product)
+                          <?php $i++; ?>
+                          <tr class="gradeC">
+                              <td>{{$i}}</td>
                             <td style="text-align: center;"><img src="{{url('products/small',$product->image)}}" alt="" width="50"></td>
                             <td style="vertical-align: middle;">{{$product->p_name}}</td>
                             <td style="vertical-align: middle;">{{$product->category->p_name}}</td>
                             <td style="vertical-align: middle;">{{$product->p_code}}</td>
                             <td style="vertical-align: middle;">{{$product->p_color}}</td>
-                            <td style="vertical-align: middle;">{{$product->price}}</td>
+                            <td style="vertical-align: middle;">{{$product->price}}</td> -->
                             <td style="vertical-align: middle;text-align: center;"><a href="{{route('image-gallery.show',$product->id)}}" class="btn btn-default btn-mini">Ajouter Images</a></td>
                             <td style="vertical-align: middle;text-align: center;"><a href="{{route('product_attr.show',$product->id)}}" class="btn btn-success btn-mini">Ajouter Attr</a></td>
                             <td style="text-align: center; vertical-align: middle;">
@@ -59,10 +59,10 @@
                             </div>
                         </div>
                         {{--Pop Up Model for View Product--}}
-                    @endforeach
+                         @endforeach
                     </tbody>
                 </table>
-            </div>
+             </div>
         </div>
     </div>
 @endsection
@@ -78,25 +78,25 @@
     <script src="{{asset('js/matrix.popover.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <script>
-        $(".deleteRecord").click(function () {
-            var id=$(this).attr('rel');
-            var deleteFunction=$(this).attr('rel1');
-            swal({
-                title:'Etes-vous sure?',
-                text:"Vous ne pourrez pas annuler cela!",
-                type:'Attention',
-                showCancelButton:true,
-                confirmButtonColor:'#3085d6',
-                cancelButtonColor:'#d33',
-                confirmButtonText:'Oui, supprimer cela!',
-                cancelButtonText:'Non, Annuler!',
-                confirmButtonClass:'btn btn-success',
-                cancelButtonClass:'btn btn-danger',
-                buttonsStyling:false,
-                reverseButtons:true
-            },function () {
-                window.location.href="/admin/"+deleteFunction+"/"+id;
-            });
-        });
-    </script>
+    $(".deleteRecord").click(function () {
+       var id=$(this).attr('rel');
+       var deleteFunction=$(this).attr('rel1');
+       swal({
+           title:'Vous etes sur?',
+           text:"Vous pourrez pas retourner en arrière!",
+           type:'warning',
+           showCancelButton:true,
+           confirmButtonColor:'#f50f16',
+           cancelButtonColor:'#d33',
+           confirmButtonText:'Oui, supprimé!',
+           cancelButtonText:'Non, Annulé!',
+           confirmButtonClass:'btn btn-success',
+           cancelButtonClass:'btn btn-danger',
+           buttonsStyling:false,
+           reverseButtons:true
+       },function () {
+          window.location.href="/admin/"+deleteFunction+"/"+id;
+       });
+    });
+  </script>
 @endsection

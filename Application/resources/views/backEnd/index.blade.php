@@ -3,7 +3,7 @@
 @section('content')
     <!--breadcrumbs-->
     <div id="content-header">
-        <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Accueil</a></div>
+        <div id="breadcrumb"> <a href="index.html" title="Retourner à l'accueil" class="tip-bottom"><i class="icon-home"></i> Accueil</a></div>
     </div>
     <!--End-breadcrumbs-->
 
@@ -12,11 +12,11 @@
         <div class="quick-actions_homepage">
             <ul class="quick-actions">
                 <li class="bg_lb"> <a href="{{route('category.store')}}" > <i class="icon-hdd"></i> <span class="label label-important">8</span>Catégories </a> </li>
-                <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Graphiques</a> </li>
-                <li class="bg_ly"> <a href="{{route('product.store')}}"> <i class="icon-plus-sign-alt"></i><span class="label label-success"></span> Ajouter un produit </a> </li>
+                <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Statistiques</a> </li>
+                <li class="bg_ly"> <a href="{{route('product.create')}}"> <i class="icon-plus-sign-alt"></i><span class="label label-success"></span> Ajouter un Article </a> </li>
                 <li class="bg_lo"> <a href="#"> <i class="icon-bell-alt"></i><span class="label label-important">0</span> Commandes-suivi</a> </li>
-                <li class="bg_ls"> <a href="#"> <i class="icon-fullscreen"></i> Plein largeur</a> </li>
-                <li class="bg_lo span3"> <a href="form-common.html"> <i class="icon-user"></i> </a> </li>
+                <li class="bg_ls"> <a href="#"> <i class="icon-fullscreen"></i>  </a> </li>
+                <li class="bg_lo span3"> <a href="#"> <i class="icon-user"></i>Departements</a> </li>
                 <li class="bg_ls"> <a href="{{route('product.index')}}"> <i class="icon-list"></i><span class="label label-important">9</span> liste des fournitures</a> </li>
                 <li class="bg_lb"> <a href="interface.html"> <i class="icon-pencil"></i>Element</a> </li>
                 <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendrier</a> </li>
@@ -51,10 +51,10 @@
     <script type="text/javascript">
         // This function is called from the pop-up menus to transfer to
         // a different page. Ignore if the value returned is a null string:
-        function goPage (newURL) {
+       function goPage (newURL) {
 
             // if url is empty, skip the menu dividers and reset the menu selection to default
-            if (newURL != "") {
+          !  if (newURL != "") {
 
                 // if url is "-", it is this page -- reset the menu:
                 if (newURL == "-" ) {
