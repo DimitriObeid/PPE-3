@@ -14,7 +14,7 @@
         </header>
         <?php $refresh = $deconnexion ?? false;
         if ($refresh) {
-            header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php');
+            header('Refresh: 0; url='.url('/'));
             exit;
         }
 
@@ -59,7 +59,7 @@
                 <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icone d'erreur" /> Le mot de passe est incorrect !</p>
             <?php }
         } ?>
-
+        <?php $url = url('inscription');?>
         {!! Form::open(['url' => 'connexion']) !!}
         {{ Form::hidden('page', $page) }}
         {{ Form::label('email', 'Adresse mail') }}
@@ -69,7 +69,7 @@
         {{ Form::password('mdp', ['required']) }}
         <br>
         {{ Form::submit('Se connecter', ['class'=>'submit']) }}
-        {{ Form::button('Créer un compte', ['onclick'=>'window.location.href="http://localhost/PPE-3/Application/server.php/inscription"']) }}
+        {{ Form::button('Créer un compte', ['onclick'=>"window.location.href='$url'"]) }}
         {!! Form::close() !!}
     </body>
 </html>
