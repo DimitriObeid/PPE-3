@@ -13,6 +13,7 @@
             <h1>Inscription</h1>
         </header>
         {!! Form::open(['url' => 'inscription']) !!}
+        {{ Form::hidden('page', 'accueil') }}
         {{ Form::label('nom', 'Nom') }}
         {{ Form::text('nom', $value = null, ['maxlength'=>'50', 'required']) }}
         <br>
