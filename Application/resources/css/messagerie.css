@@ -232,3 +232,50 @@ footer
     margin-left: 3%;
     margin-top: 1%;
 }
+
+/*Coordonées*/
+
+label {
+  display: block;
+  font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+  margin: .4rem 0;
+  background-color: white;
+}
+
+#bdr{
+  position: absolute;
+  top:  30%;
+  right: 1%;
+}
+
+#resultat0{
+text-align: center;
+}
+
+#bouton_r{
+  color: black;
+}
+
+
+#message_e{
+  border: none;
+  width: /*62*%*/ 75%;
+  background-color: #e9e5dc;
+}
+
+#coordonées{
+  width: 50%;
+  margin-left: 35%;
+  padding: 5%;
+  text-align: center;
+}
+
+#message{
+  width: 50%;
+  margin-left: 35%;
+  padding: 5%;
+  text-align: center;
+}

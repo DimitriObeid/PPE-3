@@ -81,6 +81,80 @@
                   } else { ?>
             <?php } ?>
         </section>
+
+<?php  /*
+        // Recuperation des noms des produits
+        $nom_produits = $bdd->prepare("SELECT p_name FROM products");
+        $nom_produits->execute(array());
+
+        $_SESSION['nom_fournitures'] = $nom_produits->fetchAll();
+
+        $nom_produits->closeCursor();
+
+        // Recuperation des noms des services
+        $nom_service = $bdd->prepare("SELECT nom_service FROM services");
+        $nom_service->execute(array());
+
+        $_SESSION['nom_service'] = $nom_service->fetchAll();
+
+        $nom_service->closeCursor();
+*/?>
+
+        <html lang="fr" dir="ltr">
+          <head>
+            <meta charset="utf-8">
+            <title>Statistiques</title>
+            <link rel="stylesheet" href="style.css" charset="utf-8" />
+
+          </head>
+          <body>
+        <h1> Table de statistique</h1>
+
+         <!-- Selection des fournitures -->
+          <form method="get" action="resultat.php">
+         <fieldset id="a"><h3>Selectionner un produit</h3>
+           <select name="nom_fournitures">
+             <?php /*foreach ($_SESSION['nom_fournitures'] as $key => $value) {
+               echo '<option value="'.$value['p_name'].'">'.$value['p_name'].'</option>';
+             } */?>
+           </select>
+         </fieldset>
+
+         <fieldset id="b"><h3>Date début</h3>
+           <input type ="date" id="date1" name="date1" />
+         </fieldset>
+
+         <fieldset id="c"><h3>Date fin</h3>
+           <input type ="date" id="date2" name="date2" />
+         </fieldset>
+        </br></br></br></br></br></br></br></br></br></br>
+         <input type="submit" name="resultat" value="Voir le résultat">
+        </form>
+
+        <!-- Selection des services -->
+         <form method="get" action="resultat.php">
+        <fieldset id="a"><h3>Selectionner un service</h3>
+          <select name="nom_service">
+            <?php/* foreach ($_SESSION['nom_service'] as $key => $value) {
+              echo '<option value="'.$value['nom_service'].'">'.$value['nom_service'].'</option>';
+            } */?>
+          </select>
+        </fieldset>
+
+        <fieldset id="b"><h3>Date début</h3>
+          <input type ="date" id="date1" name="date1" />
+        </fieldset>
+
+        <fieldset id="c"><h3>Date fin</h3>
+          <input type ="date" id="date2" name="date2" />
+        </fieldset>
+        </br></br></br></br></br></br></br></br></br></br>
+        <input type="submit" name="resultat" value="Voir le résultat">
+        </form>
+          </body>
+
+
+
         <footer>
             <?php if (isset($_SESSION['commandes_fini'][0])) { ?>
                 <table id="commandes_fini">

@@ -186,7 +186,7 @@ class PersonnelController extends Controller
         session_start();
 
         $Personnel = Personnel::where('mail', $_SESSION['mail'])->get();
-
+        //stocker dans la variable la requete selectionner la table personnel :: si bsn d'un jointure faire join
         $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
         $_SESSION['message'] = $Personnel[0]->message;
@@ -254,6 +254,7 @@ class PersonnelController extends Controller
         return view('accueil', ['supprlogo' => $supprlogo]);
     }
 
+    /*MESSAGERIEEEEEEE*/
     public function messagerie()
     {
         session_start();
@@ -262,7 +263,6 @@ class PersonnelController extends Controller
             header('Refresh: 0; url=http://localhost/PPE-3/Application/server.php?page=messagerie');
             exit;
         }
-
         if ($_SESSION['categorie'] != 'Administrateur') {
             $droitinsuf = true;
             return view('accueil', ['droitinsuf' => $droitinsuf]);

@@ -232,3 +232,23 @@ footer
     margin-left: 3%;
     margin-top: 1%;
 }
+
+
+/*Début de mise en page des statistiques*/
+h1{
+  margin-left:45%;
+}
+
+#a { background: wheat; margin: 25px;float: left;}
+#b { background: orange;margin: 25px;float: left;}
+#c { background: red;margin: 25px;float: left;}
+
+#b, #c{
+margin-left: 5%;
+margin-top: 5%;
+}
+
+#a{
+margin-left: 30%;
+margin-top: 5%;
+}
