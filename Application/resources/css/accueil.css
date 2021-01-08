@@ -361,3 +361,8 @@ footer
     margin-left: 3%;
     margin-top: 1%;
 }
+
+#envoi_mail
+{
+    width: 30px;
+}

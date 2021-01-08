@@ -201,7 +201,17 @@ th, td
     font-weight: bold;
 }
 
-.img_confirm
+.erreur
+{
+    background: #ee0000;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.3%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.img_confirm, .img_erreur
 {
     width: 1.1%;
     position: relative;
@@ -235,12 +245,12 @@ footer
 
 /*Coordonées*/
 
-label {
+.label {
   display: block;
   font: 1rem 'Fira Sans', sans-serif;
 }
 
-input {
+ .input {
   margin: .4rem 0;
   background-color: white;
 }
@@ -262,7 +272,7 @@ text-align: center;
 
 #message_e{
   border: none;
-  width: /*62*%*/ 75%;
+  width: 75%;
   background-color: #e9e5dc;
 }
 

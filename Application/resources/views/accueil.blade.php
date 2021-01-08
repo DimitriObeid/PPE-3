@@ -242,7 +242,7 @@
                         <th>État</th>
                         <th>Création</th>
                         <th>Dernière mise à jour</th>
-                        <th>Réponse</th>
+                        <th>Contact</th>
                     </tr>
                 <?php if ($_SESSION['commandes_liste']->count() < 6) {
                     $max = $_SESSION['commandes_liste']->count();
@@ -258,7 +258,7 @@
                         <td>{{ $_SESSION['commandes_liste'][$l]->nomEtat }}</td>
                         <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_liste'][$l]->created_at)) }}</td>
                         <td>{{ date('G:i:s \l\e d-m-Y', strtotime($_SESSION['commandes_liste'][$l]->updated_at)) }}</td>
-                        <td> <a href="messagerie"> <img src="PPE-3\Application\storage\app\public\************"/> </td>
+                        <td> <a href="messagerie?email={{ $_SESSION['commandes_liste'][$l]->mail }}&amp;nomcommande={{ $_SESSION['commandes_liste'][$l]->nomCommandes }}&amp;nom_prenom={{ $_SESSION['commandes_liste'][$l]->nom }} {{ $_SESSION['commandes_liste'][$l]->prenom }}"> <img id="envoi_mail" src="http://localhost/PPE-3/Application/storage/app/public/env.png"/> </td>
                     </tr>
                 <?php } ?>
                 </table>

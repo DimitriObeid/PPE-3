@@ -51,6 +51,10 @@ Route::get('/suppressionlogo', [PersonnelController::class, 'suppressionlogo']);
 
 Route::get('/messagerie', [PersonnelController::class, 'messagerie'])->name('messagerie');
 
+Route::post('/traitementmessagerie', [PersonnelController::class, 'traitementmessagerie']);
+
+Route::post('/recherchemail', [PersonnelController::class, 'recherchemail']);
+
 Route::get('/statistique', [PersonnelController::class, 'statistique'])->name('statistique');
 
 Route::get('/personnalisationducompte', [PersonnelController::class, 'personnalisationducompte'])->name('personnalisationducompte');

@@ -83,7 +83,7 @@ class PersonnelController extends Controller
 
             $commande = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.updated_at', 'personnels.mail', 'etats.nomEtat')->where('personnels.mail', $Personnel[0]->mail)->where('etats.nomEtat', 'En cours')->orderby('commandes.id', 'asc')->get();
 
-            $commande_liste = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.created_at', 'commandes.updated_at', 'personnels.nom', 'personnels.prenom', 'etats.nomEtat')->where('etats.nomEtat', 'En cours')->orderby('commandes.updated_at', 'asc')->get();
+            $commande_liste = Commandes::join('personnels', 'commandes.idPersonnel', 'personnels.id')->join('etats', 'commandes.idEtat', 'etats.id')->select('commandes.id', 'nomCommandes', 'quantiteDemande', 'commandes.created_at', 'commandes.updated_at', 'personnels.nom', 'personnels.prenom', 'personnels.mail', 'etats.nomEtat')->where('etats.nomEtat', 'En cours')->orderby('commandes.updated_at', 'asc')->get();
 
             $Personnels = Personnel::join('services', 'personnels.idService', 'services.id')->join('categories', 'personnels.idCategorie', 'categories.id')->select('*')->orderby('personnels.id', 'asc')->get();
 
@@ -254,7 +254,6 @@ class PersonnelController extends Controller
         return view('accueil', ['supprlogo' => $supprlogo]);
     }
 
-    /*MESSAGERIEEEEEEE*/
     public function messagerie()
     {
         session_start();
@@ -269,6 +268,159 @@ class PersonnelController extends Controller
         } else {
             return view('messagerie');
         }
+    }
+
+    public function traitementmessagerie(Request $request)
+    {
+        session_start();
+
+        $validatedData = $request->validate([
+            'nom' => 'required',
+            'email' => 'required',
+            'objet' => 'required',
+            'message' => 'required',
+        ]);
+
+        // traitement du formulaire
+        $destinataire = 'sicmu608@gmail.com';
+        $copie = 'oui';
+        $form_action = '';
+        $message_envoye = "Votre message a bien été envoyé";
+        $message_non_envoye = "L'envoi du mail a échoué, veuillez réessayer SVP.";
+
+        function Enregistrer($text)
+        {
+        	$text = htmlspecialchars(trim($text), ENT_QUOTES);
+
+        	$text = stripslashes($text);
+
+        	$text = nl2br($text);
+        	return $text;
+        };
+
+        function IsEmail($email)
+        {
+        	$value = preg_match('/^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9_](?:[a-zA-Z0-9_\-](?!\.)){0,61}[a-zA-Z0-9_-]?\.)+[a-zA-Z0-9_](?:[a-zA-Z0-9_\-](?!$)){0,61}[a-zA-Z0-9_]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/', $email);
+        	return (($value === 0) || ($value === false)) ? false : true;
+        }
+
+        // recuperer les données du formulaire
+        $nom     = Enregistrer($request->nom);
+        $email   = Enregistrer($request->email);
+        $objet   = Enregistrer($request->objet);
+        $message = Enregistrer($request->message);
+
+        // On va vérifier les variables et l'email ...
+        $email = (IsEmail($email)) ? $email : '';
+        $err_formulaire = false;
+
+    	if (($nom != '') && ($email != '') && ($objet != '') && ($message != ''))
+    	{
+    		$headers  = 'MIME-Version: 1.0' . "\r\n";
+    		$headers .= 'From:'.$nom.' <'.$email.'>' . "\r\n" .
+    				'Reply-To:'.$email. "\r\n" .
+    				'Content-Type: text/plain; charset="utf-8"; DelSp="Yes"; format=flowed '."\r\n" .
+    				'Content-Disposition: inline'. "\r\n" .
+    				'Content-Transfer-Encoding: 7bit'." \r\n" .
+    				'X-Mailer:PHP/'.phpversion();
+    				$EmailTo = "sicmu608@gmail.com";
+    				$Subject = "Vous avez un nouveau message de " .$nom;
+
+    		// envoyer une copie au visiteur
+    		if ($copie == 'oui')
+    		{
+    			$cible = $destinataire.';'.$email;
+    		}
+    		else
+    		{
+    			$cible = $destinataire;
+    		};
+
+    		// Remplacement de certains caractères spéciaux
+    		$message = str_replace("&#039;","'",$message);
+    		$message = str_replace("&#8217;","'",$message);
+    		$message = str_replace("&quot;",'"',$message);
+    		$message = str_replace('<br>','',$message);
+    		$message = str_replace('<br />','',$message);
+    		$message = str_replace("&lt;","<",$message);
+    		$message = str_replace("&gt;",">",$message);
+    		$message = str_replace("&amp;","&",$message);
+
+    		// Envoi du mail
+    		$num_emails = 2;
+    		$tmp = explode(';', $cible);
+    		foreach($tmp as $email_destinataire)
+    		{
+    			if (mail($email_destinataire, $objet, $message, $headers))
+    				$num_emails++;
+    		}
+
+    		/*if ((($copie == 'oui') && ($num_emails == 2)) || (($copie == 'non') && ($num_emails == 1)))
+    		{
+    			$req = $BDD->prepare('INSERT INTO reception(nom, email, objet, message) VALUES(:nom, :email, :objet, :message)');
+    			$req->execute(array(
+    				'nom' => $nom,
+    				'email' => $email,
+    				'objet' => $objet,
+    				'message' => $message,
+    				));
+    			$req-> closeCursor();
+    			echo '<p id="msg">'.$message_envoye.'</p>';
+                header("Refresh: 5; url=index.php");
+            }*/
+
+            $envoi = true;
+
+            return view('messagerie', ['envoi'=>$envoi, 'message_envoye'=>$message_envoye]);
+    	}
+    }
+
+    public function recherchemail(Request $request)
+    {
+        session_start();
+
+        $validatedData = $request->validate([
+            'terme' => 'required',
+        ]);
+
+        $nb = 1;
+        $aucun_result = false;
+        if (isset($request->s) AND $request->s == "Rechercher")
+        {
+            $request->terme = htmlspecialchars($request->terme); //pour sécuriser le formulaire contre les failles html
+            $terme = $request->terme;
+            $terme = trim($terme); //supprimer des caractères au début et en fin d’une chaîne de caractère.
+            $terme = strip_tags($terme);//Supprime les balises HTML et PHP d'une chaîne ...
+
+        }
+
+        if ($terme != "")
+        {
+            $rechercheExplode = explode(' ', $terme);
+            $recherche = implode('%', $rechercheExplode);
+            $select_terme = Personnel::where('nom', 'like', '%'.$recherche.'%')->orWhere('prenom', 'like', '%'.$recherche.'%')->orWhere('mail', 'like', '%'.$recherche.'%')->get();
+
+            if (isset($select_terme[1]))
+            {
+                $nb = 2;
+            }
+        }
+        if (!isset($select_terme[0])) {
+            $aucun_result = true;
+        }
+
+         /*$select_terme = $BDD->prepare("SELECT * FROM personnel WHERE nom LIKE :nom OR prenom LIKE :prenom");
+         $select_terme->execute(array("nom" => $terme, "prenom" => $terme));
+         while($terme_trouve = $select_terme->fetch())
+         {
+           $mail_result = $terme_trouve['email'];
+           $nb++;
+
+         }
+         $select_terme->closeCursor();
+        }*/
+
+        return view('messagerie', ['mail_result'=>$select_terme, 'nb'=>$nb, 'aucun_result'=>$aucun_result]);
     }
 
     public function statistique()
