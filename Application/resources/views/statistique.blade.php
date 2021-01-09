@@ -101,7 +101,6 @@
                 </table>
             <?php }
 
-
             if (isset($Statistiques_demande[0])) {?>
           <table id="statistiques">
                     <caption>Statistiques</caption>
@@ -121,7 +120,12 @@
                 <?php } ?>
                 </table>
               <?php }
-            } ?>
+
+            }
+            else {
+              echo "Aucun résultat n'a été trouvé";
+            }
+            ?>
          <?php } else {
                   $errorsdate = $erreurdate ?? false;
                   if ($errorsdate) { ?>
