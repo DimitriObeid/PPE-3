@@ -57,6 +57,8 @@ Route::post('/recherchemail', [PersonnelController::class, 'recherchemail']);
 
 Route::get('/statistique', [PersonnelController::class, 'statistique'])->name('statistique');
 
+Route::post('/stats_produit', [PersonnelController::class, 'stats_produit']);
+
 Route::get('/personnalisationducompte', [PersonnelController::class, 'personnalisationducompte'])->name('personnalisationducompte');
 
 

@@ -1,4 +1,4 @@
-date/time         : 2021-01-07, 08:59:56, 233ms
+date/time         : 2021-01-07, 09:00:31, 118ms
 computer name     : JABR
 user name         : ajabr
 operating system  : Windows NT New x64 build 9200
@@ -6,11 +6,11 @@ system language   : French
 system up time    : 27 days 11 hours
 program up time   : 1 second
 processors        : 8x Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
-physical memory   : 16840/24496 MB (free/total)
+physical memory   : 16829/24496 MB (free/total)
 free disk space   : (C:) 218,87 GB
 display mode      : 1920x1080, 32 bit
-process id        : $178c
-allocated memory  : 24,79 MB
+process id        : $6774
+allocated memory  : 24,81 MB
 command line      : "C:\xampp\sendmail\sendmail.exe" -t
 executable        : sendmail.exe
 exec. date/time   : 2012-04-16 18:30
@@ -21,7 +21,7 @@ exception number  : 1
 exception class   : EIdSocketError
 exception message : Socket Error # 11001 Host not found.
 
-main thread ($5ca0):
+main thread ($47f8):
 00435e23 +0073 sendmail.exe IdStack                        706  +42 TIdStack.RaiseSocketError
 00433faf +0123 sendmail.exe IdStackWindows                1227  +55 TIdStackWindows.HostByName
 00435a75 +006d sendmail.exe IdStack                        571  +10 TIdStack.ResolveHost
@@ -35,36 +35,36 @@ main thread ($5ca0):
 004b5f14 +1060 sendmail.exe sendmail                       808 +326 initialization
 76e36357 +0017 KERNEL32.DLL                                         BaseThreadInitThunk
 
-thread $45e4:
+thread $4158:
 76e36357 +17 KERNEL32.DLL  BaseThreadInitThunk
 
-thread $1ae4:
+thread $3a00:
 76e36357 +17 KERNEL32.DLL  BaseThreadInitThunk
 
-thread $63d8:
+thread $51d4:
 76e36357 +17 KERNEL32.DLL  BaseThreadInitThunk
 
 stack dump:
 0019fc58  28 5e 43 00 de fa ed 0e - 01 00 00 00 07 00 00 00  (^C.............
-0019fc68  6c fc 19 00 28 5e 43 00 - 48 ce 3c 02 ec 28 43 00  l...(^C.H.<..(C.
-0019fc78  10 4f 3c 02 f9 2a 00 00 - a8 fc 19 00 88 fc 19 00  .O<..*..........
+0019fc68  6c fc 19 00 28 5e 43 00 - 48 ce 3f 02 ec 28 43 00  l...(^C.H.?..(C.
+0019fc78  10 4f 3f 02 f9 2a 00 00 - a8 fc 19 00 88 fc 19 00  .O?..*..........
 0019fc88  b0 fc 19 00 c8 4b 40 00 - a8 fc 19 00 00 00 00 00  .....K@.........
-0019fc98  00 00 00 00 00 00 00 00 - f9 2a 00 00 10 4f 3c 02  .........*...O<.
+0019fc98  00 00 00 00 00 00 00 00 - f9 2a 00 00 10 4f 3f 02  .........*...O?.
 0019fca8  f4 fc 19 00 b2 3f 43 00 - 1c fd 19 00 c8 4b 40 00  .....?C......K@.
 0019fcb8  f4 fc 19 00 44 fd 19 00 - 4b 02 00 00 ec 28 43 00  ....D...K....(C.
 0019fcc8  00 00 00 00 00 00 00 00 - 02 00 00 00 01 00 00 00  ................
 0019fcd8  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
 0019fce8  00 00 00 00 00 00 00 00 - 00 00 00 00 10 fd 19 00  ................
 0019fcf8  77 5a 43 00 3c fd 19 00 - 00 00 00 00 ff ff ff 00  wZC.<...........
-0019fd08  88 a9 3d 02 10 4f 3c 02 - 48 fd 19 00 75 0a 44 00  ..=..O<.H...u.D.
+0019fd08  88 a9 40 02 10 4f 3f 02 - 48 fd 19 00 75 0a 44 00  ..@..O?.H...u.D.
 0019fd18  3c fd 19 00 50 fd 19 00 - c8 4b 40 00 48 fd 19 00  <...P....K@.H...
-0019fd28  b4 4e 4b 00 80 82 35 02 - 80 82 35 02 10 6a 3b 02  .NK...5...5..j;.
-0019fd38  00 00 00 00 00 00 00 00 - 00 00 00 00 80 82 35 02  ..............5.
+0019fd28  b4 4e 4b 00 80 82 38 02 - 80 82 38 02 10 6a 3e 02  .NK...8...8..j>.
+0019fd38  00 00 00 00 00 00 00 00 - 00 00 00 00 80 82 38 02  ..............8.
 0019fd48  64 fd 19 00 52 55 46 00 - 78 fd 19 00 c8 4b 40 00  d...RUF.x....K@.
-0019fd58  64 fd 19 00 b4 4e 4b 01 - 80 82 35 02 ac fd 19 00  d....NK...5.....
-0019fd68  a5 4a 44 00 80 82 35 02 - 3c 56 46 00 83 15 44 00  .JD...5.<VF...D.
+0019fd58  64 fd 19 00 b4 4e 4b 01 - 80 82 38 02 ac fd 19 00  d....NK...8.....
+0019fd68  a5 4a 44 00 80 82 38 02 - 3c 56 46 00 83 15 44 00  .JD...8.<VF...D.
 0019fd78  84 fd 19 00 5f 4d 40 00 - ac fd 19 00 d8 fd 19 00  ...._M@.........
-0019fd88  c8 4b 40 00 ac fd 19 00 - b4 4e 4b 00 80 82 35 02  .K@......NK...5.
+0019fd88  c8 4b 40 00 ac fd 19 00 - b4 4e 4b 00 80 82 38 02  .K@......NK...8.
 
 disassembling:
 [...]

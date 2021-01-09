@@ -201,7 +201,17 @@ th, td
     font-weight: bold;
 }
 
-.img_confirm
+.erreur
+{
+    background: #ee0000;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.3%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.img_confirm, .img_erreur
 {
     width: 1.1%;
     position: relative;
@@ -251,4 +261,15 @@ margin-top: 5%;
 #a{
 margin-left: 30%;
 margin-top: 5%;
+}
+
+#resultat{
+  margin-top: 5%;
+  margin-left: 50%;
+}
+
+
+#resultat2{
+  margin-top: 5%;
+  margin-left: 50%;
 }

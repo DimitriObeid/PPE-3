@@ -355,20 +355,6 @@ class PersonnelController extends Controller
     				$num_emails++;
     		}
 
-    		/*if ((($copie == 'oui') && ($num_emails == 2)) || (($copie == 'non') && ($num_emails == 1)))
-    		{
-    			$req = $BDD->prepare('INSERT INTO reception(nom, email, objet, message) VALUES(:nom, :email, :objet, :message)');
-    			$req->execute(array(
-    				'nom' => $nom,
-    				'email' => $email,
-    				'objet' => $objet,
-    				'message' => $message,
-    				));
-    			$req-> closeCursor();
-    			echo '<p id="msg">'.$message_envoye.'</p>';
-                header("Refresh: 5; url=index.php");
-            }*/
-
             $envoi = true;
 
             return view('messagerie', ['envoi'=>$envoi, 'message_envoye'=>$message_envoye]);
@@ -409,36 +395,50 @@ class PersonnelController extends Controller
             $aucun_result = true;
         }
 
-         /*$select_terme = $BDD->prepare("SELECT * FROM personnel WHERE nom LIKE :nom OR prenom LIKE :prenom");
-         $select_terme->execute(array("nom" => $terme, "prenom" => $terme));
-         while($terme_trouve = $select_terme->fetch())
-         {
-           $mail_result = $terme_trouve['email'];
-           $nb++;
-
-         }
-         $select_terme->closeCursor();
-        }*/
-
         return view('messagerie', ['mail_result'=>$select_terme, 'nb'=>$nb, 'aucun_result'=>$aucun_result]);
     }
 
-    public function statistique()
-    {
-        session_start();
 
-        if (!isset($_SESSION['mail'])) {
-            header('Refresh: 0; url='.url('?page=statistique'));
-            exit;
+                /****************************************     Fonction Statistiques     ***************************************************/
+        public function statistique()
+        {
+            session_start();
+
+            if (!isset($_SESSION['mail'])) {
+                header('Refresh: 0; url='.url('?page=statistique'));
+                exit;
+            }
+
+            $Fournitures = Fournitures::select('*')->get();
+            $Services = Service::select('*')->get();
+            if ($_SESSION['categorie'] != 'Administrateur') {
+                $droitinsuf = true;
+                return view('accueil', ['droitinsuf' => $droitinsuf]);
+              } else {
+                  return view('statistique', ['Fournitures'=>$Fournitures, "Services"=>$Services]);
+              }
+
         }
 
-        if ($_SESSION['categorie'] != 'Administrateur') {
-            $droitinsuf = true;
-            return view('accueil', ['droitinsuf' => $droitinsuf]);
-        } else {
-            return view('statistique');
+        public function stats_produit(Request $request)
+        {
+          session_start();
+          $Services = Service::select('*')->get();
+          $Fournitures = Fournitures::select('*')->get();
+          if ($request->date1 > $request->date2) {
+            $erreurdate='true';
+            return view("statistique", ['erreurdate'=>$erreurdate, 'Fournitures'=>$Fournitures, "Services"=>$Services]);
+          }
+
+          $Statistiques_commande = Commandes::join('personnels','commandes.idPersonnel','personnels.id')->join('services', 'personnels.idService', 'services.id')->select('nomCommandes', 'nomService', 'quantiteDemande', 'commandes.created_at')->where('commandes.created_at','>=', $request->date1, 'AND','commandes.created_at','<=', $request->date2)->where('nomCommandes', $request->nom_produits)->orWhere('nomService', $request->nom_service)->get();
+          $Statistiques_demande = DemandesSpecifiques::join('personnels','demandes_specifiques.idPersonnel','personnels.id')->join('services', 'personnels.idService', 'services.id')->select('nomDemande', 'nomService', 'quantiteDemande', 'demandes_specifiques.created_at')->where('demandes_specifiques.created_at','<=', $request->date1)->where('nomDemande', $request->nom_produits)->orWhere('nomService', $request->nom_service)->get();
+          if (isset($Statistiques_commande[0]) OR isset($Statistiques_demande[0]) ) {
+            $reponse = true;
+          } else {
+            $reponse = false;
+          }
+          return view("statistique", ['Statistiques_commande'=>$Statistiques_commande,'Statistiques_demande'=>$Statistiques_demande , 'Fournitures'=>$Fournitures, "Services"=>$Services, "reponse"=>$reponse]);
         }
-    }
 
     public function personnalisationducompte()
     {

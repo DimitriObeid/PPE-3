@@ -76,65 +76,109 @@
                 </table>
             <?php } ?>
         </header>
+
         <section id="corps">
-            <?php  /*
-            // Recuperation des noms des produits
-            $nom_produits = $bdd->prepare("SELECT p_name FROM products");
-            $nom_produits->execute(array());
+          <?php if (isset($reponse)) { ?>
+            <a href="statistique" id="retour">< Retour à la page statistique</a><br /><br />
+            <?php if ($reponse) { ?>
+              <?php if (isset($Statistiques_commande[0])) { ?>
+              <table id="statistiques">
+                    <caption>Statistiques</caption>
+                    <tr>
+                        <th class="tabl_comm">Nom</th>
+                        <th class="tabl_comm">Quantitée demandée</th>
+                        <th class="tabl_comm">Service</th>
+                        <th class="tabl_comm">Création</th>
+                    </tr>
+                <?php foreach ($Statistiques_commande as $lignes => $colonnes) { ?>
+                    <tr>
+                        <td class="tabl_comm">{{ $colonnes->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $colonnes->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $colonnes->nomService }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($colonnes->created_at)) }}</td>
+                    </tr>
+                <?php } ?>
+                </table>
+            <?php }
 
-            $_SESSION['nom_fournitures'] = $nom_produits->fetchAll();
 
-            $nom_produits->closeCursor();
+            if (isset($Statistiques_demande[0])) {?>
+          <table id="statistiques">
+                    <caption>Statistiques</caption>
+                    <tr>
+                        <th class="tabl_comm">Nom</th>
+                        <th class="tabl_comm">Quantitée demandée</th>
+                        <th class="tabl_comm">Service</th>
+                        <th class="tabl_comm">Création</th>
+                    </tr>
+                <?php foreach ($Statistiques_demande as $lignes => $colonnes) { ?>
+                    <tr>
+                        <td class="tabl_comm">{{ $colonnes->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $colonnes->quantiteDemande }}</td>
+                        <td class="tabl_comm">{{ $colonnes->nomService }}</td>
+                        <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($colonnes->created_at)) }}</td>
+                    </tr>
+                <?php } ?>
+                </table>
+              <?php }
+            } ?>
+         <?php } else {
+                  $errorsdate = $erreurdate ?? false;
+                  if ($errorsdate) { ?>
+                    <p class="erreur"><img class="img_erreur" src="http://localhost/PPE-3/Application/storage/app/public/warning.png" alt="Icon de confirmation" /> La date selectionner n'est pas valide !</p><br />
+                    <?php header('Refresh: 5; url=statistique');
+                  }
+                ?>
+                                        <!--*****************************************PARTIE PHP*****************************************-->
 
-            // Recuperation des noms des services
-            $nom_service = $bdd->prepare("SELECT nom_service FROM services");
-            $nom_service->execute(array());
+                  <h1> Table de statistique</h1>
 
-            $_SESSION['nom_service'] = $nom_service->fetchAll();
+                   <!-- Selection des fournitures -->
+                   {!! Form::open(['url' => 'stats_produit']) !!}
+                   <fieldset id="a"><h3>Selectionner un produit</h3>
+                     <select name="nom_produits">
+                       <?php
+                         foreach ($Fournitures as $key => $value)
+                          {
+                         echo '<option value="'.$value->nomFournitures.'">'.$value->nomFournitures.'</option>';
+                       } ?>
+                     </select>
+                   </fieldset>
 
-            $nom_service->closeCursor();
-            */?>
-            <h2> Table de statistique</h2>
+                   <fieldset id="b"><h3>Date début</h3>
+                     <input type ="date" id="date1" name="date1" />
+                   </fieldset>
 
-            <!-- Selection des fournitures -->
-            <form method="get" action="resultat.php">
-                <fieldset id="a"><h3>Selectionner un produit</h3>
-                    <select name="nom_fournitures">
-                        <?php /*foreach ($_SESSION['nom_fournitures'] as $key => $value) {
-                            echo '<option value="'.$value['p_name'].'">'.$value['p_name'].'</option>';
-                        } */?>
-                    </select>
-                </fieldset>
+                   <fieldset id="c"><h3>Date fin</h3>
+                     <input type ="date" id="date2" name="date2" />
+                   </fieldset>
 
-                <fieldset id="b"><h3>Date début</h3>
-                    <input type ="date" id="date1" name="date1" />
-                </fieldset>
-
-                <fieldset id="c"><h3>Date fin</h3>
-                    <input type ="date" id="date2" name="date2" />
-                </fieldset>
-                <input type="submit" name="resultat" value="Voir le résultat">
-            </form>
-
-            <!-- Selection des services -->
-            <form method="get" action="resultat.php">
-                <fieldset id="a"><h3>Selectionner un service</h3>
+                   <input type="submit" id="resultat" name="resultat" value="Voir le résultat">
+                  </form>
+                  <!---
+                  <! Selection des services -->
+                  {!! Form::open(['url' => 'stats_produit']) !!}
+                  <fieldset id="a"><h3>Selectionner un service</h3>
                     <select name="nom_service">
-                        <?php/* foreach ($_SESSION['nom_service'] as $key => $value) {
-                            echo '<option value="'.$value['nom_service'].'">'.$value['nom_service'].'</option>';
-                        } */?>
+                      <?php
+                        foreach ($Services as $key => $valeur)
+                        {
+                        echo '<option value="'.$valeur->nomService.'">'.$valeur->nomService.'</option>';
+                      } ?>
                     </select>
-                </fieldset>
+                  </fieldset>
 
-                <fieldset id="b"><h3>Date début</h3>
+                  <fieldset id="b"><h3>Date début</h3>
                     <input type ="date" id="date1" name="date1" />
-                </fieldset>
+                  </fieldset>
 
-                <fieldset id="c"><h3>Date fin</h3>
+                  <fieldset id="c"><h3>Date fin</h3>
                     <input type ="date" id="date2" name="date2" />
-                </fieldset>
-                <input type="submit" name="resultat" value="Voir le résultat">
-            </form>
+                  </fieldset>
+
+                  <input type="submit" id="resultat2" name="resultat" value="Voir le résultat">
+                  </form>
+            <?php } ?>
         </section>
         <footer>
             <?php if (isset($_SESSION['commandes_fini'][0])) { ?>

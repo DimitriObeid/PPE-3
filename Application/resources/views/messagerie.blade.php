@@ -122,8 +122,7 @@
                 <?php header('Refresh: 5; url=messagerie');
             } ?>
 
-            <form method="post" action="traitementmessagerie" name="form"  onSubmit="return validation()" style=" margin-left: 200px; margin-right: 400px; ">
-                <input name="_token" type="hidden" value="j99EVJY4tHttyn9vmbehlBe2FdZOUfOxL6xA2Spi" />
+              {!! Form::open(['url' => 'traitementmessagerie', 'name' => 'form', 'onSubmit' => 'return validation()']) !!}
                 <div id="coordonées">
                     <fieldset>
                         <legend>Coordonées du destinataire</legend>
@@ -137,10 +136,10 @@
                        <legend>Votre message :</legend>
                        <?php if (isset($_GET['nomcommande'])) {
                            $objet = 'Votre commande : '.$_GET['nomcommande'];
-                           $message = 'Je vous souhaite vous donnez des précisions sur votre commande '.$_GET['nomcommande'].', celle-ci est ...';
+                           $message = 'Je souhaite vous donnez des précisions sur votre commande '.$_GET['nomcommande'].', celle-ci est ...';
                        } elseif (isset($_GET['nomdemande'])) {
                            $objet = 'Votre demande : '.$_GET['nomdemande'];
-                           $message = 'Je vous souhaite vous donnez des précisions sur votre demande '.$_GET['nomdemande'].', celle-ci est ...';
+                           $message = 'Je souhaite vous donnez des précisions sur votre demande '.$_GET['nomdemande'].', celle-ci est ...';
                        } ?>
                        <p><label class="label" for="objet">Objet :</label><input class="input" type="text" id="objet" name="objet" value="<?php echo $objet ?? '' ?>" /></p>
                        <p><label class="label" for="message">Message :</label><textarea id="message" name="message" cols="30" rows="8"><?php echo $message ?? '' ?></textarea></p>
@@ -152,11 +151,10 @@
             <?php $nb = $nb ?? 1;
             $search = ($nb==1 ? ($mail_result[0]->mail ?? "") : ""); ?>
             <div id="bdr"><label class="label" for="rechercher">Quel adresse mail recherchez vous : </label></br>
-                <form action = "recherchemail" method = "post">
-                    <input name="_token" type="hidden" value="j99EVJY4tHttyn9vmbehlBe2FdZOUfOxL6xA2Spi" />
+                  {!! Form::open(['url' => 'recherchemail']) !!}
                     <input class="input" type = "search" name = "terme" value="<?php echo $search; ?>"/>
-                    <input type ="text" id="message_e" name="message_e" readonly value="<?php if ($nb>1) echo 'Veuillez affiner votre recherche'; ?>"/>
                     <input type = "submit" name = "s" id="bouton_r" value="Rechercher"/>
+                    <input type ="text" id="message_e" name="message_e" readonly value="<?php if ($nb>1) echo 'Veuillez affiner votre recherche'; ?>"/>
                 </form>
             </div>
         </section>
