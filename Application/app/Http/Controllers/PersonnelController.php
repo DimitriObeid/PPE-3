@@ -428,11 +428,12 @@ class PersonnelController extends Controller
           if ($request->date1 > $request->date2) {
             $erreurdate='true';
             return view("statistique", ['erreurdate'=>$erreurdate, 'Fournitures'=>$Fournitures, "Services"=>$Services]);
+            $date1 = $request->date1 ?? date("Y-m-d");
+            $date2 = $request->date2 ?? date("Y-m-d");
           }
 
-          $Statistiques_commande = Commandes::join('personnels','commandes.idPersonnel','personnels.id')->join('services', 'personnels.idService', 'services.id')->select('nomCommandes', 'nomService', 'quantiteDemande', 'commandes.created_at')->where('commandes.created_at','>=', $request->date1, 'AND','commandes.created_at','<=', $request->date2)->where('nomCommandes', $request->nom_produits)->orWhere('nomService', $request->nom_service)->get();
-          $Statistiques_demande = DemandesSpecifiques::join('personnels','demandes_specifiques.idPersonnel','personnels.id')->join('services', 'personnels.idService', 'services.id')->select('nomDemande', 'nomService', 'quantiteDemande', 'demandes_specifiques.created_at')->where('demandes_specifiques.created_at','<=', $request->date1)->where('nomDemande', $request->nom_produits)->orWhere('nomService', $request->nom_service)->get();
-          if (isset($Statistiques_commande[0]) OR isset($Statistiques_demande[0]) ) {
+          $Statistiques_commande = Commandes::join('personnels','commandes.idPersonnel','personnels.id')->join('services', 'personnels.idService', 'services.id')->select('nomCommandes', 'nomService', 'quantiteDemande', 'commandes.created_at')->where('commandes.created_at','>=', $request->date1, 'AND','commandes.created_at','<=', $request->date2, 'AND', 'nomCommandes', $request->nom_produits)->orWhere('commandes.created_at','>=', $request->date1, 'AND','commandes.created_at','<=', $request->date2, 'AND', 'nomService', $request->nom_service)->get();
+          $Statistiques_demande = DemandesSpecifiques::join('personnels','demandes_specifiques.idPersonnel','personnels.id')->join('services', 'personnels.idService', 'services.id')->select('nomDemande', 'nomService', 'quantiteDemande', 'demandes_specifiques.created_at')->where('demandes_specifiques.created_at','>=', $request->date1, 'AND','demandes_specifiques.created_at','<=', $request->date2, 'AND', 'nomService', $request->nom_service)->get();if (isset($Statistiques_commande[0]) OR isset($Statistiques_demande[0]) ) {
             $reponse = true;
           } else {
             $reponse = false;

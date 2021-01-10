@@ -112,7 +112,7 @@
                     </tr>
                 <?php foreach ($Statistiques_demande as $lignes => $colonnes) { ?>
                     <tr>
-                        <td class="tabl_comm">{{ $colonnes->nomCommandes }}</td>
+                        <td class="tabl_comm">{{ $colonnes->nomDemande }}</td>
                         <td class="tabl_comm">{{ $colonnes->quantiteDemande }}</td>
                         <td class="tabl_comm">{{ $colonnes->nomService }}</td>
                         <td class="tabl_comm">{{ date('G:i:s \l\e d-m-Y', strtotime($colonnes->created_at)) }}</td>
@@ -137,7 +137,7 @@
 
                   <h1> Table de statistique</h1>
 
-                   <!-- Selection des fournitures -->
+                   <!-- Selection des produits -->
                    {!! Form::open(['url' => 'stats_produit']) !!}
                    <fieldset id="a"><h3>Selectionner un produit</h3>
                      <select name="nom_produits">
@@ -150,11 +150,11 @@
                    </fieldset>
 
                    <fieldset id="b"><h3>Date début</h3>
-                     <input type ="date" id="date1" name="date1" />
+                     <input type ="date" id="date1" name="date1" required/>
                    </fieldset>
 
                    <fieldset id="c"><h3>Date fin</h3>
-                     <input type ="date" id="date2" name="date2" />
+                     <input type ="date" id="date2" name="date2" required/>
                    </fieldset>
 
                    <input type="submit" id="resultat" name="resultat" value="Voir le résultat">
@@ -173,11 +173,11 @@
                   </fieldset>
 
                   <fieldset id="b"><h3>Date début</h3>
-                    <input type ="date" id="date1" name="date1" />
+                    <input type ="date" id="date1" name="date1" required/>
                   </fieldset>
 
                   <fieldset id="c"><h3>Date fin</h3>
-                    <input type ="date" id="date2" name="date2" />
+                    <input type ="date" id="date2" name="date2" required/>
                   </fieldset>
 
                   <input type="submit" id="resultat2" name="resultat" value="Voir le résultat">
